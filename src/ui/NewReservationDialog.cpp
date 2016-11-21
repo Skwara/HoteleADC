@@ -55,3 +55,16 @@ void NewReservationDialog::on_endCalendarWidget_clicked(const QDate& date)
 
   setSummaryDays(reservation.getDays());
 }
+
+void NewReservationDialog::on_addParticipantPushButton_clicked()
+{
+  //TODO Enable addButton only if both fields are not empty
+  QString surname = ui->participantSurnameLineEdit->text();
+  QString name = ui->participantNameLineEdit->text();
+  if (!surname.isEmpty() && !name.isEmpty())
+  {
+    ui->participantsListWidget->addItem(surname + " " + name);
+    ui->participantSurnameLineEdit->clear();
+    ui->participantNameLineEdit->clear();
+  }
+}

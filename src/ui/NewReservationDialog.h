@@ -25,6 +25,8 @@ private slots:
   void on_beginCalendarWidget_clicked(const QDate& date);
   void on_endCalendarWidget_clicked(const QDate& date);
 
+  void on_addParticipantPushButton_clicked();
+
 private:
   Ui::NewReservationDialog* ui;
 
