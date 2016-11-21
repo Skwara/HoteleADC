@@ -11,10 +11,16 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = HoteleADC
 TEMPLATE = app
 
+INCLUDEPATH = src
 
-SOURCES += main.cpp\
-        MainWindow.cpp
+SOURCES += src/main.cpp\
+           src/ui/MainWindow.cpp \
+           src/ui/NewReservationDialog.cpp \
+           src/logic/Reservation.cpp
 
-HEADERS  += MainWindow.h
+HEADERS  += src/ui/MainWindow.h \
+            src/ui/NewReservationDialog.h \
+            src/logic/Reservation.h
 
-FORMS    += MainWindow.ui
+FORMS    += src/ui/MainWindow.ui \
+            src/ui/NewReservationDialog.ui
