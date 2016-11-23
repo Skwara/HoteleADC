@@ -14,13 +14,17 @@ TEMPLATE = app
 INCLUDEPATH = src
 
 SOURCES += src/main.cpp\
+           src/data/DatabaseHandler.cpp \
+           src/logic/Client.cpp \
+           src/logic/Reservation.cpp \
            src/ui/MainWindow.cpp \
-           src/ui/NewReservationDialog.cpp \
-           src/logic/Reservation.cpp
+           src/ui/NewReservationDialog.cpp
 
-HEADERS  += src/ui/MainWindow.h \
-            src/ui/NewReservationDialog.h \
-            src/logic/Reservation.h
+HEADERS  += src/data/DatabaseHandler.h \
+            src/logic/Client.h \
+            src/logic/Reservation.h \
+            src/ui/MainWindow.h \
+            src/ui/NewReservationDialog.h
 
 FORMS    += src/ui/MainWindow.ui \
             src/ui/NewReservationDialog.ui

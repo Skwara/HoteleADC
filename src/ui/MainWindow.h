@@ -3,6 +3,8 @@
 
 #include <QMainWindow>
 
+#include "data/DatabaseHandler.h"
+
 namespace Ui {
 class MainWindow;
 }
@@ -20,6 +22,8 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
+
+  DatabaseHandler _dbHandler;
 };
 
 #endif // MAINWINDOW_H

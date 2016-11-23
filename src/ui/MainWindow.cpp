@@ -3,9 +3,10 @@
 
 #include "NewReservationDialog.h"
 
-MainWindow::MainWindow(QWidget* parent) :
-  QMainWindow(parent),
-  ui(new Ui::MainWindow)
+MainWindow::MainWindow(QWidget* parent)
+  : QMainWindow(parent)
+  , ui(new Ui::MainWindow)
+  , _dbHandler()
 {
   ui->setupUi(this);
 }
@@ -17,6 +18,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newReservationButton_clicked()
 {
-  NewReservationDialog* dialog = new NewReservationDialog();
+  NewReservationDialog* dialog = new NewReservationDialog(_dbHandler);
   dialog->show();
 }

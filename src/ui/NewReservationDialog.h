@@ -3,6 +3,7 @@
 
 #include <QDialog>
 
+#include "data/DatabaseHandler.h"
 #include "logic/Reservation.h"
 
 namespace Ui {
@@ -14,10 +15,15 @@ class NewReservationDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit NewReservationDialog(QWidget* parent = 0);
+  explicit NewReservationDialog(DatabaseHandler& dbHandler, QWidget* parent = 0);
   ~NewReservationDialog();
 
 private:
+  void prepareMain();
+  void prepareDate();
+  void prepareParticipants();
+  void prepareSummary();
+
   void setSummaryDays(int days);
   void setEndDateToBeginDate();
 
@@ -30,8 +36,8 @@ private slots:
 private:
   Ui::NewReservationDialog* ui;
 
-  Reservation reservation;
-
+  Reservation _reservation;
+  DatabaseHandler& _dbHandler;
 };
 
 #endif // NEWRESERVATIONDIALOG_H

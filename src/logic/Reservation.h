@@ -8,16 +8,16 @@ class Reservation
 public:
   Reservation();
 
-  QDate getBeginDate() const { return beginDate; }
-  QDate getEndDate() const { return endDate; }
-  int getDays() const { return beginDate.daysTo(endDate); }
+  QDate beginDate() const { return _beginDate; }
+  QDate endDate() const { return _endDate; }
+  int days() const { return _beginDate.daysTo(_endDate); }
 
-  void setBeginDate(const QDate& date) { beginDate = date; }
-  void setEndDate(const QDate& date) { endDate = date; }
+  void setBeginDate(const QDate& date) { _beginDate = date; }
+  void setEndDate(const QDate& date) { _endDate = date; }
 
 private:
-  QDate beginDate;
-  QDate endDate;
+  QDate _beginDate;
+  QDate _endDate;
 };
 
 #endif // RESERVATION_H
