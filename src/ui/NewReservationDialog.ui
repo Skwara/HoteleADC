@@ -73,10 +73,24 @@
           <string>Zamawiający</string>
          </property>
          <layout class="QGridLayout" name="gridLayout_4">
-          <item row="0" column="0">
-           <widget class="QLineEdit" name="surnameLineEdit">
+          <item row="5" column="0" colspan="2">
+           <widget class="QLineEdit" name="disabilityLineEdit">
             <property name="placeholderText">
-             <string>Nazwisko</string>
+             <string>Niepełnosprawność</string>
+            </property>
+           </widget>
+          </item>
+          <item row="4" column="0" colspan="2">
+           <widget class="QLineEdit" name="emailLineEdit">
+            <property name="placeholderText">
+             <string>e-mail</string>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLineEdit" name="countryLineEdit">
+            <property name="placeholderText">
+             <string>Kraj</string>
             </property>
            </widget>
           </item>
@@ -84,27 +98,6 @@
            <widget class="QLineEdit" name="nameLineEdit">
             <property name="placeholderText">
              <string>Imię</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLineEdit" name="streetLineEdit">
-            <property name="placeholderText">
-             <string>Ulica</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="numberLineEdit">
-            <property name="placeholderText">
-             <string>Numer</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLineEdit" name="postalCodeLineEdit">
-            <property name="placeholderText">
-             <string>Kod pocztowy</string>
             </property>
            </widget>
           </item>
@@ -116,30 +109,37 @@
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="countryLineEdit">
-            <property name="placeholderText">
-             <string>Kraj</string>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0">
            <widget class="QLineEdit" name="phoneLineEdit">
             <property name="placeholderText">
              <string>Telefon</string>
             </property>
            </widget>
           </item>
-          <item row="4" column="1">
-           <widget class="QLineEdit" name="emailLineEdit">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="surnameLineEdit">
             <property name="placeholderText">
-             <string>e-mail</string>
+             <string>Nazwisko</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="0" colspan="2">
-           <widget class="QLineEdit" name="disabilityLineEdit">
+          <item row="2" column="0">
+           <widget class="QLineEdit" name="postalCodeLineEdit">
             <property name="placeholderText">
-             <string>Niepełnosprawność</string>
+             <string>Kod pocztowy</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="numberLineEdit">
+            <property name="placeholderText">
+             <string>Numer</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="streetLineEdit">
+            <property name="placeholderText">
+             <string>Ulica</string>
             </property>
            </widget>
           </item>

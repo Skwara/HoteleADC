@@ -2,6 +2,9 @@
 #define NEWRESERVATIONDIALOG_H
 
 #include <QDialog>
+#include <QLineEdit>
+#include <QSet>
+#include <QString>
 
 #include "data/DatabaseHandler.h"
 #include "logic/Reservation.h"
@@ -24,14 +27,21 @@ private:
   void prepareParticipants();
   void prepareSummary();
 
-  void setSummaryDays(int days);
+  void setSummaryDays(const int days);
   void setEndDateToBeginDate();
+
+  void addCompleter(QLineEdit* lineEdit, QSet<QString> completions);
+  void fillRemainingClientData(QString surname, QString name = "", QString street = "");
 
 private slots:
   void on_beginCalendarWidget_clicked(const QDate& date);
   void on_endCalendarWidget_clicked(const QDate& date);
 
   void on_addParticipantPushButton_clicked();
+
+  void on_surnameLineEdit_editingFinished();
+  void on_nameLineEdit_editingFinished();
+  void on_streetLineEdit_editingFinished();
 
 private:
   Ui::NewReservationDialog* ui;

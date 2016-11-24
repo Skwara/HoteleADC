@@ -3,15 +3,25 @@
 
 #include <QString>
 
-struct Address
+class Address
 {
+public:
   Address(QString street, QString number, QString postalCode, QString city, QString country);
 
-  QString street;
-  QString number;
-  QString postalCode;
-  QString city;
-  QString country;
+  QString street() const { return _street; }
+  QString number() const { return _number; }
+  QString postalCode() const { return _postalCode; }
+  QString city() const { return _city; }
+  QString country() const { return _country; }
+
+  static void correctStreetFormatting(QString& street);
+
+private:
+  QString _street;
+  QString _number;
+  QString _postalCode;
+  QString _city;
+  QString _country;
 };
 
 class Client
@@ -24,6 +34,8 @@ public:
   Address address() const { return _address; }
   QString phone() const { return _phone; }
   QString eMail() const { return _eMail; }
+
+  static void firstLetterUppercase(QString& string);
 
 private:
   QString _surname;

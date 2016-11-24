@@ -12,6 +12,7 @@ public:
   DatabaseHandler();
 
   QList<Client> clients() const { return _clients; }
+  QList<Client> clients(QString surname, QString name, QString street);
 
 private:
   void fetchClients();
