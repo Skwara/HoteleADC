@@ -33,9 +33,11 @@ void NewReservationDialog::prepareMain()
   }
 
   QCompleter* surnameCompleter = new QCompleter(surnames, this);
+  surnameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   ui->surnameLineEdit->setCompleter(surnameCompleter);
 
   QCompleter* nameCompleter = new QCompleter(names, this);
+  surnameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   ui->nameLineEdit->setCompleter(nameCompleter);
 }
 

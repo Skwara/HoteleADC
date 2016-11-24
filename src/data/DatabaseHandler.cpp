@@ -2,7 +2,8 @@
 
 DatabaseHandler::DatabaseHandler()
 {
-
+  // TODO fetching in another thread
+  fetchClients();
 }
 
 void DatabaseHandler::fetchClients()

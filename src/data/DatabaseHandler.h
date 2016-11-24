@@ -6,7 +6,6 @@
 
 #include "logic/Client.h"
 
-#include <iostream>
 class DatabaseHandler
 {
 public:
