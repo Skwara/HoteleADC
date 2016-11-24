@@ -24,20 +24,20 @@ NewReservationDialog::~NewReservationDialog()
 
 void NewReservationDialog::prepareMain()
 {
-  QStringList surnames;
-  QStringList names;
+  QSet<QString> surnames;
+  QSet<QString> names;
   foreach (Client client, _dbHandler.clients())
   {
     surnames << client.surname();
     names << client.name();
   }
 
-  QCompleter* surnameCompleter = new QCompleter(surnames, this);
+  QCompleter* surnameCompleter = new QCompleter(surnames.toList(), this);
   surnameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   surnameCompleter->setFilterMode(Qt::MatchContains);
   ui->surnameLineEdit->setCompleter(surnameCompleter);
 
-  QCompleter* nameCompleter = new QCompleter(names, this);
+  QCompleter* nameCompleter = new QCompleter(names.toList(), this);
   nameCompleter->setCaseSensitivity(Qt::CaseInsensitive);
   nameCompleter->setFilterMode(Qt::MatchContains);
   ui->nameLineEdit->setCompleter(nameCompleter);
