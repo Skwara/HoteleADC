@@ -24,11 +24,17 @@ NewReservationDialog::~NewReservationDialog()
 
 void NewReservationDialog::prepareMain()
 {
-  QStringList surnames = _dbHandler.surnames();
+  QStringList surnames;
+  QStringList names;
+  foreach (Client client, _dbHandler.clients())
+  {
+    surnames << client.surname();
+    names << client.name();
+  }
+
   QCompleter* surnameCompleter = new QCompleter(surnames, this);
   ui->surnameLineEdit->setCompleter(surnameCompleter);
 
-  QStringList names = _dbHandler.names();
   QCompleter* nameCompleter = new QCompleter(names, this);
   ui->nameLineEdit->setCompleter(nameCompleter);
 }
