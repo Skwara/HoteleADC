@@ -72,72 +72,76 @@
          <property name="title">
           <string>Zamawiający</string>
          </property>
-         <layout class="QFormLayout" name="formLayout">
-          <property name="labelAlignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
-          </property>
-          <property name="formAlignment">
-           <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignTop</set>
-          </property>
-          <item row="1" column="0">
-           <widget class="QLabel" name="nameLabel">
-            <property name="text">
-             <string>Imię</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="nameLineEdit"/>
-          </item>
+         <layout class="QGridLayout" name="gridLayout_4">
           <item row="0" column="0">
-           <widget class="QLabel" name="surnameLabel">
-            <property name="text">
+           <widget class="QLineEdit" name="surnameLineEdit">
+            <property name="placeholderText">
              <string>Nazwisko</string>
             </property>
            </widget>
           </item>
           <item row="0" column="1">
-           <widget class="QLineEdit" name="surnameLineEdit"/>
+           <widget class="QLineEdit" name="nameLineEdit">
+            <property name="placeholderText">
+             <string>Imię</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0">
+           <widget class="QLineEdit" name="streetLineEdit">
+            <property name="placeholderText">
+             <string>Ulica</string>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="numberLineEdit">
+            <property name="placeholderText">
+             <string>Numer</string>
+            </property>
+           </widget>
           </item>
           <item row="2" column="0">
-           <widget class="QLabel" name="addressLabel">
-            <property name="text">
-             <string>Adres</string>
+           <widget class="QLineEdit" name="postalCodeLineEdit">
+            <property name="placeholderText">
+             <string>Kod pocztowy</string>
             </property>
            </widget>
           </item>
           <item row="2" column="1">
-           <widget class="QLineEdit" name="addressLineEdit"/>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="phoneLabel">
-            <property name="text">
-             <string>Telefon</string>
+           <widget class="QLineEdit" name="cityLineEdit">
+            <property name="placeholderText">
+             <string>Miasto</string>
             </property>
            </widget>
           </item>
           <item row="3" column="1">
-           <widget class="QLineEdit" name="phoneLineEdit"/>
+           <widget class="QLineEdit" name="countryLineEdit">
+            <property name="placeholderText">
+             <string>Kraj</string>
+            </property>
+           </widget>
           </item>
           <item row="4" column="0">
-           <widget class="QLabel" name="emailLabel">
-            <property name="text">
-             <string>e-mail</string>
+           <widget class="QLineEdit" name="phoneLineEdit">
+            <property name="placeholderText">
+             <string>Telefon</string>
             </property>
            </widget>
           </item>
           <item row="4" column="1">
-           <widget class="QLineEdit" name="emailLineEdit"/>
-          </item>
-          <item row="5" column="0">
-           <widget class="QLabel" name="disabilityLabel">
-            <property name="text">
-             <string>Niepełnosprawność</string>
+           <widget class="QLineEdit" name="emailLineEdit">
+            <property name="placeholderText">
+             <string>e-mail</string>
             </property>
            </widget>
           </item>
-          <item row="5" column="1">
-           <widget class="QLineEdit" name="disabilityLineEdit"/>
+          <item row="5" column="0" colspan="2">
+           <widget class="QLineEdit" name="disabilityLineEdit">
+            <property name="placeholderText">
+             <string>Niepełnosprawność</string>
+            </property>
+           </widget>
           </item>
          </layout>
         </widget>
@@ -165,59 +169,6 @@
          </layout>
         </widget>
        </item>
-       <item row="1" column="0">
-        <widget class="QGroupBox" name="participantGroupBox">
-         <property name="title">
-          <string>Uczestnicy</string>
-         </property>
-         <layout class="QFormLayout" name="formLayout_3">
-          <item row="0" column="0">
-           <widget class="QLabel" name="participantSurnameLabel">
-            <property name="text">
-             <string>Nazwisko</string>
-            </property>
-           </widget>
-          </item>
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="participantSurnameLineEdit"/>
-          </item>
-          <item row="1" column="0">
-           <widget class="QLabel" name="participantNameLabel">
-            <property name="text">
-             <string>Imię</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="participantNameLineEdit"/>
-          </item>
-          <item row="2" column="0" colspan="2">
-           <widget class="QPushButton" name="addParticipantPushButton">
-            <property name="text">
-             <string>Dodaj</string>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0" colspan="2">
-           <widget class="Line" name="line">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
-            </property>
-           </widget>
-          </item>
-          <item row="4" column="0" colspan="2">
-           <widget class="QListWidget" name="participantsListWidget">
-            <property name="maximumSize">
-             <size>
-              <width>16777215</width>
-              <height>70</height>
-             </size>
-            </property>
-           </widget>
-          </item>
-         </layout>
-        </widget>
-       </item>
        <item row="2" column="0" colspan="2">
         <spacer name="verticalSpacer">
          <property name="orientation">
@@ -230,6 +181,53 @@
           </size>
          </property>
         </spacer>
+       </item>
+       <item row="1" column="0">
+        <widget class="QGroupBox" name="participantGroupBox">
+         <property name="title">
+          <string>Uczestnicy</string>
+         </property>
+         <layout class="QGridLayout" name="gridLayout_5">
+          <item row="0" column="0">
+           <widget class="QLineEdit" name="participantSurnameLineEdit">
+            <property name="placeholderText">
+             <string>Nazwisko</string>
+            </property>
+           </widget>
+          </item>
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="participantNameLineEdit">
+            <property name="placeholderText">
+             <string>Imię</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0" colspan="2">
+           <widget class="Line" name="line">
+            <property name="orientation">
+             <enum>Qt::Horizontal</enum>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0" colspan="2">
+           <widget class="QListWidget" name="participantsListWidget">
+            <property name="maximumSize">
+             <size>
+              <width>16777215</width>
+              <height>70</height>
+             </size>
+            </property>
+           </widget>
+          </item>
+          <item row="1" column="0" colspan="2">
+           <widget class="QPushButton" name="addParticipantPushButton">
+            <property name="text">
+             <string>Dodaj</string>
+            </property>
+           </widget>
+          </item>
+         </layout>
+        </widget>
        </item>
       </layout>
      </widget>
@@ -246,7 +244,11 @@
   <tabstop>tabWidget</tabstop>
   <tabstop>surnameLineEdit</tabstop>
   <tabstop>nameLineEdit</tabstop>
-  <tabstop>addressLineEdit</tabstop>
+  <tabstop>streetLineEdit</tabstop>
+  <tabstop>numberLineEdit</tabstop>
+  <tabstop>postalCodeLineEdit</tabstop>
+  <tabstop>cityLineEdit</tabstop>
+  <tabstop>countryLineEdit</tabstop>
   <tabstop>phoneLineEdit</tabstop>
   <tabstop>emailLineEdit</tabstop>
   <tabstop>disabilityLineEdit</tabstop>
