@@ -11,6 +11,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = HoteleADC
 TEMPLATE = app
 
+CONFIG += c++14
+
 INCLUDEPATH = src
 
 SOURCES += src/main.cpp\

@@ -49,11 +49,17 @@ void NewReservationDialog::prepareParticipants()
 void NewReservationDialog::prepareSummary()
 {
   setSummaryDays(_reservation.days());
+  setSummaryPrice(_reservation.price());
 }
 
 void NewReservationDialog::setSummaryDays(const int days)
 {
   ui->daysValueLabel->setText(QString::number(days));
+}
+
+void NewReservationDialog::setSummaryPrice(const int price)
+{
+  ui->priceValueLabel->setText(QString::number(price));
 }
 
 void NewReservationDialog::setEndDateToBeginDate()
@@ -121,7 +127,7 @@ void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate& date)
     setEndDateToBeginDate();
   }
 
-  setSummaryDays(_reservation.days());
+  prepareSummary();
 }
 
 void NewReservationDialog::on_endCalendarWidget_clicked(const QDate& date)
@@ -135,7 +141,7 @@ void NewReservationDialog::on_endCalendarWidget_clicked(const QDate& date)
     setEndDateToBeginDate();
   }
 
-  setSummaryDays(_reservation.days());
+  prepareSummary();
 }
 
 void NewReservationDialog::on_addParticipantPushButton_clicked()
@@ -143,11 +149,14 @@ void NewReservationDialog::on_addParticipantPushButton_clicked()
   // TODO Enable addButton only if both fields are not empty
   QString surname = ui->participantSurnameLineEdit->text();
   QString name = ui->participantNameLineEdit->text();
+  QString participant = surname + " " + name;
   if (!surname.isEmpty() && !name.isEmpty())
   {
-    ui->participantsListWidget->addItem(surname + " " + name);
+    ui->participantsListWidget->addItem(participant);
     ui->participantSurnameLineEdit->clear();
     ui->participantNameLineEdit->clear();
+    _reservation.addParticipant(participant);
+    prepareSummary();
   }
 }
 

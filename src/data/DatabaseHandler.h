@@ -3,6 +3,7 @@
 
 #include <QStringList>
 #include <QList>
+#include <QDate>
 
 #include "logic/Client.h"
 
@@ -14,11 +15,15 @@ public:
   QList<Client> clients() const { return _clients; }
   QList<Client> clients(QString surname, QString name, QString street);
 
+  int dateCost(QDate date) const;
+
 private:
   void fetchClients();
 
 private:
-  QList<Client> _clients;
+  static QList<Client> _clients;
+
+  static bool _fetched;
 };
 
 #endif // DATABASEHANDLER_H

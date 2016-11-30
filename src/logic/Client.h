@@ -1,6 +1,8 @@
 #ifndef CLIENT_H
 #define CLIENT_H
 
+#include <memory>
+
 #include <QString>
 
 class Address
@@ -44,5 +46,7 @@ private:
   QString _phone;
   QString _eMail;
 };
+
+using ClientPtr = std::shared_ptr<Client>;
 
 #endif // CLIENT_H

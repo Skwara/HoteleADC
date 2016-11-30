@@ -28,6 +28,7 @@ private:
   void prepareSummary();
 
   void setSummaryDays(const int days);
+  void setSummaryPrice(const int price);
   void setEndDateToBeginDate();
 
   void addCompleter(QLineEdit* lineEdit, QSet<QString> completions);
