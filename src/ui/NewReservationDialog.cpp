@@ -3,11 +3,11 @@
 
 #include <QCompleter>
 
-NewReservationDialog::NewReservationDialog(DatabaseHandler& dbHandler, QWidget* parent)
+NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewReservationDialog)
   , _reservation()
-  , _dbHandler(dbHandler)
+  , _dbHandler(DatabaseHandler::instance())
 {
   ui->setupUi(this);
 
@@ -25,7 +25,7 @@ NewReservationDialog::~NewReservationDialog()
 void NewReservationDialog::prepareMain()
 {
   QSet<QString> surnames;
-  foreach (Client client, _dbHandler.clients())
+  foreach (Client client, _dbHandler->clients())
   {
     surnames << client.surname();
   }
@@ -87,7 +87,7 @@ void NewReservationDialog::addCompleter(QLineEdit* lineEdit, QSet<QString> compl
 
 void NewReservationDialog::fillRemainingClientData(QString surname, QString name, QString street)
 {
-  QList<Client> matchingClients  = _dbHandler.clients(surname, name, street);
+  QList<Client> matchingClients  = _dbHandler->clients(surname, name, street);
   QSet<QString> names;
   QSet<QString> streets;
   foreach (Client client, matchingClients)

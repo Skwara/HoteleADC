@@ -23,7 +23,7 @@ private slots:
 private:
   Ui::MainWindow* ui;
 
-  DatabaseHandler _dbHandler;
+  DatabaseHandler* _dbHandler;
 };
 
 #endif // MAINWINDOW_H

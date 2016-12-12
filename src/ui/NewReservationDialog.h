@@ -18,7 +18,7 @@ class NewReservationDialog : public QDialog
   Q_OBJECT
 
 public:
-  explicit NewReservationDialog(DatabaseHandler& dbHandler, QWidget* parent = 0);
+  explicit NewReservationDialog(QWidget* parent = 0);
   ~NewReservationDialog();
 
 private:
@@ -48,7 +48,7 @@ private:
   Ui::NewReservationDialog* ui;
 
   Reservation _reservation;
-  DatabaseHandler& _dbHandler;
+  DatabaseHandler* _dbHandler;
 };
 
 #endif // NEWRESERVATIONDIALOG_H

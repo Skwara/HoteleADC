@@ -6,7 +6,7 @@
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
-  , _dbHandler()
+  , _dbHandler(DatabaseHandler::instance())
 {
   ui->setupUi(this);
 }
@@ -18,6 +18,6 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newReservationButton_clicked()
 {
-  NewReservationDialog* dialog = new NewReservationDialog(_dbHandler);
+  NewReservationDialog* dialog = new NewReservationDialog();
   dialog->show();
 }

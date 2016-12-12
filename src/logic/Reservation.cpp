@@ -8,12 +8,12 @@ Reservation::Reservation()
 
 int Reservation::price() const
 {
-  DatabaseHandler dbHandler;
+  DatabaseHandler* dbHandler = DatabaseHandler::instance();
   int price = 0;
   QDate currentDate = _beginDate;
   while (currentDate < _endDate)
   {
-    price += dbHandler.dateCost(currentDate);
+    price += dbHandler->dateCost(currentDate);
     currentDate = currentDate.addDays(1);
   }
 

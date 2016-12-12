@@ -9,8 +9,17 @@
 
 class DatabaseHandler
 {
-public:
   DatabaseHandler();
+public:
+
+  static DatabaseHandler* instance()
+  {
+    if (_instance == nullptr)
+    {
+      _instance = new DatabaseHandler();
+    }
+    return _instance;
+  }
 
   QList<Client> clients() const { return _clients; }
   QList<Client> clients(QString surname, QString name, QString street);
@@ -24,6 +33,9 @@ private:
   static QList<Client> _clients;
 
   static bool _fetched;
+
+private:
+  static DatabaseHandler* _instance;
 };
 
 #endif // DATABASEHANDLER_H

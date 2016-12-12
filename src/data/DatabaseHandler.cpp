@@ -1,5 +1,7 @@
 #include "DatabaseHandler.h"
 
+DatabaseHandler* DatabaseHandler::_instance = nullptr;
+
 QList<Client> DatabaseHandler::_clients = QList<Client>();
 bool DatabaseHandler::_fetched = false;
 
