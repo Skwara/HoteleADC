@@ -19,12 +19,14 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newReservationButton_clicked()
 {
-  NewReservationDialog* dialog = new NewReservationDialog();
+  NewReservationDialog* dialog = new NewReservationDialog(this);
+  dialog->setAttribute(Qt::WA_DeleteOnClose, true);
   dialog->show();
 }
 
 void MainWindow::on_scheduleButton_clicked()
 {
-  ScheduleDialog* dialog = new ScheduleDialog();
+  ScheduleDialog* dialog = new ScheduleDialog(this);
+  dialog->setAttribute(Qt::WA_DeleteOnClose, true);
   dialog->show();
 }
