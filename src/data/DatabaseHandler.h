@@ -6,6 +6,8 @@
 #include <QDate>
 
 #include "logic/Client.h"
+#include "logic/Room.h"
+#include "logic/Reservation.h"
 
 class DatabaseHandler
 {
@@ -24,15 +26,27 @@ public:
   QList<Client> clients() const { return _clients; }
   QList<Client> clients(QString surname, QString name, QString street);
 
+  QDate firstDate() const;
+  QDate lastDate() const;
   int dateCost(QDate date) const;
 
+  QList<Room> rooms() const { return _rooms; }
+
+  QList<Reservation> reservations() const { return _reservations; }
+  ReservationPtr reservation(const QDate& beginDate, const Room& room) const;
+
 private:
+  void fetch();
   void fetchClients();
+  void fetchRooms();
+  void fetchReservations();
 
 private:
-  static QList<Client> _clients;
+  QList<Client> _clients;
+  QList<Room> _rooms;
+  QList<Reservation> _reservations;
 
-  static bool _fetched;
+  bool _fetched;
 
 private:
   static DatabaseHandler* _instance;

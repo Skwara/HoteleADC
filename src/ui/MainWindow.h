@@ -20,6 +20,8 @@ public:
 private slots:
   void on_newReservationButton_clicked();
 
+  void on_scheduleButton_clicked();
+
 private:
   Ui::MainWindow* ui;
 

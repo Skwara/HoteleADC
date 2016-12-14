@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 
 #include "NewReservationDialog.h"
+#include "ScheduleDialog.h"
 
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
@@ -19,5 +20,11 @@ MainWindow::~MainWindow()
 void MainWindow::on_newReservationButton_clicked()
 {
   NewReservationDialog* dialog = new NewReservationDialog();
+  dialog->show();
+}
+
+void MainWindow::on_scheduleButton_clicked()
+{
+  ScheduleDialog* dialog = new ScheduleDialog();
   dialog->show();
 }
