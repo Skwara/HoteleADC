@@ -7,9 +7,13 @@
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
+  , _scheduleTableView(new ScheduleTableView(this))
   , _dbHandler(DatabaseHandler::instance())
 {
   ui->setupUi(this);
+
+  ui->dockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
+  ui->dockWidget->setWidget(_scheduleTableView);
 }
 
 MainWindow::~MainWindow()

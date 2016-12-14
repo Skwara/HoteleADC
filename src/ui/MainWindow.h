@@ -3,6 +3,7 @@
 
 #include <QMainWindow>
 
+#include "src/ui/ScheduleTableView.h"
 #include "data/DatabaseHandler.h"
 
 namespace Ui {
@@ -24,6 +25,7 @@ private slots:
 
 private:
   Ui::MainWindow* ui;
+  ScheduleTableView* _scheduleTableView;
 
   DatabaseHandler* _dbHandler;
 };
