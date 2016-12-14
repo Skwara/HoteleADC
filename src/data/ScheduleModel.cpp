@@ -32,11 +32,11 @@ QVariant ScheduleModel::data(const QModelIndex& index, int role) const
   {
     if (role == Qt::DisplayRole)
     {
-      return reservation->client()->surname();
+      return reservation->client()->surname() + " " + reservation->client()->name();
     }
     if (role == Qt::BackgroundRole)
     {
-      return QColor(0, 128, 0);
+      return QColor(144, 238, 144);
     }
   }
 

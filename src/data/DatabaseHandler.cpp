@@ -123,9 +123,28 @@ void DatabaseHandler::fetchReservations()
 {
   // TODO Mock method for fetching reservations
   Reservation reservation;
+
   reservation.setClient(_clients[0]);
   reservation.setRoom(_rooms[0]);
   reservation.setBeginDate(QDate(QDate::currentDate().year(), 5, 2));
   reservation.setEndDate(QDate(QDate::currentDate().year(), 5, 9));
+  _reservations.push_back(reservation);
+
+  reservation.setClient(_clients[1]);
+  reservation.setRoom(_rooms[1]);
+  reservation.setBeginDate(QDate(QDate::currentDate().year(), 5, 1));
+  reservation.setEndDate(QDate(QDate::currentDate().year(), 5, 7));
+  _reservations.push_back(reservation);
+
+  reservation.setClient(_clients[2]);
+  reservation.setRoom(_rooms[3]);
+  reservation.setBeginDate(QDate(QDate::currentDate().year(), 5, 1));
+  reservation.setEndDate(QDate(QDate::currentDate().year(), 5, 7));
+  _reservations.push_back(reservation);
+
+  reservation.setClient(_clients[3]);
+  reservation.setRoom(_rooms[3]);
+  reservation.setBeginDate(QDate(QDate::currentDate().year(), 5, 7));
+  reservation.setEndDate(QDate(QDate::currentDate().year(), 5, 14));
   _reservations.push_back(reservation);
 }
