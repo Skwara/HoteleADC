@@ -3,6 +3,7 @@
 
 #include <QCompleter>
 
+
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewReservationDialog)
@@ -22,6 +23,11 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
 NewReservationDialog::~NewReservationDialog()
 {
   delete ui;
+}
+
+void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+{
+  // TODO Update data on selection
 }
 
 void NewReservationDialog::prepareMain()

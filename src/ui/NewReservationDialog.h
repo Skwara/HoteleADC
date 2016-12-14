@@ -5,6 +5,7 @@
 #include <QLineEdit>
 #include <QSet>
 #include <QString>
+#include <QItemSelection>
 
 #include "data/DatabaseHandler.h"
 #include "logic/Reservation.h"
@@ -20,6 +21,9 @@ class NewReservationDialog : public QDialog
 public:
   explicit NewReservationDialog(QWidget* parent = 0);
   ~NewReservationDialog();
+
+public slots:
+  void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
   void prepareMain();
