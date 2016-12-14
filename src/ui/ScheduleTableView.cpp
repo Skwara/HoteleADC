@@ -1,12 +1,13 @@
-#include "src/ui/ScheduleView.h"
+#include "src/ui/ScheduleTableView.h"
 
-ScheduleView::ScheduleView(QWidget* parent)
+
+ScheduleTableView::ScheduleTableView(QWidget* parent)
   : QTableView(parent)
 {
 
 }
 
-void ScheduleView::setModel(QAbstractItemModel* model)
+void ScheduleTableView::setModel(QAbstractItemModel* model)
 {
   QTableView::setModel(model);
 

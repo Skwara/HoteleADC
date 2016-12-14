@@ -2,7 +2,6 @@
 #include "ui_ScheduleDialog.h"
 
 #include "src/data/ScheduleModel.h"
-#include "src/ui/ScheduleView.h"
 
 
 ScheduleDialog::ScheduleDialog(QWidget *parent) :
@@ -11,7 +10,7 @@ ScheduleDialog::ScheduleDialog(QWidget *parent) :
 {
   ui->setupUi(this);
 
-  ScheduleView* scheduleTableView = new ScheduleView(this);
+  scheduleTableView = new ScheduleTableView(this);
   scheduleTableView->setObjectName(QStringLiteral("scheduleTableView"));
   scheduleTableView->setFrameShape(QFrame::Box);
   scheduleTableView->setLineWidth(0);
@@ -34,9 +33,12 @@ ScheduleDialog::ScheduleDialog(QWidget *parent) :
   scheduleTableView->resizeRowsToContents();
 
   scheduleTableView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+  setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 ScheduleDialog::~ScheduleDialog()
 {
+  scheduleTableView->model()->deleteLater();
   delete ui;
 }

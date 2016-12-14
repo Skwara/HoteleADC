@@ -4,10 +4,10 @@
 #include <QTableView>
 
 
-class ScheduleView : public QTableView
+class ScheduleTableView : public QTableView
 {
 public:
-  ScheduleView(QWidget* parent = nullptr);
+  ScheduleTableView(QWidget* parent = nullptr);
 
 public:
   void setModel(QAbstractItemModel* model);

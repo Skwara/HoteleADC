@@ -15,6 +15,8 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   prepareDate();
   prepareParticipants();
   prepareSummary();
+
+  setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 NewReservationDialog::~NewReservationDialog()

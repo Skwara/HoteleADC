@@ -3,6 +3,9 @@
 
 #include <QDialog>
 
+#include "src/ui/ScheduleTableView.h"
+
+
 namespace Ui {
 class ScheduleDialog;
 }
@@ -17,6 +20,7 @@ public:
 
 private:
   Ui::ScheduleDialog* ui;
+  ScheduleTableView* scheduleTableView;
 
   const int horizontalHeaderWidth = 30;
   const int horizontalHeaderHeight = 40;
