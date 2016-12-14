@@ -1,10 +1,39 @@
 #include "src/ui/ScheduleTableView.h"
 
+#include "src/data/ScheduleModel.h"
+
+#include <QHeaderView>
+
 
 ScheduleTableView::ScheduleTableView(QWidget* parent)
   : QTableView(parent)
 {
+  setObjectName(QStringLiteral("scheduleTableView"));
+  setFrameShape(QFrame::Box);
+  setLineWidth(0);
+  setMidLineWidth(1);
 
+  //TODO Remove 1 pixel move of contents to horizontal header
+  setModel(new ScheduleModel());
+
+  horizontalHeader()->setMinimumSectionSize(_horizontalHeaderWidth);
+  horizontalHeader()->setMaximumSectionSize(horizontalHeader()->minimumSectionSize());
+  horizontalHeader()->setFixedHeight(_horizontalHeaderHeight);
+  horizontalHeader()->setStyleSheet("QHeaderView{ border: 0px; border-bottom: 1px solid lightgrey; border-left: 1px solid lightgrey; }");
+  resizeColumnsToContents();
+
+  verticalHeader()->setMinimumSectionSize(_verticalHeaderHeight);
+  verticalHeader()->setMaximumSectionSize(verticalHeader()->minimumSectionSize());
+  verticalHeader()->setFixedWidth(_verticalHeaderWidth);
+  verticalHeader()->setStyleSheet("QHeaderView{ border: 0px; border-right: 1px solid lightgrey; border-top: 1px solid lightgrey; }");
+  resizeRowsToContents();
+
+  setSelectionMode(QAbstractItemView::ExtendedSelection);
+}
+
+ScheduleTableView::~ScheduleTableView()
+{
+  model()->deleteLater();
 }
 
 void ScheduleTableView::setModel(QAbstractItemModel* model)

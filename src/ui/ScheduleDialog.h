@@ -20,12 +20,8 @@ public:
 
 private:
   Ui::ScheduleDialog* ui;
-  ScheduleTableView* scheduleTableView;
+  ScheduleTableView* _scheduleTableView;
 
-  const int horizontalHeaderWidth = 30;
-  const int horizontalHeaderHeight = 40;
-  const int verticalHeaderWidth = 30;
-  const int verticalHeaderHeight = 20;
 };
 
 #endif // SCHEDULEDIALOG_H
