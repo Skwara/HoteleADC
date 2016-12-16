@@ -4,6 +4,7 @@
 #include "NewReservationDialog.h"
 #include "ScheduleDialog.h"
 
+#include <iostream>
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
@@ -14,6 +15,7 @@ MainWindow::MainWindow(QWidget* parent)
 
   ui->dockWidget->setFeatures(QDockWidget::DockWidgetMovable | QDockWidget::DockWidgetFloatable);
   ui->dockWidget->setWidget(_scheduleTableView);
+  connect(ui->dockWidget, SIGNAL(topLevelChanged(bool)), this, SLOT(on_dockWidget_topLevelChanged(bool)));
 }
 
 MainWindow::~MainWindow()
@@ -33,4 +35,13 @@ void MainWindow::on_scheduleButton_clicked()
 {
   ScheduleDialog* dialog = new ScheduleDialog(this);
   dialog->show();
+}
+
+void MainWindow::on_dockWidget_topLevelChanged(bool isFloating)
+{
+  if (isFloating)
+  {
+    ui->dockWidget->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinMaxButtonsHint);
+    ui->dockWidget->show();
+  }
 }

@@ -20,8 +20,8 @@ public:
 
 private slots:
   void on_newReservationButton_clicked();
-
   void on_scheduleButton_clicked();
+  void on_dockWidget_topLevelChanged(bool isFloating);
 
 private:
   Ui::MainWindow* ui;

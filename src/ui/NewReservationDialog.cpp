@@ -30,8 +30,6 @@ NewReservationDialog::~NewReservationDialog()
 
 void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-  // TODO Update data on selection
-
   static QSet<QModelIndex> allSelected;
   allSelected -= deselected.indexes().toSet();
   allSelected += selected.indexes().toSet();
