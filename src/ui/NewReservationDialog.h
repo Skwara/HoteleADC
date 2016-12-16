@@ -27,8 +27,9 @@ public slots:
 
 private:
   void prepareMain();
-  void prepareDate();
   void prepareParticipants();
+  void prepareRoom();
+  void prepareDate();
   void prepareSummary();
 
   void setSummaryDays(const int days);

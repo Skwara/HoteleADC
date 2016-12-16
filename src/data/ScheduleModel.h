@@ -8,8 +8,16 @@
 
 class ScheduleModel : public QAbstractTableModel
 {
-public:
   ScheduleModel();
+public:
+  static ScheduleModel* instance()
+  {
+    if (_instance == nullptr)
+    {
+      _instance = new ScheduleModel();
+    }
+    return _instance;
+  }
 
 public:
   int rowCount(const QModelIndex& parent) const;
@@ -24,6 +32,8 @@ private:
 private:
   DatabaseHandler* _dbhandler;
 
+private:
+  static ScheduleModel* _instance;
 };
 
 #endif // SCHEDULEMODEL_H

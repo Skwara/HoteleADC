@@ -3,6 +3,8 @@
 
 #include <QCompleter>
 
+#include "src/data/RoomsModel.h"
+
 
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
@@ -13,8 +15,9 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   ui->setupUi(this);
 
   prepareMain();
-  prepareDate();
   prepareParticipants();
+  prepareRoom();
+  prepareDate();
   prepareSummary();
 
   setAttribute(Qt::WA_DeleteOnClose, true);
@@ -25,9 +28,29 @@ NewReservationDialog::~NewReservationDialog()
   delete ui;
 }
 
-void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
   // TODO Update data on selection
+
+  static QSet<QModelIndex> allSelected;
+  allSelected -= deselected.indexes().toSet();
+  allSelected += selected.indexes().toSet();
+  ui->roomListView->selectionModel()->clear();
+  QAbstractItemModel* model = ui->roomListView->model();
+  foreach (QModelIndex index, allSelected)
+  {
+    ui->roomListView->selectionModel()->select(model->index(index.row(), 0), QItemSelectionModel::Select);
+  }
+
+  std::pair<QSet<QModelIndex>::iterator, QSet<QModelIndex>::iterator> beginEndCol = std::minmax_element(allSelected.begin(), allSelected.end(),
+    [](const QModelIndex& left, const QModelIndex& right)
+    {
+      return left.column() < right.column();
+    });
+  QDate beginDate = _dbHandler->firstDate().addDays(beginEndCol.first->column());
+  QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column());
+  ui->beginCalendarWidget->setSelectedDate(beginDate);
+  ui->endCalendarWidget->setSelectedDate(endDate);
 }
 
 void NewReservationDialog::prepareMain()
@@ -40,6 +63,17 @@ void NewReservationDialog::prepareMain()
   addCompleter(ui->surnameLineEdit, surnames);
 }
 
+void NewReservationDialog::prepareParticipants()
+{
+
+}
+
+void NewReservationDialog::prepareRoom()
+{
+  ui->roomListView->setModel(RoomsModel::instance());
+  ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+}
+
 void NewReservationDialog::prepareDate()
 {
   QDate currentDate = QDate::currentDate();
@@ -47,11 +81,6 @@ void NewReservationDialog::prepareDate()
   ui->beginCalendarWidget->setSelectedDate(currentDate);
   _reservation.setEndDate(currentDate);
   ui->endCalendarWidget->setSelectedDate(currentDate);
-}
-
-void NewReservationDialog::prepareParticipants()
-{
-
 }
 
 void NewReservationDialog::prepareSummary()

@@ -14,7 +14,7 @@ ScheduleTableView::ScheduleTableView(QWidget* parent)
   setMidLineWidth(1);
 
   //TODO Remove 1 pixel move of contents to horizontal header
-  setModel(new ScheduleModel());
+  setModel(ScheduleModel::instance());
 
   horizontalHeader()->setMinimumSectionSize(_horizontalHeaderWidth);
   horizontalHeader()->setMaximumSectionSize(horizontalHeader()->minimumSectionSize());
