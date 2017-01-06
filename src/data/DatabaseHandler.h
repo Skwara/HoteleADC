@@ -28,12 +28,15 @@ public:
 
   QDate firstDate() const;
   QDate lastDate() const;
-  int dateCost(QDate date) const;
+  int roomCost(QDate date) const;
+  int parkingCost(QDate date) const;
 
   QList<Room> rooms() const { return _rooms; }
 
   QList<Reservation> reservations() const { return _reservations; }
   ReservationPtr reservation(const QDate& beginDate, const Room& room) const;
+
+  bool hasAvailableParkingSpace(const Reservation& reservation) const;
 
 private:
   void fetch();

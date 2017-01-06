@@ -36,9 +36,9 @@ QDate DatabaseHandler::lastDate() const
   return QDate(QDate::currentDate().year(), 10, 31);
 }
 
-int DatabaseHandler::dateCost(QDate date) const
+int DatabaseHandler::roomCost(QDate date) const
 {
-  // TODO Mock method for pricing
+  // TODO Mock method for room pricing
   if (date.month() >= 5 && date.month() <= 8)
   {
     return 100;
@@ -46,6 +46,19 @@ int DatabaseHandler::dateCost(QDate date) const
   else
   {
     return 80;
+  }
+}
+
+int DatabaseHandler::parkingCost(QDate date) const
+{
+  // TODO Mock method for parking pricing
+  if (date.month() >= 5 && date.month() <= 8)
+  {
+    return 10;
+  }
+  else
+  {
+    return 8;
   }
 }
 
@@ -63,6 +76,11 @@ ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const Room& 
   }
 
   return nullptr;
+}
+
+bool DatabaseHandler::hasAvailableParkingSpace(const Reservation& /*reservation*/) const
+{
+  return true; // TODO Check with database
 }
 
 void DatabaseHandler::fetch()

@@ -18,6 +18,7 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   prepareParticipants();
   prepareRoom();
   prepareDate();
+  prepareAdditional();
   prepareSummary();
 
   setAttribute(Qt::WA_DeleteOnClose, true);
@@ -79,6 +80,15 @@ void NewReservationDialog::prepareDate()
   ui->beginCalendarWidget->setSelectedDate(currentDate);
   _reservation.setEndDate(currentDate);
   ui->endCalendarWidget->setSelectedDate(currentDate);
+}
+
+void NewReservationDialog::prepareAdditional()
+{
+  if (_dbHandler->hasAvailableParkingSpace(_reservation))
+  {
+    ui->parkingCheckBox->setEnabled(true);
+    ui->parkingCheckBox->setChecked(_reservation.parking());
+  }
 }
 
 void NewReservationDialog::prepareSummary()
@@ -229,4 +239,10 @@ void NewReservationDialog::on_streetLineEdit_editingFinished()
     ui->streetLineEdit->setText(street);
     fillRemainingClientData(surname, name, street);
   }
+}
+
+void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
+{
+  _reservation.setParking(checked);
+  prepareSummary();
 }

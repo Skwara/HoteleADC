@@ -30,6 +30,7 @@ private:
   void prepareParticipants();
   void prepareRoom();
   void prepareDate();
+  void prepareAdditional();
   void prepareSummary();
 
   void setSummaryDays(const int days);
@@ -48,6 +49,8 @@ private slots:
   void on_surnameLineEdit_editingFinished();
   void on_nameLineEdit_editingFinished();
   void on_streetLineEdit_editingFinished();
+
+  void on_parkingCheckBox_toggled(bool checked);
 
 private:
   Ui::NewReservationDialog* ui;

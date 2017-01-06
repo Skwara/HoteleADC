@@ -24,15 +24,19 @@ public:
   QDate endDate() const { return _endDate; }
   int days() const { return _beginDate.daysTo(_endDate); }
 
+  bool parking() const { return _parking; }
+
+
 
   void setClient(const Client& client) { _client = std::make_shared<Client>(client); }
   void addParticipant(QString participant) { _participants.append(participant); }
   void removeParticipant(QString participant) { _participants.removeOne(participant); }
+  void setRoom(const Room& room) { _room = std::make_shared<Room>(room); }
 
   void setBeginDate(const QDate& date) { _beginDate = date; }
   void setEndDate(const QDate& date) { _endDate = date; }
 
-  void setRoom(const Room& room) { _room = std::make_shared<Room>(room); }
+  void setParking(bool value) { _parking = value; }
 
 private:
   ClientPtr _client;
@@ -41,6 +45,8 @@ private:
 
   QDate _beginDate;
   QDate _endDate;
+
+  bool _parking;
 };
 
 using ReservationPtr = std::shared_ptr<Reservation>;

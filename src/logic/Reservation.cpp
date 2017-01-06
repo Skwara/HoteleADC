@@ -3,6 +3,8 @@
 
 Reservation::Reservation()
   : _client(nullptr)
+  , _room(nullptr)
+  , _parking(false)
 {
 }
 
@@ -13,7 +15,11 @@ int Reservation::price() const
   QDate currentDate = _beginDate;
   while (currentDate < _endDate)
   {
-    price += dbHandler->dateCost(currentDate);
+    price += dbHandler->roomCost(currentDate);
+    if (_parking)
+    {
+      price += dbHandler->parkingCost(currentDate);
+    }
     currentDate = currentDate.addDays(1);
   }
 
