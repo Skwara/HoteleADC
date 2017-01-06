@@ -47,7 +47,7 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& select
       return left.column() < right.column();
     });
   QDate beginDate = _dbHandler->firstDate().addDays(beginEndCol.first->column());
-  QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column());
+  QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column() + 1); // On schedule leave date is not selected
   ui->beginCalendarWidget->setSelectedDate(beginDate);
   ui->endCalendarWidget->setSelectedDate(endDate);
 }
