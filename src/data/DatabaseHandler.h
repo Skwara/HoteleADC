@@ -23,18 +23,20 @@ public:
     return _instance;
   }
 
-  QList<Client> clients() const { return _clients; }
-  QList<Client> clients(QString surname, QString name, QString street);
+  QList<ClientPtr> clients() const { return _clients; }
+  QList<ClientPtr> clients(QString surname, QString name, QString street);
 
   QDate firstDate() const;
   QDate lastDate() const;
   int roomCost(QDate date) const;
   int parkingCost(QDate date) const;
 
-  QList<Room> rooms() const { return _rooms; }
+  QList<RoomPtr> rooms() const { return _rooms; }
+  RoomPtr room(int number) const { return *std::find_if(_rooms.begin(), _rooms.end(),
+                                                        [number](const RoomPtr& room){ return room->number() == number; }); }
 
-  QList<Reservation> reservations() const { return _reservations; }
-  ReservationPtr reservation(const QDate& beginDate, const Room& room) const;
+  QList<ReservationPtr> reservations() const { return _reservations; }
+  ReservationPtr reservation(const QDate& beginDate, const RoomPtr& room) const;
 
   bool hasAvailableParkingSpace(const Reservation& reservation) const;
 
@@ -45,9 +47,9 @@ private:
   void fetchReservations();
 
 private:
-  QList<Client> _clients;
-  QList<Room> _rooms;
-  QList<Reservation> _reservations;
+  QList<ClientPtr> _clients;
+  QList<RoomPtr> _rooms;
+  QList<ReservationPtr> _reservations;
 
   bool _fetched;
 

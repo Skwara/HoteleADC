@@ -16,7 +16,7 @@ public:
 
   ClientPtr client() const { return _client; }
   QStringList participants() const { return _participants; }
-  RoomPtr room() const { return _room; }
+  QList<RoomPtr> rooms() const { return _rooms; }
 
   int price() const;
 
@@ -28,10 +28,11 @@ public:
 
 
 
-  void setClient(const Client& client) { _client = std::make_shared<Client>(client); }
+  void setClient(ClientPtr client) { _client = client; }
   void addParticipant(QString participant) { _participants.append(participant); }
   void removeParticipant(QString participant) { _participants.removeOne(participant); }
-  void setRoom(const Room& room) { _room = std::make_shared<Room>(room); }
+  void addRoom(RoomPtr room) { _rooms.append(room); }
+  void removeRoom(RoomPtr room) { _rooms.removeOne(room); }
 
   void setBeginDate(const QDate& date) { _beginDate = date; }
   void setEndDate(const QDate& date) { _endDate = date; }
@@ -41,7 +42,7 @@ public:
 private:
   ClientPtr _client;
   QStringList _participants;
-  RoomPtr _room;
+  QList<RoomPtr> _rooms;
 
   QDate _beginDate;
   QDate _endDate;

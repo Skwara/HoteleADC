@@ -3,7 +3,6 @@
 
 Reservation::Reservation()
   : _client(nullptr)
-  , _room(nullptr)
   , _parking(false)
 {
 }
@@ -24,6 +23,8 @@ int Reservation::price() const
   }
 
   price *= _participants.length() + 1;
+
+  // TODO Pricing based on rooms. When adding participants, rooms need to be assigned
 
   return price;
 }

@@ -29,16 +29,27 @@ NewReservationDialog::~NewReservationDialog()
   delete ui;
 }
 
-void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
 {
-  static QSet<QModelIndex> allSelected;
-  allSelected -= deselected.indexes().toSet();
-  allSelected += selected.indexes().toSet();
-  ui->roomListView->selectionModel()->clear();
-  QAbstractItemModel* model = ui->roomListView->model();
+  QItemSelectionModel* selectionModel = qobject_cast<QItemSelectionModel*>(sender());
+  QSet<QModelIndex> allSelected = selectionModel->selectedIndexes().toSet();
+  QSet<int> selectedRows;
   foreach (QModelIndex index, allSelected)
   {
-    ui->roomListView->selectionModel()->select(model->index(index.row(), 0), QItemSelectionModel::Select);
+    selectedRows += index.row();
+  }
+
+  QAbstractItemModel* model = ui->roomListView->model();
+  for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)
+  {
+    if (selectedRows.contains(i) && !ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
+    {
+      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Select);
+    }
+    else if (!selectedRows.contains(i) && ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
+    {
+      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Deselect);
+    }
   }
 
   std::pair<QSet<QModelIndex>::iterator, QSet<QModelIndex>::iterator> beginEndCol = std::minmax_element(allSelected.begin(), allSelected.end(),
@@ -50,14 +61,16 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& select
   QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column() + 1); // On schedule leave date is not selected
   ui->beginCalendarWidget->setSelectedDate(beginDate);
   ui->endCalendarWidget->setSelectedDate(endDate);
+
+  prepareSummary();
 }
 
 void NewReservationDialog::prepareMain()
 {
   QSet<QString> surnames;
-  foreach (Client client, _dbHandler->clients())
+  foreach (ClientPtr client, _dbHandler->clients())
   {
-    surnames << client.surname();
+    surnames << client->surname();
   }
   addCompleter(ui->surnameLineEdit, surnames);
 }
@@ -71,6 +84,8 @@ void NewReservationDialog::prepareRoom()
 {
   ui->roomListView->setModel(RoomsModel::instance());
   ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+  connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 void NewReservationDialog::prepareDate()
@@ -132,13 +147,13 @@ void NewReservationDialog::addCompleter(QLineEdit* lineEdit, QSet<QString> compl
 
 void NewReservationDialog::fillRemainingClientData(QString surname, QString name, QString street)
 {
-  QList<Client> matchingClients  = _dbHandler->clients(surname, name, street);
+  QList<ClientPtr> matchingClients  = _dbHandler->clients(surname, name, street);
   QSet<QString> names;
   QSet<QString> streets;
-  foreach (Client client, matchingClients)
+  foreach (ClientPtr client, matchingClients)
   {
-    names << client.name();
-    streets << client.address().street();
+    names << client->name();
+    streets << client->address().street();
   }
   if (name.isEmpty())
   {
@@ -151,22 +166,21 @@ void NewReservationDialog::fillRemainingClientData(QString surname, QString name
 
   if (matchingClients.size() == 1)
   {
-    const Client& client = matchingClients.first();
-    ui->surnameLineEdit->setText(client.surname());
-    ui->nameLineEdit->setText(client.name());
-    ui->streetLineEdit->setText(client.address().street());
-    ui->numberLineEdit->setText(client.address().number());
-    ui->postalCodeLineEdit->setText(client.address().postalCode());
-    ui->cityLineEdit->setText(client.address().city());
-    ui->countryLineEdit->setText(client.address().country());
-    ui->phoneLineEdit->setText(client.phone());
-    ui->emailLineEdit->setText(client.eMail());
+    const ClientPtr& client = matchingClients.first();
+    ui->surnameLineEdit->setText(client->surname());
+    ui->nameLineEdit->setText(client->name());
+    ui->streetLineEdit->setText(client->address().street());
+    ui->numberLineEdit->setText(client->address().number());
+    ui->postalCodeLineEdit->setText(client->address().postalCode());
+    ui->cityLineEdit->setText(client->address().city());
+    ui->countryLineEdit->setText(client->address().country());
+    ui->phoneLineEdit->setText(client->phone());
+    ui->emailLineEdit->setText(client->eMail());
   }
 }
 
-void NewReservationDialog::on_beginCalendarWidget_selectionChanged()
+void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate &date)
 {
-  QDate date = ui->beginCalendarWidget->selectedDate();
   _reservation.setBeginDate(date);
   if (date > _reservation.endDate())
   {
@@ -176,9 +190,8 @@ void NewReservationDialog::on_beginCalendarWidget_selectionChanged()
   prepareSummary();
 }
 
-void NewReservationDialog::on_endCalendarWidget_selectionChanged()
+void NewReservationDialog::on_endCalendarWidget_clicked(const QDate &date)
 {
-  QDate date = ui->endCalendarWidget->selectedDate();
   if (date >= _reservation.beginDate())
   {
     _reservation.setEndDate(date);
@@ -249,3 +262,17 @@ void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
   prepareSummary();
 }
 
+void NewReservationDialog::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+{
+  foreach (QModelIndex index, selected.indexes())
+  {
+    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
+    _reservation.addRoom(room);
+  }
+
+  foreach (QModelIndex index, deselected.indexes())
+  {
+    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
+    _reservation.removeRoom(room);
+  }
+}
