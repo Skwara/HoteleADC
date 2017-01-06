@@ -164,8 +164,9 @@ void NewReservationDialog::fillRemainingClientData(QString surname, QString name
   }
 }
 
-void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate& date)
+void NewReservationDialog::on_beginCalendarWidget_selectionChanged()
 {
+  QDate date = ui->beginCalendarWidget->selectedDate();
   _reservation.setBeginDate(date);
   if (date > _reservation.endDate())
   {
@@ -175,8 +176,9 @@ void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate& date)
   prepareSummary();
 }
 
-void NewReservationDialog::on_endCalendarWidget_clicked(const QDate& date)
+void NewReservationDialog::on_endCalendarWidget_selectionChanged()
 {
+  QDate date = ui->endCalendarWidget->selectedDate();
   if (date >= _reservation.beginDate())
   {
     _reservation.setEndDate(date);
@@ -246,3 +248,4 @@ void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
   _reservation.setParking(checked);
   prepareSummary();
 }
+

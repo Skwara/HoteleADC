@@ -41,8 +41,8 @@ private:
   void fillRemainingClientData(QString surname, QString name = "", QString street = "");
 
 private slots:
-  void on_beginCalendarWidget_clicked(const QDate& date);
-  void on_endCalendarWidget_clicked(const QDate& date);
+  void on_beginCalendarWidget_selectionChanged();
+  void on_endCalendarWidget_selectionChanged();
 
   void on_addParticipantPushButton_clicked();
 
