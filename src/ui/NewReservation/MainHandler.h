@@ -20,9 +20,11 @@ public:
   explicit MainHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
 
   void setup();
-  void prepare();
 
 public slots:
+  void prepare();
+
+private slots:
   void onSurnameLineEditEditingFinished();
   void onNameLineEditEditingFinished();
   void onStreetLineEditEditingFinished();

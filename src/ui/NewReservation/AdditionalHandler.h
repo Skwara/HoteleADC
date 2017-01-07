@@ -18,6 +18,8 @@ public:
   explicit AdditionalHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
 
   void setup();
+
+public slots:
   void prepare();
 
 signals:

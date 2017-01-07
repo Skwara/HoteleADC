@@ -18,6 +18,8 @@ public:
   explicit ParticipantsHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
 
   void setup();
+
+public slots:
   void prepare();
 
 private:

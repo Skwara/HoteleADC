@@ -19,6 +19,8 @@ public:
   explicit RoomsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
 
   void setup();
+
+public slots:
   void prepare();
 
 private slots:

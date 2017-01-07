@@ -12,6 +12,7 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _rooms(ui, _reservation, this)
   , _date(ui, _reservation, this)
   , _additional(ui, _reservation, this)
+  , _summary(ui, _reservation, this)
 {
   ui->setupUi(this);
   _main.setup();
@@ -19,13 +20,17 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   _rooms.setup();
   _date.setup();
   _additional.setup();
+  _summary.setup();
 
   _main.prepare();
   _participants.prepare();
   _rooms.prepare();
   _date.prepare();
   _additional.prepare();
-  prepareSummary();
+  _summary.prepare();
+
+  connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(prepare()));
+  connect(&_additional, SIGNAL(additionalChanged()), &_summary, SLOT(prepare()));
 
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
@@ -70,21 +75,5 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   ui->beginCalendarWidget->setSelectedDate(beginDate);
   ui->endCalendarWidget->setSelectedDate(endDate);
 
-  prepareSummary();
-}
-
-void NewReservationDialog::prepareSummary()
-{
-  setSummaryDays(_reservation.days());
-  setSummaryPrice(_reservation.price());
-}
-
-void NewReservationDialog::setSummaryDays(const int days)
-{
-  ui->daysValueLabel->setText(QString::number(days));
-}
-
-void NewReservationDialog::setSummaryPrice(const int price)
-{
-  ui->priceValueLabel->setText(QString::number(price));
+  _summary.prepare();
 }
