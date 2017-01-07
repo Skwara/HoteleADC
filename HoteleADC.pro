@@ -15,18 +15,19 @@ CONFIG += c++14
 
 INCLUDEPATH = src
 
-SOURCES += src/main.cpp \
-           src/data/DatabaseHandler.cpp \
-           src/data/ScheduleModel.cpp \
-           src/data/RoomsModel.cpp \
-           src/logic/Client.cpp \
-           src/logic/Reservation.cpp \
-           src/logic/Room.cpp \
-           src/ui/MainWindow.cpp \
-           src/ui/NewReservation/NewReservationDialog.cpp \
-           src/ui/ScheduleDialog.cpp \
-           src/ui/ScheduleTableView.cpp \
-    src/ui/NewReservation/MainHandler.cpp
+SOURCES  += src/main.cpp \
+            src/data/DatabaseHandler.cpp \
+            src/data/ScheduleModel.cpp \
+            src/data/RoomsModel.cpp \
+            src/logic/Client.cpp \
+            src/logic/Reservation.cpp \
+            src/logic/Room.cpp \
+            src/ui/MainWindow.cpp \
+            src/ui/NewReservation/NewReservationDialog.cpp \
+            src/ui/ScheduleDialog.cpp \
+            src/ui/ScheduleTableView.cpp \
+            src/ui/NewReservation/MainHandler.cpp \
+            src/ui/NewReservation/ParticipantsHandler.cpp
 
 HEADERS  += src/data/DatabaseHandler.h \
             src/data/ScheduleModel.h \
@@ -38,7 +39,8 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/ui/NewReservation/NewReservationDialog.h \
             src/ui/ScheduleDialog.h \
             src/ui/ScheduleTableView.h \
-    src/ui/NewReservation/MainHandler.h
+            src/ui/NewReservation/MainHandler.h \
+            src/ui/NewReservation/ParticipantsHandler.h
 
 FORMS    += src/ui/MainWindow.ui \
             src/ui/NewReservation/NewReservationDialog.ui \

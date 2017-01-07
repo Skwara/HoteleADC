@@ -7,6 +7,7 @@
 #include "logic/Reservation.h"
 #include "data/DatabaseHandler.h"
 #include "MainHandler.h"
+#include "ParticipantsHandler.h"
 
 
 namespace Ui {
@@ -25,7 +26,6 @@ public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  void prepareParticipants();
   void prepareRoom();
   void prepareDate();
   void prepareAdditional();
@@ -39,8 +39,6 @@ private slots:
   void on_beginCalendarWidget_clicked(const QDate &date);
   void on_endCalendarWidget_clicked(const QDate &date);
 
-  void on_addParticipantPushButton_clicked();
-
   void on_parkingCheckBox_toggled(bool checked);
 
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -52,6 +50,7 @@ private:
   DatabaseHandler* _dbHandler;
 
   MainHandler _main;
+  ParticipantsHandler _participants;
 };
 
 #endif // NEWRESERVATIONDIALOG_H

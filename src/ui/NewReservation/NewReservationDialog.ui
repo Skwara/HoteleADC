@@ -219,76 +219,6 @@
            <property name="title">
             <string>Dodatkowi uczestnicy</string>
            </property>
-           <layout class="QGridLayout" name="gridLayout_5">
-            <item row="0" column="1">
-             <widget class="QLineEdit" name="participantNameLineEdit">
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="placeholderText">
-               <string>Imię</string>
-              </property>
-             </widget>
-            </item>
-            <item row="0" column="0">
-             <widget class="QLineEdit" name="participantSurnameLineEdit">
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="placeholderText">
-               <string>Nazwisko</string>
-              </property>
-             </widget>
-            </item>
-            <item row="2" column="0" colspan="2">
-             <widget class="Line" name="line">
-              <property name="orientation">
-               <enum>Qt::Horizontal</enum>
-              </property>
-             </widget>
-            </item>
-            <item row="3" column="0" colspan="2">
-             <widget class="QListWidget" name="participantsListWidget">
-              <property name="sizePolicy">
-               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
-                <horstretch>0</horstretch>
-                <verstretch>0</verstretch>
-               </sizepolicy>
-              </property>
-              <property name="minimumSize">
-               <size>
-                <width>200</width>
-                <height>100</height>
-               </size>
-              </property>
-              <property name="maximumSize">
-               <size>
-                <width>16777215</width>
-                <height>16777215</height>
-               </size>
-              </property>
-             </widget>
-            </item>
-            <item row="1" column="0" colspan="2">
-             <widget class="QPushButton" name="addParticipantPushButton">
-              <property name="minimumSize">
-               <size>
-                <width>100</width>
-                <height>0</height>
-               </size>
-              </property>
-              <property name="text">
-               <string>Dodaj</string>
-              </property>
-             </widget>
-            </item>
-           </layout>
           </widget>
          </item>
          <item>
@@ -536,10 +466,6 @@
   <tabstop>disabilityLineEdit</tabstop>
   <tabstop>beginCalendarWidget</tabstop>
   <tabstop>endCalendarWidget</tabstop>
-  <tabstop>participantSurnameLineEdit</tabstop>
-  <tabstop>participantNameLineEdit</tabstop>
-  <tabstop>addParticipantPushButton</tabstop>
-  <tabstop>participantsListWidget</tabstop>
  </tabstops>
  <resources/>
  <connections/>

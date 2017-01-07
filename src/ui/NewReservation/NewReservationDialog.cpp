@@ -10,12 +10,14 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _reservation()
   , _dbHandler(DatabaseHandler::instance())
   , _main(ui, this)
+  , _participants(ui, this)
 {
   ui->setupUi(this);
   _main.setup();
+  _participants.setup();
 
   _main.prepare();
-  prepareParticipants();
+  _participants.prepare();
   prepareRoom();
   prepareDate();
   prepareAdditional();
@@ -63,11 +65,6 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   ui->endCalendarWidget->setSelectedDate(endDate);
 
   prepareSummary();
-}
-
-void NewReservationDialog::prepareParticipants()
-{
-
 }
 
 void NewReservationDialog::prepareRoom()
@@ -142,22 +139,6 @@ void NewReservationDialog::on_endCalendarWidget_clicked(const QDate &date)
   }
 
   prepareSummary();
-}
-
-void NewReservationDialog::on_addParticipantPushButton_clicked()
-{
-  // TODO Enable addButton only if both fields are not empty
-  QString surname = ui->participantSurnameLineEdit->text();
-  QString name = ui->participantNameLineEdit->text();
-  QString participant = surname + " " + name;
-  if (!surname.isEmpty() && !name.isEmpty())
-  {
-    ui->participantsListWidget->addItem(participant);
-    ui->participantSurnameLineEdit->clear();
-    ui->participantNameLineEdit->clear();
-    _reservation.addParticipant(participant);
-    prepareSummary();
-  }
 }
 
 void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
