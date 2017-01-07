@@ -2,6 +2,7 @@
 #define ROOMSHANDLER_H
 
 #include <QObject>
+#include <QSet>
 #include <QItemSelection>
 
 #include "data/DatabaseHandler.h"
@@ -20,8 +21,11 @@ public:
 
   void setup();
 
+signals:
+  void roomsChanged();
+
 public slots:
-  void prepare();
+  void prepare(QSet<int> selectedRows);
 
 private slots:
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);

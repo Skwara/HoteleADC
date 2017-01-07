@@ -22,13 +22,8 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   _additional.setup();
   _summary.setup();
 
-  _main.prepare();
-  _participants.prepare();
-  _rooms.prepare();
-  _date.prepare();
-  _additional.prepare();
-  _summary.prepare();
-
+  connect(&_rooms, SIGNAL(roomsChanged()), &_summary, SLOT(prepare()));
+  connect(&_date, SIGNAL(dateChanged()), &_additional, SLOT(prepare()));
   connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(prepare()));
   connect(&_additional, SIGNAL(additionalChanged()), &_summary, SLOT(prepare()));
 
@@ -44,36 +39,32 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
 {
   QItemSelectionModel* selectionModel = qobject_cast<QItemSelectionModel*>(sender());
   QSet<QModelIndex> allSelected = selectionModel->selectedIndexes().toSet();
+
+  QSet<int> selectedRows = getSelectedRows(allSelected);
+  QSet<int> selectedCols = getSelectedCols(allSelected);
+
+  _rooms.prepare(selectedRows);
+  _date.prepare(selectedCols);
+}
+
+QSet<int> NewReservationDialog::getSelectedRows(QSet<QModelIndex> allSelected)
+{
   QSet<int> selectedRows;
   foreach (QModelIndex index, allSelected)
   {
     selectedRows += index.row();
   }
 
-  QAbstractItemModel* model = ui->roomListView->model();
-  for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)
+  return selectedRows;
+}
+
+QSet<int> NewReservationDialog::getSelectedCols(QSet<QModelIndex> allSelected)
+{
+  QSet<int> selectedCols;
+  foreach (QModelIndex index, allSelected)
   {
-    if (selectedRows.contains(i) && !ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
-    {
-      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Select);
-    }
-    else if (!selectedRows.contains(i) && ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
-    {
-      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Deselect);
-    }
+    selectedCols += index.column();
   }
 
-  std::pair<QSet<QModelIndex>::iterator, QSet<QModelIndex>::iterator> beginEndCol = std::minmax_element(allSelected.begin(), allSelected.end(),
-    [](const QModelIndex& left, const QModelIndex& right)
-    {
-      return left.column() < right.column();
-    });
-  QDate beginDate = _dbHandler->firstDate().addDays(beginEndCol.first->column());
-  QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column() + 1); // On schedule leave date is not selected
-  _reservation.setBeginDate(beginDate);
-  _reservation.setEndDate(endDate);
-  ui->beginCalendarWidget->setSelectedDate(beginDate);
-  ui->endCalendarWidget->setSelectedDate(endDate);
-
-  _summary.prepare();
+  return selectedCols;
 }

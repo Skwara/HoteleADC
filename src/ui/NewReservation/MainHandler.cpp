@@ -15,6 +15,13 @@ MainHandler::MainHandler(Ui::NewReservationDialog* ui, QObject* parent)
 
 void MainHandler::setup()
 {
+  QSet<QString> surnames;
+  foreach (ClientPtr client, _dbHandler->clients())
+  {
+    surnames << client->surname();
+  }
+  addCompleter(ui->surnameLineEdit, surnames);
+
   connect(ui->surnameLineEdit, SIGNAL(editingFinished()), this, SLOT(onSurnameLineEditEditingFinished()));
   connect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(onNameLineEditEditingFinished()));
   connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(onStreetLineEditEditingFinished()));
@@ -22,13 +29,6 @@ void MainHandler::setup()
 
 void MainHandler::prepare()
 {
-  QSet<QString> surnames;
-  foreach (ClientPtr client, _dbHandler->clients())
-  {
-    surnames << client->surname();
-  }
-
-  addCompleter(ui->surnameLineEdit, surnames);
 }
 
 void MainHandler::onSurnameLineEditEditingFinished()

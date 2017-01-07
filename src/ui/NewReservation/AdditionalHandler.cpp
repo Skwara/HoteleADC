@@ -13,6 +13,8 @@ AdditionalHandler::AdditionalHandler(Ui::NewReservationDialog* ui, Reservation& 
 
 void AdditionalHandler::setup()
 {
+  prepare();
+
   connect(ui->parkingCheckBox, SIGNAL(toggled(bool)), this, SLOT(onParkingCheckBoxToggled(bool)));
 }
 

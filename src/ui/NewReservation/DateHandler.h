@@ -10,6 +10,8 @@ namespace Ui {
 class NewReservationDialog;
 }
 
+using BeginEndDates = std::pair<QDate, QDate>;
+
 class DateHandler : public QObject
 {
   Q_OBJECT
@@ -18,7 +20,9 @@ public:
   explicit DateHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
 
   void setup();
-  void prepare();
+
+public slots:
+  void prepare(QSet<int> selectedCols);
 
 signals:
   void dateChanged();

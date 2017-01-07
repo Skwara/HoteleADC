@@ -22,8 +22,18 @@ void DateHandler::setup()
   connect(ui->endCalendarWidget, SIGNAL(clicked(QDate)), this, SLOT(onEndCalendarWidgetClicked(QDate)));
 }
 
-void DateHandler::prepare()
+void DateHandler::prepare(QSet<int> selectedCols)
 {
+  std::pair<QSet<int>::const_iterator, QSet<int>::const_iterator> beginEndCol = std::minmax_element(selectedCols.begin(), selectedCols.end());
+  QDate beginDate = _dbHandler->firstDate().addDays(*beginEndCol.first);
+  QDate endDate = _dbHandler->firstDate().addDays(*beginEndCol.second + 1); // On schedule leave date is not selected
+
+  _reservation.setBeginDate(beginDate);
+  _reservation.setEndDate(endDate);
+  ui->beginCalendarWidget->setSelectedDate(beginDate);
+  ui->endCalendarWidget->setSelectedDate(endDate);
+
+  emit dateChanged();
 }
 
 void DateHandler::onBeginCalendarWidgetClicked(const QDate& date)

@@ -3,6 +3,8 @@
 
 #include <QDialog>
 #include <QItemSelection>
+#include <QSet>
+#include <QItemSelectionModel>
 
 #include "logic/Reservation.h"
 #include "data/DatabaseHandler.h"
@@ -28,6 +30,10 @@ public:
 
 public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+
+private:
+  QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
+  QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);
 
 private:
   Ui::NewReservationDialog* ui;

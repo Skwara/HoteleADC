@@ -11,6 +11,7 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
 
 void SummaryHandler::setup()
 {
+  prepare();
 }
 
 void SummaryHandler::prepare()
