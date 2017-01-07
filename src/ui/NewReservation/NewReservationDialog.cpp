@@ -1,8 +1,6 @@
 #include "NewReservationDialog.h"
 #include "ui_NewReservationDialog.h"
 
-#include "src/data/RoomsModel.h"
-
 
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
@@ -11,14 +9,16 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _dbHandler(DatabaseHandler::instance())
   , _main(ui, this)
   , _participants(ui, this)
+  , _rooms(ui, _reservation, this)
 {
   ui->setupUi(this);
   _main.setup();
   _participants.setup();
+  _rooms.setup();
 
   _main.prepare();
   _participants.prepare();
-  prepareRoom();
+  _rooms.prepare();
   prepareDate();
   prepareAdditional();
   prepareSummary();
@@ -61,18 +61,12 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
     });
   QDate beginDate = _dbHandler->firstDate().addDays(beginEndCol.first->column());
   QDate endDate = _dbHandler->firstDate().addDays(beginEndCol.second->column() + 1); // On schedule leave date is not selected
+  _reservation.setBeginDate(beginDate);
+  _reservation.setEndDate(endDate);
   ui->beginCalendarWidget->setSelectedDate(beginDate);
   ui->endCalendarWidget->setSelectedDate(endDate);
 
   prepareSummary();
-}
-
-void NewReservationDialog::prepareRoom()
-{
-  ui->roomListView->setModel(RoomsModel::instance());
-  ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-
-  connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 void NewReservationDialog::prepareDate()
@@ -145,19 +139,4 @@ void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
 {
   _reservation.setParking(checked);
   prepareSummary();
-}
-
-void NewReservationDialog::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
-{
-  foreach (QModelIndex index, selected.indexes())
-  {
-    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
-    _reservation.addRoom(room);
-  }
-
-  foreach (QModelIndex index, deselected.indexes())
-  {
-    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
-    _reservation.removeRoom(room);
-  }
 }

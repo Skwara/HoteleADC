@@ -17,15 +17,15 @@ class MainHandler : public QObject
   Q_OBJECT
 
 public:
-  MainHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
+  explicit MainHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
 
   void setup();
   void prepare();
 
 public slots:
-  void surnameLineEditEditingFinished();
-  void nameLineEditEditingFinished();
-  void streetLineEditEditingFinished();
+  void onSurnameLineEditEditingFinished();
+  void onNameLineEditEditingFinished();
+  void onStreetLineEditEditingFinished();
 
 private:
   void addCompleter(QLineEdit* lineEdit, QSet<QString> completions);

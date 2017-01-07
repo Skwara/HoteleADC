@@ -15,7 +15,7 @@ class ParticipantsHandler : public QObject
   Q_OBJECT
 
 public:
-  ParticipantsHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
+  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
 
   void setup();
   void prepare();

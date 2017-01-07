@@ -15,9 +15,9 @@ MainHandler::MainHandler(Ui::NewReservationDialog* ui, QObject* parent)
 
 void MainHandler::setup()
 {
-  connect(ui->surnameLineEdit, SIGNAL(editingFinished()), this, SLOT(surnameLineEditEditingFinished()));
-  connect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(nameLineEditEditingFinished()));
-  connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(streetLineEditEditingFinished()));
+  connect(ui->surnameLineEdit, SIGNAL(editingFinished()), this, SLOT(onSurnameLineEditEditingFinished()));
+  connect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(onNameLineEditEditingFinished()));
+  connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(onStreetLineEditEditingFinished()));
 }
 
 void MainHandler::prepare()
@@ -31,7 +31,7 @@ void MainHandler::prepare()
   addCompleter(ui->surnameLineEdit, surnames);
 }
 
-void MainHandler::surnameLineEditEditingFinished()
+void MainHandler::onSurnameLineEditEditingFinished()
 {
   QString surname = ui->surnameLineEdit->text();
   if (!surname.isEmpty())
@@ -42,7 +42,7 @@ void MainHandler::surnameLineEditEditingFinished()
   }
 }
 
-void MainHandler::nameLineEditEditingFinished()
+void MainHandler::onNameLineEditEditingFinished()
 {
   QString surname = ui->surnameLineEdit->text();
   QString name = ui->nameLineEdit->text();
@@ -54,7 +54,7 @@ void MainHandler::nameLineEditEditingFinished()
   }
 }
 
-void MainHandler::streetLineEditEditingFinished()
+void MainHandler::onStreetLineEditEditingFinished()
 {
   QString surname = ui->surnameLineEdit->text();
   QString name = ui->nameLineEdit->text();

@@ -8,6 +8,7 @@
 #include "data/DatabaseHandler.h"
 #include "MainHandler.h"
 #include "ParticipantsHandler.h"
+#include "RoomsHandler.h"
 
 
 namespace Ui {
@@ -26,7 +27,6 @@ public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  void prepareRoom();
   void prepareDate();
   void prepareAdditional();
   void prepareSummary();
@@ -41,8 +41,6 @@ private slots:
 
   void on_parkingCheckBox_toggled(bool checked);
 
-  void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-
 private:
   Ui::NewReservationDialog* ui;
 
@@ -51,6 +49,7 @@ private:
 
   MainHandler _main;
   ParticipantsHandler _participants;
+  RoomsHandler _rooms;
 };
 
 #endif // NEWRESERVATIONDIALOG_H
