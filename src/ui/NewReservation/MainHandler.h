@@ -22,7 +22,7 @@ public:
   void setup();
 
 public slots:
-  void prepare();
+  void prepare(); // TODO Rename all prepares to updates
 
 private slots:
   void onSurnameLineEditEditingFinished();

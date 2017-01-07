@@ -24,6 +24,7 @@ public slots:
 
 private:
   void setSummaryDays(const int days);
+  void setSummaryRooms(const int rooms);
   void setSummaryPrice(const int price);
 
 private:
