@@ -23,9 +23,10 @@ SOURCES += src/main.cpp \
            src/logic/Reservation.cpp \
            src/logic/Room.cpp \
            src/ui/MainWindow.cpp \
-           src/ui/NewReservationDialog.cpp \
+           src/ui/NewReservation/NewReservationDialog.cpp \
            src/ui/ScheduleDialog.cpp \
-           src/ui/ScheduleTableView.cpp
+           src/ui/ScheduleTableView.cpp \
+    src/ui/NewReservation/MainHandler.cpp
 
 HEADERS  += src/data/DatabaseHandler.h \
             src/data/ScheduleModel.h \
@@ -34,10 +35,11 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/logic/Reservation.h \
             src/logic/Room.h \
             src/ui/MainWindow.h \
-            src/ui/NewReservationDialog.h \
+            src/ui/NewReservation/NewReservationDialog.h \
             src/ui/ScheduleDialog.h \
-            src/ui/ScheduleTableView.h
+            src/ui/ScheduleTableView.h \
+    src/ui/NewReservation/MainHandler.h
 
 FORMS    += src/ui/MainWindow.ui \
-            src/ui/NewReservationDialog.ui \
+            src/ui/NewReservation/NewReservationDialog.ui \
             src/ui/ScheduleDialog.ui

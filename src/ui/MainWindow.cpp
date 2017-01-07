@@ -1,10 +1,10 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "NewReservationDialog.h"
+#include "ui/NewReservation/NewReservationDialog.h"
 #include "ScheduleDialog.h"
 
-#include <iostream>
+
 MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)

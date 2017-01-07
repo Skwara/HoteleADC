@@ -1,8 +1,6 @@
 #include "NewReservationDialog.h"
 #include "ui_NewReservationDialog.h"
 
-#include <QCompleter>
-
 #include "src/data/RoomsModel.h"
 
 
@@ -11,10 +9,12 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , ui(new Ui::NewReservationDialog)
   , _reservation()
   , _dbHandler(DatabaseHandler::instance())
+  , _main(ui, this)
 {
   ui->setupUi(this);
+  _main.setup();
 
-  prepareMain();
+  _main.prepare();
   prepareParticipants();
   prepareRoom();
   prepareDate();
@@ -63,16 +63,6 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   ui->endCalendarWidget->setSelectedDate(endDate);
 
   prepareSummary();
-}
-
-void NewReservationDialog::prepareMain()
-{
-  QSet<QString> surnames;
-  foreach (ClientPtr client, _dbHandler->clients())
-  {
-    surnames << client->surname();
-  }
-  addCompleter(ui->surnameLineEdit, surnames);
 }
 
 void NewReservationDialog::prepareParticipants()
@@ -129,56 +119,6 @@ void NewReservationDialog::setEndDateToBeginDate()
   ui->endCalendarWidget->setSelectedDate(beginDate);
 }
 
-void NewReservationDialog::addCompleter(QLineEdit* lineEdit, QSet<QString> completions)
-{
-  if (completions.isEmpty())
-    return;
-
-  if (completions.size() == 1)
-  {
-    lineEdit->setText(*completions.begin());
-  }
-
-  QCompleter* completer = new QCompleter(completions.toList(), this);
-  completer->setCaseSensitivity(Qt::CaseInsensitive);
-  completer->setFilterMode(Qt::MatchContains);
-  lineEdit->setCompleter(completer);
-}
-
-void NewReservationDialog::fillRemainingClientData(QString surname, QString name, QString street)
-{
-  QList<ClientPtr> matchingClients  = _dbHandler->clients(surname, name, street);
-  QSet<QString> names;
-  QSet<QString> streets;
-  foreach (ClientPtr client, matchingClients)
-  {
-    names << client->name();
-    streets << client->address().street();
-  }
-  if (name.isEmpty())
-  {
-    addCompleter(ui->nameLineEdit, names);
-  }
-  if (name.isEmpty() && street.isEmpty())
-  {
-    addCompleter(ui->streetLineEdit, streets);
-  }
-
-  if (matchingClients.size() == 1)
-  {
-    const ClientPtr& client = matchingClients.first();
-    ui->surnameLineEdit->setText(client->surname());
-    ui->nameLineEdit->setText(client->name());
-    ui->streetLineEdit->setText(client->address().street());
-    ui->numberLineEdit->setText(client->address().number());
-    ui->postalCodeLineEdit->setText(client->address().postalCode());
-    ui->cityLineEdit->setText(client->address().city());
-    ui->countryLineEdit->setText(client->address().country());
-    ui->phoneLineEdit->setText(client->phone());
-    ui->emailLineEdit->setText(client->eMail());
-  }
-}
-
 void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate &date)
 {
   _reservation.setBeginDate(date);
@@ -217,42 +157,6 @@ void NewReservationDialog::on_addParticipantPushButton_clicked()
     ui->participantNameLineEdit->clear();
     _reservation.addParticipant(participant);
     prepareSummary();
-  }
-}
-
-void NewReservationDialog::on_surnameLineEdit_editingFinished()
-{
-  QString surname = ui->surnameLineEdit->text();
-  if (!surname.isEmpty())
-  {
-    Client::firstLetterUppercase(surname);
-    ui->surnameLineEdit->setText(surname);
-    fillRemainingClientData(surname);
-  }
-}
-
-void NewReservationDialog::on_nameLineEdit_editingFinished()
-{
-  QString surname = ui->surnameLineEdit->text();
-  QString name = ui->nameLineEdit->text();
-  if (!name.isEmpty())
-  {
-    Client::firstLetterUppercase(name);
-    ui->nameLineEdit->setText(name);
-    fillRemainingClientData(surname, name);
-  }
-}
-
-void NewReservationDialog::on_streetLineEdit_editingFinished()
-{
-  QString surname = ui->surnameLineEdit->text();
-  QString name = ui->nameLineEdit->text();
-  QString street = ui->streetLineEdit->text();
-  if (!street.isEmpty())
-  {
-    Address::correctStreetFormatting(street);
-    ui->streetLineEdit->setText(street);
-    fillRemainingClientData(surname, name, street);
   }
 }
 
