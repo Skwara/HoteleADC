@@ -10,16 +10,18 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _main(ui, this)
   , _participants(ui, this)
   , _rooms(ui, _reservation, this)
+  , _date(ui, _reservation, this)
 {
   ui->setupUi(this);
   _main.setup();
   _participants.setup();
   _rooms.setup();
+  _date.setup();
 
   _main.prepare();
   _participants.prepare();
   _rooms.prepare();
-  prepareDate();
+  _date.prepare();
   prepareAdditional();
   prepareSummary();
 
@@ -69,15 +71,6 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   prepareSummary();
 }
 
-void NewReservationDialog::prepareDate()
-{
-  QDate currentDate = QDate::currentDate();
-  _reservation.setBeginDate(currentDate);
-  ui->beginCalendarWidget->setSelectedDate(currentDate);
-  _reservation.setEndDate(currentDate);
-  ui->endCalendarWidget->setSelectedDate(currentDate);
-}
-
 void NewReservationDialog::prepareAdditional()
 {
   if (_dbHandler->hasAvailableParkingSpace(_reservation))
@@ -101,38 +94,6 @@ void NewReservationDialog::setSummaryDays(const int days)
 void NewReservationDialog::setSummaryPrice(const int price)
 {
   ui->priceValueLabel->setText(QString::number(price));
-}
-
-void NewReservationDialog::setEndDateToBeginDate()
-{
-  QDate beginDate = _reservation.beginDate();
-  _reservation.setEndDate(beginDate);
-  ui->endCalendarWidget->setSelectedDate(beginDate);
-}
-
-void NewReservationDialog::on_beginCalendarWidget_clicked(const QDate &date)
-{
-  _reservation.setBeginDate(date);
-  if (date > _reservation.endDate())
-  {
-    setEndDateToBeginDate();
-  }
-
-  prepareSummary();
-}
-
-void NewReservationDialog::on_endCalendarWidget_clicked(const QDate &date)
-{
-  if (date >= _reservation.beginDate())
-  {
-    _reservation.setEndDate(date);
-  }
-  else
-  {
-    setEndDateToBeginDate();
-  }
-
-  prepareSummary();
 }
 
 void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)

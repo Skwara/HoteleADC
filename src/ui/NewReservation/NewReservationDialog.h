@@ -9,6 +9,7 @@
 #include "MainHandler.h"
 #include "ParticipantsHandler.h"
 #include "RoomsHandler.h"
+#include "DateHandler.h"
 
 
 namespace Ui {
@@ -27,18 +28,13 @@ public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  void prepareDate();
   void prepareAdditional();
   void prepareSummary();
 
   void setSummaryDays(const int days);
   void setSummaryPrice(const int price);
-  void setEndDateToBeginDate();
 
 private slots:
-  void on_beginCalendarWidget_clicked(const QDate &date);
-  void on_endCalendarWidget_clicked(const QDate &date);
-
   void on_parkingCheckBox_toggled(bool checked);
 
 private:
@@ -50,6 +46,7 @@ private:
   MainHandler _main;
   ParticipantsHandler _participants;
   RoomsHandler _rooms;
+  DateHandler _date;
 };
 
 #endif // NEWRESERVATIONDIALOG_H
