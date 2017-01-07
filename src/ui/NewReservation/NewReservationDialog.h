@@ -10,6 +10,7 @@
 #include "ParticipantsHandler.h"
 #include "RoomsHandler.h"
 #include "DateHandler.h"
+#include "AdditionalHandler.h"
 
 
 namespace Ui {
@@ -28,14 +29,10 @@ public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  void prepareAdditional();
   void prepareSummary();
 
   void setSummaryDays(const int days);
   void setSummaryPrice(const int price);
-
-private slots:
-  void on_parkingCheckBox_toggled(bool checked);
 
 private:
   Ui::NewReservationDialog* ui;
@@ -47,6 +44,7 @@ private:
   ParticipantsHandler _participants;
   RoomsHandler _rooms;
   DateHandler _date;
+  AdditionalHandler _additional;
 };
 
 #endif // NEWRESERVATIONDIALOG_H

@@ -11,18 +11,20 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _participants(ui, this)
   , _rooms(ui, _reservation, this)
   , _date(ui, _reservation, this)
+  , _additional(ui, _reservation, this)
 {
   ui->setupUi(this);
   _main.setup();
   _participants.setup();
   _rooms.setup();
   _date.setup();
+  _additional.setup();
 
   _main.prepare();
   _participants.prepare();
   _rooms.prepare();
   _date.prepare();
-  prepareAdditional();
+  _additional.prepare();
   prepareSummary();
 
   setAttribute(Qt::WA_DeleteOnClose, true);
@@ -71,15 +73,6 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   prepareSummary();
 }
 
-void NewReservationDialog::prepareAdditional()
-{
-  if (_dbHandler->hasAvailableParkingSpace(_reservation))
-  {
-    ui->parkingCheckBox->setEnabled(true);
-    ui->parkingCheckBox->setChecked(_reservation.parking());
-  }
-}
-
 void NewReservationDialog::prepareSummary()
 {
   setSummaryDays(_reservation.days());
@@ -94,10 +87,4 @@ void NewReservationDialog::setSummaryDays(const int days)
 void NewReservationDialog::setSummaryPrice(const int price)
 {
   ui->priceValueLabel->setText(QString::number(price));
-}
-
-void NewReservationDialog::on_parkingCheckBox_toggled(bool checked)
-{
-  _reservation.setParking(checked);
-  prepareSummary();
 }
