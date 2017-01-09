@@ -22,7 +22,7 @@ public:
   void setup();
 
 public slots:
-  void prepare(QSet<int> selectedCols);
+  void update(QSet<int> selectedCols);
 
 signals:
   void dateChanged();

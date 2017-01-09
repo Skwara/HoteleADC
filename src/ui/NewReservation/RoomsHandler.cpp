@@ -20,7 +20,7 @@ void RoomsHandler::setup()
   connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
 }
 
-void RoomsHandler::prepare(QSet<int> selectedRows)
+void RoomsHandler::update(QSet<int> selectedRows)
 {
   QAbstractItemModel* model = ui->roomListView->model();
   for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)

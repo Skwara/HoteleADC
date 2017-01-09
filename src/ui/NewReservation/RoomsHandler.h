@@ -25,7 +25,7 @@ signals:
   void roomsChanged();
 
 public slots:
-  void prepare(QSet<int> selectedRows);
+  void update(QSet<int> selectedRows);
 
 private slots:
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);

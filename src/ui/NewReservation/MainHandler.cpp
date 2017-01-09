@@ -27,7 +27,7 @@ void MainHandler::setup()
   connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(onStreetLineEditEditingFinished()));
 }
 
-void MainHandler::prepare()
+void MainHandler::update()
 {
 }
 

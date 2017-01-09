@@ -13,12 +13,12 @@ AdditionalHandler::AdditionalHandler(Ui::NewReservationDialog* ui, Reservation& 
 
 void AdditionalHandler::setup()
 {
-  prepare();
+  update();
 
   connect(ui->parkingCheckBox, SIGNAL(toggled(bool)), this, SLOT(onParkingCheckBoxToggled(bool)));
 }
 
-void AdditionalHandler::prepare()
+void AdditionalHandler::update()
 {
   if (_dbHandler->hasAvailableParkingSpace(_reservation))
   {

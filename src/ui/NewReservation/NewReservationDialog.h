@@ -32,6 +32,9 @@ public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
+  void setupHandlers();
+  void connectHandlers();
+
   QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
   QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);
 

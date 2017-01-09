@@ -22,7 +22,7 @@ void DateHandler::setup()
   connect(ui->endCalendarWidget, SIGNAL(clicked(QDate)), this, SLOT(onEndCalendarWidgetClicked(QDate)));
 }
 
-void DateHandler::prepare(QSet<int> selectedCols)
+void DateHandler::update(QSet<int> selectedCols)
 {
   std::pair<QSet<int>::const_iterator, QSet<int>::const_iterator> beginEndCol = std::minmax_element(selectedCols.begin(), selectedCols.end());
   QDate beginDate = _dbHandler->firstDate().addDays(*beginEndCol.first);

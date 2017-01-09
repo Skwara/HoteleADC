@@ -12,6 +12,6 @@ void ParticipantsHandler::setup()
 {
 }
 
-void ParticipantsHandler::prepare()
+void ParticipantsHandler::update()
 {
 }

@@ -15,17 +15,8 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _summary(ui, _reservation, this)
 {
   ui->setupUi(this);
-  _main.setup();
-  _participants.setup();
-  _rooms.setup();
-  _date.setup();
-  _additional.setup();
-  _summary.setup();
-
-  connect(&_rooms, SIGNAL(roomsChanged()), &_summary, SLOT(prepare()));
-  connect(&_date, SIGNAL(dateChanged()), &_additional, SLOT(prepare()));
-  connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(prepare()));
-  connect(&_additional, SIGNAL(additionalChanged()), &_summary, SLOT(prepare()));
+  setupHandlers();
+  connectHandlers();
 
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
@@ -43,8 +34,26 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   QSet<int> selectedRows = getSelectedRows(allSelected);
   QSet<int> selectedCols = getSelectedCols(allSelected);
 
-  _rooms.prepare(selectedRows);
-  _date.prepare(selectedCols);
+  _rooms.update(selectedRows);
+  _date.update(selectedCols);
+}
+
+void NewReservationDialog::setupHandlers()
+{
+  _main.setup();
+  _participants.setup();
+  _rooms.setup();
+  _date.setup();
+  _additional.setup();
+  _summary.setup();
+}
+
+void NewReservationDialog::connectHandlers()
+{
+  connect(&_rooms, SIGNAL(roomsChanged()), &_summary, SLOT(update()));
+  connect(&_date, SIGNAL(dateChanged()), &_additional, SLOT(update()));
+  connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(update()));
+  connect(&_additional, SIGNAL(additionalChanged()), &_summary, SLOT(update()));
 }
 
 QSet<int> NewReservationDialog::getSelectedRows(QSet<QModelIndex> allSelected)

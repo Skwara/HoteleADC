@@ -20,7 +20,7 @@ public:
   void setup();
 
 public slots:
-  void prepare();
+  void update();
 
 private:
   Ui::NewReservationDialog* ui;

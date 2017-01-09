@@ -20,7 +20,7 @@ public:
   void setup();
 
 public slots:
-  void prepare();
+  void update();
 
 signals:
   void additionalChanged();

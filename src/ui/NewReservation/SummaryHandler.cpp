@@ -11,10 +11,10 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
 
 void SummaryHandler::setup()
 {
-  prepare();
+  update();
 }
 
-void SummaryHandler::prepare()
+void SummaryHandler::update()
 {
   setSummaryDays(_reservation.days());
   setSummaryRooms(_reservation.rooms().size());
