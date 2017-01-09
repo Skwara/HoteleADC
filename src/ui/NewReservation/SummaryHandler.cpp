@@ -7,6 +7,9 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
 {
+  connect(&reservation, SIGNAL(roomsChanged()), this, SLOT(update()));
+  connect(&reservation, SIGNAL(dateChanged()), this, SLOT(update()));
+  connect(&reservation, SIGNAL(additionalChanged()), this, SLOT(update()));
 }
 
 void SummaryHandler::setup()

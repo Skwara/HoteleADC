@@ -1,6 +1,7 @@
 #ifndef RESERVATION_H
 #define RESERVATION_H
 
+#include <QObject>
 #include <QDate>
 #include <QStringList>
 
@@ -9,35 +10,37 @@
 #include "Client.h"
 #include "Room.h"
 
-class Reservation
+class Reservation : public QObject
 {
+  Q_OBJECT
+
 public:
   Reservation();
 
-  ClientPtr client() const { return _client; }
-  QStringList participants() const { return _participants; }
-  QList<RoomPtr> rooms() const { return _rooms; }
-
+  ClientPtr client() const;
+  QStringList participants() const;
+  QList<RoomPtr> rooms() const;
   int price() const;
+  QDate beginDate() const;
+  QDate endDate() const;
+  int days() const;
+  bool parking() const;
 
-  QDate beginDate() const { return _beginDate; }
-  QDate endDate() const { return _endDate; }
-  int days() const { return _beginDate.daysTo(_endDate); }
+  void setClient(ClientPtr client);
+  void addParticipant(QString participant);
+  void removeParticipant(QString participant);
+  void addRoom(RoomPtr room);
+  void removeRoom(RoomPtr room);
+  void setBeginDate(const QDate& date);
+  void setEndDate(const QDate& date);
+  void setParking(bool value);
 
-  bool parking() const { return _parking; }
-
-
-
-  void setClient(ClientPtr client) { _client = client; }
-  void addParticipant(QString participant) { _participants.append(participant); }
-  void removeParticipant(QString participant) { _participants.removeOne(participant); }
-  void addRoom(RoomPtr room) { _rooms.append(room); }
-  void removeRoom(RoomPtr room) { _rooms.removeOne(room); }
-
-  void setBeginDate(const QDate& date) { _beginDate = date; }
-  void setEndDate(const QDate& date) { _endDate = date; }
-
-  void setParking(bool value) { _parking = value; }
+signals:
+  void clientChanged();
+  void roomsChanged();
+  void participantsChanged();
+  void dateChanged();
+  void additionalChanged();
 
 private:
   ClientPtr _client;

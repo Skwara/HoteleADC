@@ -33,7 +33,6 @@ public slots:
 
 private:
   void setupHandlers();
-  void connectHandlers();
 
   QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
   QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);

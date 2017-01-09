@@ -49,6 +49,4 @@ void RoomsHandler::onRoomListViewSelectionChanged(const QItemSelection& selected
     RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
     _reservation.removeRoom(room);
   }
-
-  emit roomsChanged();
 }

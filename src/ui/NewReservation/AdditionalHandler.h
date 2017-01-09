@@ -22,9 +22,6 @@ public:
 public slots:
   void update();
 
-signals:
-  void additionalChanged();
-
 private slots:
   void onParkingCheckBoxToggled(bool checked);
 

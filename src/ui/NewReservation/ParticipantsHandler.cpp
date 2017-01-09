@@ -7,6 +7,7 @@ ParticipantsHandler::ParticipantsHandler(Ui::NewReservationDialog* ui, Reservati
   , _dbHandler(DatabaseHandler::instance())
   , _participantsModel(reservation)
 {
+  connect(&reservation, SIGNAL(roomsChanged()), this, SLOT(update()));
 }
 
 void ParticipantsHandler::setup()

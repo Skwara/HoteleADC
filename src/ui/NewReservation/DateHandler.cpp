@@ -32,8 +32,6 @@ void DateHandler::update(QSet<int> selectedCols)
   _reservation.setEndDate(endDate);
   ui->beginCalendarWidget->setSelectedDate(beginDate);
   ui->endCalendarWidget->setSelectedDate(endDate);
-
-  emit dateChanged();
 }
 
 void DateHandler::onBeginCalendarWidgetClicked(const QDate& date)
@@ -43,8 +41,6 @@ void DateHandler::onBeginCalendarWidgetClicked(const QDate& date)
   {
     setEndDateToBeginDate();
   }
-
-  emit dateChanged();
 }
 
 void DateHandler::onEndCalendarWidgetClicked(const QDate& date)
@@ -57,8 +53,6 @@ void DateHandler::onEndCalendarWidgetClicked(const QDate& date)
   {
     setEndDateToBeginDate();
   }
-
-  emit dateChanged();
 }
 
 void DateHandler::setEndDateToBeginDate()

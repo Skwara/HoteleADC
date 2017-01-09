@@ -16,7 +16,6 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
 {
   ui->setupUi(this);
   setupHandlers();
-  connectHandlers();
 
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
@@ -46,16 +45,6 @@ void NewReservationDialog::setupHandlers()
   _date.setup();
   _additional.setup();
   _summary.setup();
-}
-
-void NewReservationDialog::connectHandlers()
-{
-  // TODO Refactor that everything uses reservation and it send signals when sth has changed
-  connect(&_rooms, SIGNAL(roomsChanged()), &_participants, SLOT(update()));
-  connect(&_rooms, SIGNAL(roomsChanged()), &_summary, SLOT(update()));
-  connect(&_date, SIGNAL(dateChanged()), &_additional, SLOT(update()));
-  connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(update()));
-  connect(&_additional, SIGNAL(additionalChanged()), &_summary, SLOT(update()));
 }
 
 QSet<int> NewReservationDialog::getSelectedRows(QSet<QModelIndex> allSelected)

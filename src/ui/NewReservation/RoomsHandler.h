@@ -21,9 +21,6 @@ public:
 
   void setup();
 
-signals:
-  void roomsChanged();
-
 public slots:
   void update(QSet<int> selectedRows);
 

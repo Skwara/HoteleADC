@@ -8,7 +8,7 @@ AdditionalHandler::AdditionalHandler(Ui::NewReservationDialog* ui, Reservation& 
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
 {
-
+  connect(&reservation, SIGNAL(dateChanged()), this, SLOT(update()));
 }
 
 void AdditionalHandler::setup()
@@ -30,6 +30,4 @@ void AdditionalHandler::update()
 void AdditionalHandler::onParkingCheckBoxToggled(bool checked)
 {
   _reservation.setParking(checked);
-
-  emit additionalChanged();
 }

@@ -24,9 +24,6 @@ public:
 public slots:
   void update(QSet<int> selectedCols);
 
-signals:
-  void dateChanged();
-
 private slots:
   void onBeginCalendarWidgetClicked(const QDate &date);
   void onEndCalendarWidgetClicked(const QDate &date);
