@@ -1,7 +1,7 @@
 #include "RoomsModel.h"
 
 
-RoomsModel* RoomsModel::_instance = nullptr;
+RoomsModel RoomsModel::_instance;
 
 RoomsModel::RoomsModel()
   : _scheduleModel(ScheduleModel::instance())

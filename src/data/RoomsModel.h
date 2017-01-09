@@ -12,11 +12,7 @@ class RoomsModel : public QAbstractListModel
 public:
   static RoomsModel* instance()
   {
-    if (_instance == nullptr)
-    {
-      _instance = new RoomsModel();
-    }
-    return _instance;
+    return &_instance;
   }
 
 public:
@@ -27,7 +23,7 @@ private:
   ScheduleModel* _scheduleModel;
 
 private:
-  static RoomsModel* _instance;
+  static RoomsModel _instance;
 };
 
 #endif // ROOMSMODEL_H

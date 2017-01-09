@@ -4,7 +4,7 @@
 #include <QColor>
 
 
-ScheduleModel* ScheduleModel::_instance = nullptr;
+ScheduleModel ScheduleModel::_instance;
 
 ScheduleModel::ScheduleModel()
   : _dbhandler(DatabaseHandler::instance())

@@ -1,6 +1,6 @@
 #include "DatabaseHandler.h"
 
-DatabaseHandler* DatabaseHandler::_instance = nullptr;
+DatabaseHandler DatabaseHandler::_instance;
 
 DatabaseHandler::DatabaseHandler()
   : _fetched(false)

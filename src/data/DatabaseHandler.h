@@ -16,11 +16,7 @@ public:
 
   static DatabaseHandler* instance()
   {
-    if (_instance == nullptr)
-    {
-      _instance = new DatabaseHandler();
-    }
-    return _instance;
+    return &_instance;
   }
 
   QList<ClientPtr> clients() const { return _clients; }
@@ -54,7 +50,7 @@ private:
   bool _fetched;
 
 private:
-  static DatabaseHandler* _instance;
+  static DatabaseHandler _instance;
 };
 
 #endif // DATABASEHANDLER_H
