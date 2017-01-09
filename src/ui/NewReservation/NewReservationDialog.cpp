@@ -8,8 +8,8 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _reservation()
   , _dbHandler(DatabaseHandler::instance())
   , _main(ui, this)
-  , _participants(ui, this)
   , _rooms(ui, _reservation, this)
+  , _participants(ui, _reservation, this)
   , _date(ui, _reservation, this)
   , _additional(ui, _reservation, this)
   , _summary(ui, _reservation, this)
@@ -41,8 +41,8 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
 void NewReservationDialog::setupHandlers()
 {
   _main.setup();
-  _participants.setup();
   _rooms.setup();
+  _participants.setup();
   _date.setup();
   _additional.setup();
   _summary.setup();
@@ -50,6 +50,8 @@ void NewReservationDialog::setupHandlers()
 
 void NewReservationDialog::connectHandlers()
 {
+  // TODO Refactor that everything uses reservation and it send signals when sth has changed
+  connect(&_rooms, SIGNAL(roomsChanged()), &_participants, SLOT(update()));
   connect(&_rooms, SIGNAL(roomsChanged()), &_summary, SLOT(update()));
   connect(&_date, SIGNAL(dateChanged()), &_additional, SLOT(update()));
   connect(&_date, SIGNAL(dateChanged()), &_summary, SLOT(update()));

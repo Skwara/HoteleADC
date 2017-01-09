@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "data/DatabaseHandler.h"
+#include "data/ParticipantsModel.h"
 
 
 namespace Ui {
@@ -15,7 +16,7 @@ class ParticipantsHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
+  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
 
   void setup();
 
@@ -25,6 +26,8 @@ public slots:
 private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
+
+  ParticipantsModel _participantsModel;
 };
 
 #endif // PARTICIPANTSHANDLER_H

@@ -45,8 +45,8 @@ private:
   DatabaseHandler* _dbHandler;
 
   MainHandler _main;
-  ParticipantsHandler _participants;
   RoomsHandler _rooms;
+  ParticipantsHandler _participants;
   DateHandler _date;
   AdditionalHandler _additional;
   SummaryHandler _summary;
