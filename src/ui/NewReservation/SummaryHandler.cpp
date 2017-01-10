@@ -8,6 +8,7 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
   , _reservation(reservation)
 {
   connect(&reservation, SIGNAL(roomsChanged()), this, SLOT(update()));
+  connect(&reservation, SIGNAL(participantsChanged()), this, SLOT(update()));
   connect(&reservation, SIGNAL(dateChanged()), this, SLOT(update()));
   connect(&reservation, SIGNAL(additionalChanged()), this, SLOT(update()));
 }
@@ -19,22 +20,28 @@ void SummaryHandler::setup()
 
 void SummaryHandler::update()
 {
-  setSummaryDays(_reservation.days());
-  setSummaryRooms(_reservation.rooms().size());
-  setSummaryPrice(_reservation.price());
+  setSummaryDays();
+  setSummaryRooms();
+  setSummaryParticipants();
+  setSummaryPrice();
 }
 
-void SummaryHandler::setSummaryDays(const int days)
+void SummaryHandler::setSummaryDays()
 {
-  ui->daysValueLabel->setText(QString::number(days));
+  ui->daysValueLabel->setText(QString::number(_reservation.days()));
 }
 
-void SummaryHandler::setSummaryRooms(const int rooms)
+void SummaryHandler::setSummaryRooms()
 {
-  ui->roomsValueLabel->setText(QString::number(rooms));
+  ui->roomsValueLabel->setText(QString::number(_reservation.rooms().size()));
 }
 
-void SummaryHandler::setSummaryPrice(const int price)
+void SummaryHandler::setSummaryParticipants()
 {
-  ui->priceValueLabel->setText(QString::number(price));
+  ui->participantsValueLabel->setText(QString::number(_reservation.participantsCount()));
+}
+
+void SummaryHandler::setSummaryPrice()
+{
+  ui->priceValueLabel->setText(QString::number(_reservation.price()));
 }

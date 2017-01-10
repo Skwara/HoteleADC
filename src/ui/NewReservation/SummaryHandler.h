@@ -23,9 +23,10 @@ public slots:
   void update();
 
 private:
-  void setSummaryDays(const int days);
-  void setSummaryRooms(const int rooms);
-  void setSummaryPrice(const int price);
+  void setSummaryDays();
+  void setSummaryRooms();
+  void setSummaryParticipants();
+  void setSummaryPrice();
 
 private:
   Ui::NewReservationDialog* ui;

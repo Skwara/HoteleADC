@@ -4,6 +4,7 @@
 
 Reservation::Reservation()
   : _client(nullptr)
+  , _participantsCount(1)
   , _parking(false)
 {
 }
@@ -13,14 +14,14 @@ ClientPtr Reservation::client() const
   return _client;
 }
 
-QStringList Reservation::participants() const
-{
-  return _participants;
-}
-
 QList<RoomPtr> Reservation::rooms() const
 {
   return _rooms;
+}
+
+int Reservation::participantsCount() const
+{
+  return _participantsCount;
 }
 
 int Reservation::price() const
@@ -30,15 +31,13 @@ int Reservation::price() const
   QDate currentDate = _beginDate;
   while (currentDate < _endDate)
   {
-    price += dbHandler->roomCost(currentDate);
+    price += dbHandler->roomCost(currentDate) * _participantsCount;
     if (_parking)
     {
       price += dbHandler->parkingCost(currentDate);
     }
     currentDate = currentDate.addDays(1);
   }
-
-  price *= _participants.length() + 1;
 
   // TODO Pricing based on rooms. When adding participants, rooms need to be assigned
 
@@ -71,18 +70,6 @@ void Reservation::setClient(ClientPtr client)
   emit clientChanged();
 }
 
-void Reservation::addParticipant(QString participant)
-{
-  _participants.append(participant);
-  emit participantsChanged();
-}
-
-void Reservation::removeParticipant(QString participant)
-{
-  _participants.removeOne(participant);
-  emit participantsChanged();
-}
-
 void Reservation::addRoom(RoomPtr room)
 {
   _rooms.append(room);
@@ -93,6 +80,12 @@ void Reservation::removeRoom(RoomPtr room)
 {
   _rooms.removeOne(room);
   emit roomsChanged();
+}
+
+void Reservation::setParticipantsCount(int count)
+{
+  _participantsCount = count;
+  emit participantsChanged();
 }
 
 void Reservation::setBeginDate(const QDate& date)

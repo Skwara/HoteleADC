@@ -18,8 +18,8 @@ public:
   Reservation();
 
   ClientPtr client() const;
-  QStringList participants() const;
   QList<RoomPtr> rooms() const;
+  int participantsCount() const;
   int price() const;
   QDate beginDate() const;
   QDate endDate() const;
@@ -27,10 +27,9 @@ public:
   bool parking() const;
 
   void setClient(ClientPtr client);
-  void addParticipant(QString participant);
-  void removeParticipant(QString participant);
   void addRoom(RoomPtr room);
   void removeRoom(RoomPtr room);
+  void setParticipantsCount(int count);
   void setBeginDate(const QDate& date);
   void setEndDate(const QDate& date);
   void setParking(bool value);
@@ -44,8 +43,8 @@ signals:
 
 private:
   ClientPtr _client;
-  QStringList _participants;
   QList<RoomPtr> _rooms;
+  int _participantsCount;
 
   QDate _beginDate;
   QDate _endDate;
