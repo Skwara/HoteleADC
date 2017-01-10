@@ -2,6 +2,7 @@
 #include "ui_NewReservationDialog.h"
 
 
+// TODO Calendars should be laid out one above the other
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewReservationDialog)
