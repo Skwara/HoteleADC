@@ -4,7 +4,6 @@
 
 Reservation::Reservation()
   : _client(nullptr)
-  , _participantsCount(1)
   , _parking(false)
 {
 }
@@ -16,12 +15,19 @@ ClientPtr Reservation::client() const
 
 QList<RoomPtr> Reservation::rooms() const
 {
-  return _rooms;
+  QList<RoomPtr> keys = _rooms.keys();
+  std::sort(keys.begin(), keys.end(), [](const RoomPtr& lhs, const RoomPtr& rhs){ return lhs->number() < rhs->number(); });
+  return keys;
 }
 
 int Reservation::participantsCount() const
 {
-  return _participantsCount;
+  return std::accumulate(_rooms.begin(), _rooms.end(), 0);
+}
+
+int Reservation::participantsCountPerRoom(RoomPtr room)
+{
+  return _rooms[room];
 }
 
 int Reservation::price() const
@@ -31,7 +37,7 @@ int Reservation::price() const
   QDate currentDate = _beginDate;
   while (currentDate < _endDate)
   {
-    price += dbHandler->roomCost(currentDate) * _participantsCount;
+    price += dbHandler->roomCost(currentDate) * participantsCount();
     if (_parking)
     {
       price += dbHandler->parkingCost(currentDate);
@@ -72,19 +78,19 @@ void Reservation::setClient(ClientPtr client)
 
 void Reservation::addRoom(RoomPtr room)
 {
-  _rooms.append(room);
+  _rooms.insert(room, 0);
   emit roomsChanged();
 }
 
 void Reservation::removeRoom(RoomPtr room)
 {
-  _rooms.removeOne(room);
+  _rooms.remove(room);
   emit roomsChanged();
 }
 
-void Reservation::setParticipantsCount(int count)
+void Reservation::setRoomParticipants(RoomPtr room, int participantsCount)
 {
-  _participantsCount = count;
+  _rooms[room] = participantsCount;
   emit participantsChanged();
 }
 

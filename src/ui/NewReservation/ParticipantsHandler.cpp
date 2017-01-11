@@ -13,9 +13,8 @@ ParticipantsHandler::ParticipantsHandler(Ui::NewReservationDialog* ui, Reservati
 
 void ParticipantsHandler::setup()
 {
-  ui->participantCountSpinBox->setValue(_reservation.participantsCount());
-
   ui->participantTableView->setModel(&_participantsModel);
+  ui->participantTableView->setItemDelegate(&_participantsModel.delegate());
 
   ui->participantTableView->horizontalHeader()->setMinimumSectionSize(ui->participantTableView->minimumWidth() / 2 - 1);
   ui->participantTableView->horizontalHeader()->setMaximumSectionSize(ui->participantTableView->horizontalHeader()->minimumSectionSize());
@@ -24,16 +23,9 @@ void ParticipantsHandler::setup()
 
   ui->participantTableView->verticalHeader()->hide();
   // TODO Add space for vertical scrolling bar
-
-  connect(ui->participantCountSpinBox, SIGNAL(valueChanged(int)), this, SLOT(onParticipantsCountSpinBoxValueChanged(int)));
 }
 
 void ParticipantsHandler::update()
 {
   _participantsModel.layoutChanged();
-}
-
-void ParticipantsHandler::onParticipantsCountSpinBoxValueChanged(int value)
-{
-  _reservation.setParticipantsCount(value);
 }

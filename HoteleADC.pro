@@ -19,6 +19,8 @@ SOURCES  += src/main.cpp \
             src/data/DatabaseHandler.cpp \
             src/data/ScheduleModel.cpp \
             src/data/RoomsModel.cpp \
+            src/data/ParticipantsModel.cpp \
+            src/data/SpinBoxDelegate.cpp \
             src/logic/Client.cpp \
             src/logic/Reservation.cpp \
             src/logic/Room.cpp \
@@ -30,12 +32,13 @@ SOURCES  += src/main.cpp \
             src/ui/NewReservation/RoomsHandler.cpp \
             src/ui/NewReservation/DateHandler.cpp \
             src/ui/NewReservation/AdditionalHandler.cpp \
-            src/ui/NewReservation/SummaryHandler.cpp \
-    src/data/ParticipantsModel.cpp
+            src/ui/NewReservation/SummaryHandler.cpp
 
 HEADERS  += src/data/DatabaseHandler.h \
             src/data/ScheduleModel.h \
             src/data/RoomsModel.h \
+            src/data/ParticipantsModel.h \
+            src/data/SpinBoxDelegate.h \
             src/logic/Client.h \
             src/logic/Reservation.h \
             src/logic/Room.h \
@@ -47,8 +50,7 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/ui/NewReservation/RoomsHandler.h \
             src/ui/NewReservation/DateHandler.h \
             src/ui/NewReservation/AdditionalHandler.h \
-            src/ui/NewReservation/SummaryHandler.h \
-    src/data/ParticipantsModel.h
+            src/ui/NewReservation/SummaryHandler.h
 
 FORMS    += src/ui/MainWindow.ui \
             src/ui/NewReservation/NewReservationDialog.ui

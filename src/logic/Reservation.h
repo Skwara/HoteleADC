@@ -3,7 +3,7 @@
 
 #include <QObject>
 #include <QDate>
-#include <QStringList>
+#include <QMap>
 
 #include <memory>
 
@@ -20,6 +20,7 @@ public:
   ClientPtr client() const;
   QList<RoomPtr> rooms() const;
   int participantsCount() const;
+  int participantsCountPerRoom(RoomPtr room);
   int price() const;
   QDate beginDate() const;
   QDate endDate() const;
@@ -29,7 +30,7 @@ public:
   void setClient(ClientPtr client);
   void addRoom(RoomPtr room);
   void removeRoom(RoomPtr room);
-  void setParticipantsCount(int count);
+  void setRoomParticipants(RoomPtr room, int participantsCount);
   void setBeginDate(const QDate& date);
   void setEndDate(const QDate& date);
   void setParking(bool value);
@@ -43,8 +44,7 @@ signals:
 
 private:
   ClientPtr _client;
-  QList<RoomPtr> _rooms;
-  int _participantsCount;
+  QMap<RoomPtr, int> _rooms;
 
   QDate _beginDate;
   QDate _endDate;

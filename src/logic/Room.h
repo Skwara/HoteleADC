@@ -7,14 +7,16 @@
 class Room
 {
 public:
-  Room(int number);
+  Room(int number, int maxParticipants);
 
   int number() const { return _number; }
+  int maxParticipants() const { return _maxParticipants; }
 
   bool operator==(const Room& other) { return this->_number == other._number; }
 
 private:
   int _number;
+  int _maxParticipants;
 
 };
 

@@ -130,16 +130,16 @@ void DatabaseHandler::fetchClients()
 void DatabaseHandler::fetchRooms()
 {
   // TODO Mock method for fetching rooms
-  _rooms.push_back(std::make_shared<Room>(Room(1)));
-  _rooms.push_back(std::make_shared<Room>(Room(2)));
-  _rooms.push_back(std::make_shared<Room>(Room(3)));
-  _rooms.push_back(std::make_shared<Room>(Room(4)));
-  _rooms.push_back(std::make_shared<Room>(Room(5)));
-  _rooms.push_back(std::make_shared<Room>(Room(6)));
-  _rooms.push_back(std::make_shared<Room>(Room(7)));
-  _rooms.push_back(std::make_shared<Room>(Room(8)));
-  _rooms.push_back(std::make_shared<Room>(Room(9)));
-  _rooms.push_back(std::make_shared<Room>(Room(10)));
+  _rooms.push_back(std::make_shared<Room>(Room(1, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(2, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(3, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(4, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(5, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(6, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(7, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(8, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(9, 3)));
+  _rooms.push_back(std::make_shared<Room>(Room(10, 3)));
 }
 
 void DatabaseHandler::fetchReservations()
