@@ -11,8 +11,8 @@
 #include "MainHandler.h"
 #include "ParticipantsHandler.h"
 #include "RoomsHandler.h"
-#include "DateHandler.h"
 #include "AdditionalHandler.h"
+#include "DateHandler.h"
 #include "SummaryHandler.h"
 
 
@@ -46,8 +46,8 @@ private:
   MainHandler _main;
   RoomsHandler _rooms;
   ParticipantsHandler _participants;
-  DateHandler _date;
   AdditionalHandler _additional;
+  DateHandler _date;
   SummaryHandler _summary;
 };
 

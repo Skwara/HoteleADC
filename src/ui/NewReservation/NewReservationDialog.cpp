@@ -2,7 +2,6 @@
 #include "ui_NewReservationDialog.h"
 
 
-// TODO Calendars should be laid out one above the other
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewReservationDialog)
@@ -11,13 +10,14 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   , _main(ui, this)
   , _rooms(ui, _reservation, this)
   , _participants(ui, _reservation, this)
-  , _date(ui, _reservation, this)
   , _additional(ui, _reservation, this)
+  , _date(ui, _reservation, this)
   , _summary(ui, _reservation, this)
 {
   ui->setupUi(this);
   setupHandlers();
 
+  this->resize(this->minimumWidth(), this->minimumHeight());
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
@@ -43,8 +43,8 @@ void NewReservationDialog::setupHandlers()
   _main.setup();
   _rooms.setup();
   _participants.setup();
-  _date.setup();
   _additional.setup();
+  _date.setup();
   _summary.setup();
 }
 
