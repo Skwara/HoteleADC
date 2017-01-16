@@ -9,6 +9,7 @@
 #include "logic/Room.h"
 #include "logic/Reservation.h"
 
+
 class DatabaseHandler
 {
   DatabaseHandler();
@@ -25,6 +26,7 @@ public:
   QDate firstDate() const;
   QDate lastDate() const;
   int roomCost(QDate date) const;
+  int emptyPlaceCost(QDate date) const;
   int parkingCost(QDate date) const;
 
   QList<RoomPtr> rooms() const { return _rooms; }
@@ -41,11 +43,14 @@ private:
   void fetchClients();
   void fetchRooms();
   void fetchReservations();
+  void fetchOther();
 
 private:
   QList<ClientPtr> _clients;
   QList<RoomPtr> _rooms;
   QList<ReservationPtr> _reservations;
+
+  float _emptyPlaceFactor;
 
   bool _fetched;
 

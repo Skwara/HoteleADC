@@ -1,5 +1,6 @@
 #include "DatabaseHandler.h"
 
+
 DatabaseHandler DatabaseHandler::_instance;
 
 DatabaseHandler::DatabaseHandler()
@@ -49,6 +50,11 @@ int DatabaseHandler::roomCost(QDate date) const
   }
 }
 
+int DatabaseHandler::emptyPlaceCost(QDate date) const
+{
+  return roomCost(date) * _emptyPlaceFactor;
+}
+
 int DatabaseHandler::parkingCost(QDate date) const
 {
   // TODO Mock method for parking pricing
@@ -93,6 +99,7 @@ void DatabaseHandler::fetch()
   fetchClients();
   fetchRooms();
   fetchReservations();
+  fetchOther();
 
   _fetched = true;
 }
@@ -173,4 +180,10 @@ void DatabaseHandler::fetchReservations()
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 7));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 14));
   _reservations.push_back(reservation);
+}
+
+void DatabaseHandler::fetchOther()
+{
+  // TODO Mock method for fetching other
+  _emptyPlaceFactor = 0.6f;
 }

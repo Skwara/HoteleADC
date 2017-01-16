@@ -5,6 +5,7 @@
 Reservation::Reservation()
   : _client(nullptr)
   , _parking(false)
+  , _countEmptyPlace(true)
 {
 }
 
@@ -30,24 +31,9 @@ int Reservation::participantsCountPerRoom(RoomPtr room)
   return _rooms[room];
 }
 
-int Reservation::price() const
+Price Reservation::price() const
 {
-  DatabaseHandler* dbHandler = DatabaseHandler::instance();
-  int price = 0;
-  QDate currentDate = _beginDate;
-  while (currentDate < _endDate)
-  {
-    price += dbHandler->roomCost(currentDate) * participantsCount();
-    if (_parking)
-    {
-      price += dbHandler->parkingCost(currentDate);
-    }
-    currentDate = currentDate.addDays(1);
-  }
-
-  // TODO Pricing based on rooms. When adding participants, rooms need to be assigned
-
-  return price;
+  return Price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
 }
 
 QDate Reservation::beginDate() const
@@ -68,6 +54,11 @@ int Reservation::days() const
 bool Reservation::parking() const
 {
   return _parking;
+}
+
+bool Reservation::countEmptyPlace() const
+{
+  return _countEmptyPlace;
 }
 
 void Reservation::setClient(ClientPtr client)
@@ -109,5 +100,11 @@ void Reservation::setEndDate(const QDate& date)
 void Reservation::setParking(bool value)
 {
   _parking = value;
+  emit additionalChanged();
+}
+
+void Reservation::setCountEmptyPlace(bool value)
+{
+  _countEmptyPlace = value;
   emit additionalChanged();
 }

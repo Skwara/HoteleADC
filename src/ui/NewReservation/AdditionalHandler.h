@@ -24,6 +24,7 @@ public slots:
 
 private slots:
   void onParkingCheckBoxToggled(bool checked);
+  void onEmptyPlaceCheckBoxToggled(bool checked);
 
 private:
   Ui::NewReservationDialog* ui;

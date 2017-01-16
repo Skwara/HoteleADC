@@ -9,6 +9,8 @@
 
 #include "Client.h"
 #include "Room.h"
+#include "Price.h"
+
 
 class Reservation : public QObject
 {
@@ -21,11 +23,12 @@ public:
   QList<RoomPtr> rooms() const;
   int participantsCount() const;
   int participantsCountPerRoom(RoomPtr room);
-  int price() const;
+  Price price() const;
   QDate beginDate() const;
   QDate endDate() const;
   int days() const;
   bool parking() const;
+  bool countEmptyPlace() const;
 
   void setClient(ClientPtr client);
   void addRoom(RoomPtr room);
@@ -34,6 +37,7 @@ public:
   void setBeginDate(const QDate& date);
   void setEndDate(const QDate& date);
   void setParking(bool value);
+  void setCountEmptyPlace(bool value);
 
 signals:
   void clientChanged();
@@ -50,6 +54,7 @@ private:
   QDate _endDate;
 
   bool _parking;
+  bool _countEmptyPlace;
 };
 
 using ReservationPtr = std::shared_ptr<Reservation>;

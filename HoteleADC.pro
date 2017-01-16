@@ -24,6 +24,7 @@ SOURCES  += src/main.cpp \
             src/logic/Client.cpp \
             src/logic/Reservation.cpp \
             src/logic/Room.cpp \
+            src/logic/Price.cpp \
             src/ui/MainWindow.cpp \
             src/ui/ScheduleTableView.cpp \
             src/ui/NewReservation/NewReservationDialog.cpp \
@@ -42,6 +43,7 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/logic/Client.h \
             src/logic/Reservation.h \
             src/logic/Room.h \
+            src/logic/Price.h \
             src/ui/MainWindow.h \
             src/ui/ScheduleTableView.h \
             src/ui/NewReservation/NewReservationDialog.h \

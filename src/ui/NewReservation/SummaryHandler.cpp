@@ -43,5 +43,5 @@ void SummaryHandler::setSummaryParticipants()
 
 void SummaryHandler::setSummaryPrice()
 {
-  ui->priceValueLabel->setText(QString::number(_reservation.price()));
+  ui->priceValueLabel->setText(QString::number(_reservation.price().fullPrice()));
 }

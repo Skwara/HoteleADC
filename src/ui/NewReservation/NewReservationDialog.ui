@@ -287,6 +287,13 @@
              </widget>
             </item>
             <item>
+             <widget class="QCheckBox" name="emptyPlaceCheckBox">
+              <property name="text">
+               <string>Licz puste</string>
+              </property>
+             </widget>
+            </item>
+            <item>
              <spacer name="verticalSpacer_3">
               <property name="orientation">
                <enum>Qt::Vertical</enum>
