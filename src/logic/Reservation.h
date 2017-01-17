@@ -47,6 +47,9 @@ signals:
   void dateChanged();
   void additionalChanged();
 
+private slots:
+  void updatePrice();
+
 private:
   ClientPtr _client;
   QMap<RoomPtr, int> _rooms;
@@ -56,6 +59,8 @@ private:
 
   bool _parking;
   bool _countEmptyPlace;
+
+  Price _price;
 };
 
 using ReservationPtr = std::shared_ptr<Reservation>;

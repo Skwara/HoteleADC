@@ -6,7 +6,12 @@ Reservation::Reservation()
   : _client(nullptr)
   , _parking(false)
   , _countEmptyPlace(true)
+  , _price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace)
 {
+  connect(this, SIGNAL(dateChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
+  connect(this, SIGNAL(roomsChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
+  connect(this, SIGNAL(participantsChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
+  connect(this, SIGNAL(additionalChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
 }
 
 ClientPtr Reservation::client() const
@@ -40,8 +45,7 @@ int Reservation::emptyPlaceCount() const
 
 Price Reservation::price() const
 {
-  // TODO Cache price. Update only if relevant data has been changed
-  return Price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
+  return _price;
 }
 
 QDate Reservation::beginDate() const
@@ -115,4 +119,9 @@ void Reservation::setCountEmptyPlace(bool value)
 {
   _countEmptyPlace = value;
   emit additionalChanged();
+}
+
+void Reservation::updatePrice()
+{
+  _price = Price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
 }
