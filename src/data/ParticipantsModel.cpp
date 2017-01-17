@@ -4,6 +4,7 @@ ParticipantsModel::ParticipantsModel(Reservation& reservation)
   : _spinBoxDelegate(reservation, this)
   , _reservation(reservation)
 {
+  connect(&reservation, SIGNAL(roomsChanged()), this, SIGNAL(layoutChanged()));
 }
 
 SpinBoxDelegate& ParticipantsModel::delegate()
@@ -84,7 +85,6 @@ bool ParticipantsModel::setData(const QModelIndex& index, const QVariant& value,
   if (index.isValid() && role == Qt::EditRole)
   {
     _reservation.setRoomParticipants(_reservation.rooms()[index.row()], value.toInt());
-    emit dataChanged(this->index(0, 1), this->index(this->rowCount() - 1, 1));
     return true;
   }
 

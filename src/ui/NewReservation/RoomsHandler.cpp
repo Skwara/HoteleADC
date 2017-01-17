@@ -1,20 +1,19 @@
 #include "RoomsHandler.h"
 #include "ui_NewReservationDialog.h"
 
-#include "src/data/RoomsModel.h"
-
 
 RoomsHandler::RoomsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent)
   : QObject(parent)
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
+  , _roomsModel()
 {
 }
 
 void RoomsHandler::setup()
 {
-  ui->roomListView->setModel(RoomsModel::instance());
+  ui->roomListView->setModel(&_roomsModel);
   ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
   connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));

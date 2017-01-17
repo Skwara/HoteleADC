@@ -8,22 +8,14 @@
 
 class RoomsModel : public QAbstractListModel
 {
+public:
   RoomsModel();
-public:
-  static RoomsModel* instance()
-  {
-    return &_instance;
-  }
 
-public:
   int rowCount(const QModelIndex& parent) const;
   QVariant data(const QModelIndex& index, int role) const;
 
 private:
   ScheduleModel* _scheduleModel;
-
-private:
-  static RoomsModel _instance;
 };
 
 #endif // ROOMSMODEL_H

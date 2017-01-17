@@ -6,6 +6,7 @@
 #include <QItemSelection>
 
 #include "data/DatabaseHandler.h"
+#include "src/data/RoomsModel.h"
 
 
 namespace Ui {
@@ -32,6 +33,7 @@ private:
   DatabaseHandler* _dbHandler;
 
   Reservation& _reservation;
+  RoomsModel _roomsModel;
 };
 
 #endif // ROOMSHANDLER_H
