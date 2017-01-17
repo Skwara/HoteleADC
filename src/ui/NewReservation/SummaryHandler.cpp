@@ -6,6 +6,7 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
+  , _summaryModel(reservation)
 {
   connect(&reservation, SIGNAL(roomsChanged()), this, SLOT(update()));
   connect(&reservation, SIGNAL(participantsChanged()), this, SLOT(update()));
@@ -15,33 +16,15 @@ SummaryHandler::SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reserv
 
 void SummaryHandler::setup()
 {
+  ui->summaryTableView->setModel(&_summaryModel);
+  ui->summaryTableView->horizontalHeader()->hide();
+  ui->summaryTableView->verticalHeader()->hide();
+  ui->summaryTableView->horizontalHeader()->setSectionResizeMode(_summaryModel.columnCount() - 1, QHeaderView::Stretch);
+
   update();
 }
 
 void SummaryHandler::update()
 {
-  setSummaryDays();
-  setSummaryRooms();
-  setSummaryParticipants();
-  setSummaryPrice();
-}
-
-void SummaryHandler::setSummaryDays()
-{
-  ui->daysValueLabel->setText(QString::number(_reservation.days()));
-}
-
-void SummaryHandler::setSummaryRooms()
-{
-  ui->roomsValueLabel->setText(QString::number(_reservation.rooms().size()));
-}
-
-void SummaryHandler::setSummaryParticipants()
-{
-  ui->participantsValueLabel->setText(QString::number(_reservation.participantsCount()));
-}
-
-void SummaryHandler::setSummaryPrice()
-{
-  ui->priceValueLabel->setText(QString::number(_reservation.price().fullPrice()));
+  _summaryModel.layoutChanged();
 }

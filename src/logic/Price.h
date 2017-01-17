@@ -13,7 +13,9 @@ public:
   Price(QDate beginDate, QDate endDate, QMap<RoomPtr, int> rooms, bool parking, bool countEmptyPlace);
 
   int roomPrice(RoomPtr room) const { return _roomParticipantsPrices[room]; }
+  int roomsPrice() const;
   int roomEmptyPlacePrice(RoomPtr room) const { return _roomEmptyPlacePrices[room]; }
+  int roomsEmptyPlacePrice() const;
   int parkingPrice() const { return _parkingPrice; }
   int fullPrice() const;
 

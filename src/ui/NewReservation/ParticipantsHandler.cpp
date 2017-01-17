@@ -27,4 +27,5 @@ void ParticipantsHandler::setup()
 
 void ParticipantsHandler::update()
 {
+  _participantsModel.layoutChanged();
 }

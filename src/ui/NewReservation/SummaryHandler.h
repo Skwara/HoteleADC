@@ -4,6 +4,7 @@
 #include <QObject>
 
 #include "data/DatabaseHandler.h"
+#include "data/SummaryModel.h"
 
 
 namespace Ui {
@@ -23,16 +24,11 @@ public slots:
   void update();
 
 private:
-  void setSummaryDays();
-  void setSummaryRooms();
-  void setSummaryParticipants();
-  void setSummaryPrice();
-
-private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
 
   Reservation& _reservation;
+  SummaryModel _summaryModel;
 };
 
 #endif // SUMMARYHANDLER_H

@@ -23,6 +23,7 @@ public:
   QList<RoomPtr> rooms() const;
   int participantsCount() const;
   int participantsCountPerRoom(RoomPtr room);
+  int emptyPlaceCount() const;
   Price price() const;
   QDate beginDate() const;
   QDate endDate() const;

@@ -14,6 +14,32 @@ Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, int> rooms, bool park
   calculatePrice();
 }
 
+int Price::roomsPrice() const
+{
+  if (_roomParticipantsPrices.size() > 0)
+  {
+    QList<int> values = _roomParticipantsPrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int Price::roomsEmptyPlacePrice() const
+{
+  if (_roomEmptyPlacePrices.size() > 0)
+  {
+    QList<int> values = _roomEmptyPlacePrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 int Price::fullPrice() const
 {
   int price = 0;

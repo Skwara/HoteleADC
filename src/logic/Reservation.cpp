@@ -31,8 +31,16 @@ int Reservation::participantsCountPerRoom(RoomPtr room)
   return _rooms[room];
 }
 
+int Reservation::emptyPlaceCount() const
+{
+  QList<RoomPtr> rooms = _rooms.keys();
+  int placeCount = std::accumulate(rooms.begin(), rooms.end(), 0, [](int sum, const RoomPtr& room){ return sum + room->maxParticipants(); });
+  return placeCount - participantsCount();
+}
+
 Price Reservation::price() const
 {
+  // TODO Cache price. Update only if relevant data has been changed
   return Price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
 }
 

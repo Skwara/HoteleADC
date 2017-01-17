@@ -4,7 +4,6 @@ ParticipantsModel::ParticipantsModel(Reservation& reservation)
   : _spinBoxDelegate(reservation, this)
   , _reservation(reservation)
 {
-  connect(&reservation, SIGNAL(roomsChanged()), this, SIGNAL(layoutChanged()));
 }
 
 SpinBoxDelegate& ParticipantsModel::delegate()
