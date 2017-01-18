@@ -27,6 +27,7 @@ public:
   QDate lastDate() const;
   int roomCost(QDate date) const;
   int emptyPlaceCost(QDate date) const;
+  int additionalPlaceCost(QDate date) const;
   int parkingCost(QDate date) const;
 
   QList<RoomPtr> rooms() const { return _rooms; }
@@ -51,6 +52,7 @@ private:
   QList<ReservationPtr> _reservations;
 
   float _emptyPlaceFactor;
+  float _additionalPlaceFactor;
 
   bool _fetched;
 

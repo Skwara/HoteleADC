@@ -21,8 +21,10 @@ public:
 
   ClientPtr client() const;
   QList<RoomPtr> rooms() const;
-  int participantsCount() const;
-  int participantsCountPerRoom(RoomPtr room);
+  int mainParticipantsCount() const;
+  int mainParticipantsCountPerRoom(RoomPtr room) const;
+  int additionalParticipantsCount() const;
+  int additionalParticipantsCountPerRoom(RoomPtr room) const;
   int emptyPlaceCount() const;
   Price price() const;
   QDate beginDate() const;
@@ -34,7 +36,8 @@ public:
   void setClient(ClientPtr client);
   void addRoom(RoomPtr room);
   void removeRoom(RoomPtr room);
-  void setRoomParticipants(RoomPtr room, int participantsCount);
+  void setRoomMainParticipants(RoomPtr room, int mainParticipantsCount);
+  void setRoomAdditionalParticipants(RoomPtr room, int additionalParticipantsCount);
   void setBeginDate(const QDate& date);
   void setEndDate(const QDate& date);
   void setParking(bool value);
@@ -52,7 +55,7 @@ private slots:
 
 private:
   ClientPtr _client;
-  QMap<RoomPtr, int> _rooms;
+  QMap<RoomPtr, QPair<int, int>> _rooms; // QPair<participants, additional>
 
   QDate _beginDate;
   QDate _endDate;

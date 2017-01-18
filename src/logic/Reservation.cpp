@@ -26,21 +26,33 @@ QList<RoomPtr> Reservation::rooms() const
   return keys;
 }
 
-int Reservation::participantsCount() const
+int Reservation::mainParticipantsCount() const
 {
-  return std::accumulate(_rooms.begin(), _rooms.end(), 0);
+  return std::accumulate(_rooms.begin(), _rooms.end(), 0,
+                         [](int sum, QPair<int, int> val){ return sum + val.first; });
 }
 
-int Reservation::participantsCountPerRoom(RoomPtr room)
+int Reservation::mainParticipantsCountPerRoom(RoomPtr room) const
 {
-  return _rooms[room];
+  return _rooms[room].first;
+}
+
+int Reservation::additionalParticipantsCount() const
+{
+  return std::accumulate(_rooms.begin(), _rooms.end(), 0,
+                         [](int sum, QPair<int, int> val){ return sum + val.second; });
+}
+
+int Reservation::additionalParticipantsCountPerRoom(RoomPtr room) const
+{
+  return _rooms[room].second;
 }
 
 int Reservation::emptyPlaceCount() const
 {
   QList<RoomPtr> rooms = _rooms.keys();
   int placeCount = std::accumulate(rooms.begin(), rooms.end(), 0, [](int sum, const RoomPtr& room){ return sum + room->maxParticipants(); });
-  return placeCount - participantsCount();
+  return placeCount - mainParticipantsCount();
 }
 
 Price Reservation::price() const
@@ -81,7 +93,7 @@ void Reservation::setClient(ClientPtr client)
 
 void Reservation::addRoom(RoomPtr room)
 {
-  _rooms.insert(room, 0);
+  _rooms.insert(room, QPair<int, int>(0, 0));
   emit roomsChanged();
 }
 
@@ -91,9 +103,15 @@ void Reservation::removeRoom(RoomPtr room)
   emit roomsChanged();
 }
 
-void Reservation::setRoomParticipants(RoomPtr room, int participantsCount)
+void Reservation::setRoomMainParticipants(RoomPtr room, int mainParticipantsCount)
 {
-  _rooms[room] = participantsCount;
+  _rooms[room].first = mainParticipantsCount;
+  emit participantsChanged();
+}
+
+void Reservation::setRoomAdditionalParticipants(RoomPtr room, int additionalParticipantsCount)
+{
+  _rooms[room].second = additionalParticipantsCount;
   emit participantsChanged();
 }
 

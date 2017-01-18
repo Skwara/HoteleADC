@@ -19,15 +19,17 @@ public:
   QVariant data(const QModelIndex& index, int role) const;
 
 private:
-  static const int _rowCount = 8;
+  static const int _rowCount = 10;
   static const QString rowName(int row)
   {
     static const QString rows[_rowCount] = {"Ilość dni",
                                             "Ilość pokoi",
                                             "Ilość osób",
                                             "Ilość pustych",
+                                            "Ilość dostawek",
                                             "Koszt pokoju",
                                             "Koszt pustych",
+                                            "Koszt dostawek",
                                             "Koszt parkingu",
                                             "Koszt całkowity"};
     return rows[row];

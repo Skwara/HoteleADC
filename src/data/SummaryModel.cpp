@@ -49,21 +49,27 @@ QVariant SummaryModel::rowValue(int row) const
     return _reservation.rooms().size();
     break;
   case 2:
-    return _reservation.participantsCount();
+    return _reservation.mainParticipantsCount();
     break;
   case 3:
     return _reservation.emptyPlaceCount();
     break;
   case 4:
-    return _reservation.price().roomsPrice();
+    return _reservation.additionalParticipantsCount();
     break;
   case 5:
-    return _reservation.price().roomsEmptyPlacePrice();
+    return _reservation.price().roomsPrice();
     break;
   case 6:
-    return _reservation.price().parkingPrice();
+    return _reservation.price().roomsEmptyPlacePrice();
     break;
   case 7:
+    return _reservation.price().roomsAdditionalPlacePrice();
+    break;
+  case 8:
+    return _reservation.price().parkingPrice();
+    break;
+  case 9:
     return _reservation.price().fullPrice();
     break;
   default:

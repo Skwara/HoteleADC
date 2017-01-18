@@ -55,6 +55,11 @@ int DatabaseHandler::emptyPlaceCost(QDate date) const
   return roomCost(date) * _emptyPlaceFactor;
 }
 
+int DatabaseHandler::additionalPlaceCost(QDate date) const
+{
+  return roomCost(date) * _additionalPlaceFactor;
+}
+
 int DatabaseHandler::parkingCost(QDate date) const
 {
   // TODO Mock method for parking pricing
@@ -186,4 +191,5 @@ void DatabaseHandler::fetchOther()
 {
   // TODO Mock method for fetching other
   _emptyPlaceFactor = 0.6f;
+  _additionalPlaceFactor = 0.6f;
 }

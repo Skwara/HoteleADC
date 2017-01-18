@@ -18,7 +18,7 @@ int ParticipantsModel::rowCount(const QModelIndex& /*parent*/) const
 
 int ParticipantsModel::columnCount(const QModelIndex& /*parent*/) const
 {
-  return 2;
+  return 3;
 }
 
 QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
@@ -37,7 +37,11 @@ QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
     }
     else if (index.column() == 1)
     {
-      return _reservation.participantsCountPerRoom(room);
+      return _reservation.mainParticipantsCountPerRoom(room);
+    }
+    else if (index.column() == 2)
+    {
+      return _reservation.additionalParticipantsCountPerRoom(room);
     }
   }
 
@@ -58,6 +62,10 @@ QVariant ParticipantsModel::headerData(int section, Qt::Orientation orientation,
       {
         return "Osoby";
       }
+      else if (section == 2)
+      {
+        return "Dostawki";
+      }
     }
   }
 
@@ -71,7 +79,7 @@ Qt::ItemFlags ParticipantsModel::flags(const QModelIndex& index) const
     return Qt::ItemIsEnabled;
   }
 
-  if (index.column() == 1)
+  if (index.column() == 1 || index.column() == 2)
   {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
   }
@@ -83,8 +91,16 @@ bool ParticipantsModel::setData(const QModelIndex& index, const QVariant& value,
 {
   if (index.isValid() && role == Qt::EditRole)
   {
-    _reservation.setRoomParticipants(_reservation.rooms()[index.row()], value.toInt());
-    return true;
+    if (index.column() == 1)
+    {
+      _reservation.setRoomMainParticipants(_reservation.rooms()[index.row()], value.toInt());
+      return true;
+    }
+    else if (index.column() == 2)
+    {
+      _reservation.setRoomAdditionalParticipants(_reservation.rooms()[index.row()], value.toInt());
+      return true;
+    }
   }
 
   return false;

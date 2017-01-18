@@ -3,7 +3,7 @@
 #include "data/DatabaseHandler.h"
 
 
-Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, int> rooms, bool parking, bool countEmptyPlace)
+Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace)
   : _parkingPrice(0)
   , _beginDate(beginDate)
   , _endDate(endDate)
@@ -40,6 +40,19 @@ int Price::roomsEmptyPlacePrice() const
   }
 }
 
+int Price::roomsAdditionalPlacePrice() const
+{
+  if (_roomAdditionalParticipantsPrices.size() > 0)
+  {
+    QList<int> values = _roomAdditionalParticipantsPrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
 int Price::fullPrice() const
 {
   int price = 0;
@@ -47,6 +60,7 @@ int Price::fullPrice() const
   {
     price += _roomParticipantsPrices[room];
     price += _roomEmptyPlacePrices[room];
+    price += _roomAdditionalParticipantsPrices[room];
   }
 
   if (_parking)
@@ -76,7 +90,8 @@ void Price::addRoomsPrice(QDate currentDate)
 {
   foreach (RoomPtr room, _rooms.keys())
   {
-    _roomParticipantsPrices[room] += DatabaseHandler::instance()->roomCost(currentDate) * _rooms[room];
+    _roomParticipantsPrices[room] += DatabaseHandler::instance()->roomCost(currentDate) * _rooms[room].first;
+    _roomAdditionalParticipantsPrices[room] += DatabaseHandler::instance()->additionalPlaceCost(currentDate) * _rooms[room].second;
     if (_countEmptyPlace)
     {
       addEmptyPlacePrice(currentDate, room);
@@ -86,7 +101,7 @@ void Price::addRoomsPrice(QDate currentDate)
 
 void Price::addEmptyPlacePrice(QDate currentDate, RoomPtr room)
 {
-  int roomEmptyPlaceCount = room->maxParticipants() - _rooms[room];
+  int roomEmptyPlaceCount = room->maxParticipants() - _rooms[room].first;
   if (roomEmptyPlaceCount > 0)
   {
     _roomEmptyPlacePrices[room] += DatabaseHandler::instance()->emptyPlaceCost(currentDate) * roomEmptyPlaceCount;

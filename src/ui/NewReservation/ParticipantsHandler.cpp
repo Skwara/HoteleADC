@@ -16,7 +16,7 @@ void ParticipantsHandler::setup()
   ui->participantTableView->setModel(&_participantsModel);
   ui->participantTableView->setItemDelegate(&_participantsModel.delegate());
 
-  ui->participantTableView->horizontalHeader()->setMinimumSectionSize(ui->participantTableView->minimumWidth() / 2 - 1);
+  ui->participantTableView->horizontalHeader()->setMinimumSectionSize(ui->participantTableView->minimumWidth() / _participantsModel.columnCount() - 1);
   ui->participantTableView->horizontalHeader()->setMaximumSectionSize(ui->participantTableView->horizontalHeader()->minimumSectionSize());
   ui->participantTableView->horizontalHeader()->setFixedHeight(25);
   ui->participantTableView->resizeColumnsToContents();

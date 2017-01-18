@@ -10,12 +10,14 @@
 class Price
 {
 public:
-  Price(QDate beginDate, QDate endDate, QMap<RoomPtr, int> rooms, bool parking, bool countEmptyPlace);
+  Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace);
 
   int roomPrice(RoomPtr room) const { return _roomParticipantsPrices[room]; }
   int roomsPrice() const;
   int roomEmptyPlacePrice(RoomPtr room) const { return _roomEmptyPlacePrices[room]; }
   int roomsEmptyPlacePrice() const;
+  int roomAdditionalPlacePrice(RoomPtr room) const { return _roomAdditionalParticipantsPrices[room]; }
+  int roomsAdditionalPlacePrice() const;
   int parkingPrice() const { return _parkingPrice; }
   int fullPrice() const;
 
@@ -28,12 +30,13 @@ private:
 private:
   QMap<RoomPtr, int> _roomParticipantsPrices;
   QMap<RoomPtr, int> _roomEmptyPlacePrices;
+  QMap<RoomPtr, int> _roomAdditionalParticipantsPrices;
   int _parkingPrice;
 
 private:
   QDate _beginDate;
   QDate _endDate;
-  QMap<RoomPtr, int> _rooms;
+  QMap<RoomPtr, QPair<int, int>> _rooms;
   bool _parking;
   bool _countEmptyPlace;
 };
