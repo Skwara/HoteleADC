@@ -1,6 +1,7 @@
 #include "DatabaseHandler.h"
 
 
+// TODO Connect mock methods to database
 DatabaseHandler DatabaseHandler::_instance;
 
 DatabaseHandler::DatabaseHandler()
@@ -27,19 +28,16 @@ QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString
 
 QDate DatabaseHandler::firstDate() const
 {
-  // TODO Mock method for first date
   return QDate(QDate::currentDate().year(), 5, 1);
 }
 
 QDate DatabaseHandler::lastDate() const
 {
-  // TODO Mock method for last date
   return QDate(QDate::currentDate().year(), 10, 31);
 }
 
 int DatabaseHandler::roomCost(QDate date) const
 {
-  // TODO Mock method for room pricing
   if (date.month() >= 5 && date.month() <= 8)
   {
     return 100;
@@ -62,7 +60,6 @@ int DatabaseHandler::additionalPlaceCost(QDate date) const
 
 int DatabaseHandler::parkingCost(QDate date) const
 {
-  // TODO Mock method for parking pricing
   if (date.month() >= 5 && date.month() <= 8)
   {
     return 10;
@@ -91,7 +88,7 @@ ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPt
 
 bool DatabaseHandler::hasAvailableParkingSpace(const Reservation& /*reservation*/) const
 {
-  return true; // TODO Check with database
+  return true;
 }
 
 void DatabaseHandler::fetch()
@@ -111,7 +108,6 @@ void DatabaseHandler::fetch()
 
 void DatabaseHandler::fetchClients()
 {
-  // TODO Mock method for fetching clients
   _clients.push_back(std::make_shared<Client>(
                      Client("Kowalski", "Jan",
                             Address("al. Pokoju", "22/10", "31-564", "Kraków", "Polska"),
@@ -141,7 +137,6 @@ void DatabaseHandler::fetchClients()
 
 void DatabaseHandler::fetchRooms()
 {
-  // TODO Mock method for fetching rooms
   _rooms.push_back(std::make_shared<Room>(Room(1, 3)));
   _rooms.push_back(std::make_shared<Room>(Room(2, 3)));
   _rooms.push_back(std::make_shared<Room>(Room(3, 3)));
@@ -156,7 +151,6 @@ void DatabaseHandler::fetchRooms()
 
 void DatabaseHandler::fetchReservations()
 {
-  // TODO Mock method for fetching reservations
   ReservationPtr reservation = std::make_shared<Reservation>();
 
   reservation->setClient(_clients[0]);
@@ -189,7 +183,6 @@ void DatabaseHandler::fetchReservations()
 
 void DatabaseHandler::fetchOther()
 {
-  // TODO Mock method for fetching other
   _emptyPlaceFactor = 0.6f;
   _additionalPlaceFactor = 0.6f;
 }
