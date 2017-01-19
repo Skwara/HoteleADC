@@ -1,6 +1,6 @@
-#include "src/ui/ScheduleTableView.h"
+#include "ScheduleTableView.h"
 
-#include "src/data/ScheduleModel.h"
+#include "src/data/NewReservation/ScheduleModel.h"
 
 #include <QHeaderView>
 

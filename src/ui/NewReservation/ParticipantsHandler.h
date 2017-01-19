@@ -4,7 +4,7 @@
 #include <QObject>
 
 #include "data/DatabaseHandler.h"
-#include "data/ParticipantsModel.h"
+#include "data/NewReservation/ParticipantsModel.h"
 
 
 namespace Ui {

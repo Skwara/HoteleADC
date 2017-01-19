@@ -6,7 +6,7 @@
 #include <QItemSelection>
 
 #include "data/DatabaseHandler.h"
-#include "src/data/RoomsModel.h"
+#include "src/data/NewReservation/RoomsModel.h"
 
 
 namespace Ui {

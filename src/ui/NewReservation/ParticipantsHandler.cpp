@@ -16,13 +16,11 @@ void ParticipantsHandler::setup()
   ui->participantTableView->setModel(&_participantsModel);
   ui->participantTableView->setItemDelegate(&_participantsModel.delegate());
 
-  ui->participantTableView->horizontalHeader()->setMinimumSectionSize(ui->participantTableView->minimumWidth() / _participantsModel.columnCount() - 1);
-  ui->participantTableView->horizontalHeader()->setMaximumSectionSize(ui->participantTableView->horizontalHeader()->minimumSectionSize());
+  ui->participantTableView->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
   ui->participantTableView->horizontalHeader()->setFixedHeight(25);
   ui->participantTableView->resizeColumnsToContents();
 
   ui->participantTableView->verticalHeader()->hide();
-  // TODO Add space for vertical scrolling bar
 }
 
 void ParticipantsHandler::update()
