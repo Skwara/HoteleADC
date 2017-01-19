@@ -14,6 +14,20 @@ Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> room
   calculatePrice();
 }
 
+void Price::update(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int> > rooms, bool parking, bool countEmptyPlace)
+{
+  _roomParticipantsPrices.clear();
+  _roomEmptyPlacePrices.clear();
+  _roomAdditionalParticipantsPrices.clear();
+  _parkingPrice = 0;
+  _beginDate = beginDate;
+  _endDate = endDate;
+  _rooms = rooms;
+  _parking = parking;
+  _countEmptyPlace = countEmptyPlace;
+  calculatePrice();
+}
+
 int Price::roomsPrice() const
 {
   if (_roomParticipantsPrices.size() > 0)

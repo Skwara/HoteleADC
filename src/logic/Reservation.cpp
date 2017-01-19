@@ -141,5 +141,5 @@ void Reservation::setCountEmptyPlace(bool value)
 
 void Reservation::updatePrice()
 {
-  _price = Price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
+  _price.update(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);
 }

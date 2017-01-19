@@ -12,6 +12,8 @@ class Price
 public:
   Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace);
 
+  void update(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace);
+
   int roomPrice(RoomPtr room) const { return _roomParticipantsPrices[room]; }
   int roomsPrice() const;
   int roomEmptyPlacePrice(RoomPtr room) const { return _roomEmptyPlacePrices[room]; }
