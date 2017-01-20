@@ -43,6 +43,12 @@ public:
   void setParking(bool value);
   void setCountEmptyPlace(bool value);
 
+  void setRoomsPrice(int value);
+  void setRoomsEmptyPlacePrice(int value);
+  void setRoomsAdditionalPlacePrice(int value);
+  void setParkingPrice(int value);
+  void setFullPrice(int value);
+
 signals:
   void clientChanged();
   void roomsChanged();

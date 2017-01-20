@@ -7,6 +7,19 @@
 #include <QMap>
 
 
+class PricePair
+{
+public:
+  PricePair(int calculated, int manual, bool hasManual) : _calculated(calculated), _manual(manual), _hasManual(hasManual) {}
+  int calculated() const { return _calculated; }
+  int manual() const { return _manual; }
+  bool hasManual() const { return _hasManual; }
+private:
+  int _calculated;
+  int _manual;
+  bool _hasManual;
+};
+
 class Price
 {
 public:
@@ -15,13 +28,20 @@ public:
   void update(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace);
 
   int roomPrice(RoomPtr room) const { return _roomParticipantsPrices[room]; }
-  int roomsPrice() const;
   int roomEmptyPlacePrice(RoomPtr room) const { return _roomEmptyPlacePrices[room]; }
-  int roomsEmptyPlacePrice() const;
   int roomAdditionalPlacePrice(RoomPtr room) const { return _roomAdditionalParticipantsPrices[room]; }
-  int roomsAdditionalPlacePrice() const;
-  int parkingPrice() const { return _parkingPrice; }
-  int fullPrice() const;
+
+  PricePair roomsPrice() const;
+  PricePair roomsEmptyPlacePrice() const;
+  PricePair roomsAdditionalPlacePrice() const;
+  PricePair parkingPrice() const;
+  PricePair fullPrice() const;
+
+  void setRoomsPrice(int value);
+  void setRoomsEmptyPlacePrice(int value);
+  void setRoomsAdditionalPlacePrice(int value);
+  void setParkingPrice(int value);
+  void setFullPrice(int value);
 
 private:
   void calculatePrice();
@@ -29,11 +49,24 @@ private:
   void addEmptyPlacePrice(QDate currentDate, RoomPtr room);
   void addParkingPrice(QDate currentDate);
 
+  int roomsCalculatedPrice() const;
+  int roomsCalculatedEmptyPlacePrice() const;
+  int roomsCalculatedAdditionalPlacePrice() const;
+  int parkingCalculatedPrice() const;
+  int fullCalculatedPrice() const;
+  int fullManualPrice() const;
+
 private:
   QMap<RoomPtr, int> _roomParticipantsPrices;
   QMap<RoomPtr, int> _roomEmptyPlacePrices;
   QMap<RoomPtr, int> _roomAdditionalParticipantsPrices;
   int _parkingPrice;
+
+  int _manualRoomsPrice = -1;
+  int _manualRoomsEmptyPlacePrice = -1;
+  int _manualRoomsAdditionalPlacePrice = -1;
+  int _manualParkingPrice = -1;
+  int _manualFullPrice = -1;
 
 private:
   QDate _beginDate;

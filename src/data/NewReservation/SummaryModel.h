@@ -18,6 +18,15 @@ public:
   int columnCount(const QModelIndex& parent = QModelIndex()) const;
   QVariant data(const QModelIndex& index, int role) const;
 
+  bool setData(const QModelIndex& index, const QVariant& value, int role);
+  Qt::ItemFlags flags(const QModelIndex& index) const;
+
+private:
+  QVariant rowValue(int row) const;
+  QVariant costRowValue(int row) const;
+  QVariant formatPrice(PricePair price) const;
+  bool isCostRow(int row) const { return row >= 5; }
+
 private:
   static const int _rowCount = 10;
   static const QString rowName(int row)
@@ -35,9 +44,8 @@ private:
     return rows[row];
   }
 
-  QVariant rowValue(int row) const;
-
   Reservation& _reservation;
+
 };
 
 #endif // SUMMARYMODEL_H

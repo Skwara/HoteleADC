@@ -72,21 +72,6 @@ QVariant ParticipantsModel::headerData(int section, Qt::Orientation orientation,
   return QVariant();
 }
 
-Qt::ItemFlags ParticipantsModel::flags(const QModelIndex& index) const
-{
-  if (!index.isValid())
-  {
-    return Qt::ItemIsEnabled;
-  }
-
-  if (index.column() == 1 || index.column() == 2)
-  {
-    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
-  }
-
-  return QAbstractItemModel::flags(index);
-}
-
 bool ParticipantsModel::setData(const QModelIndex& index, const QVariant& value, int role)
 {
   if (index.isValid() && role == Qt::EditRole)
@@ -104,4 +89,19 @@ bool ParticipantsModel::setData(const QModelIndex& index, const QVariant& value,
   }
 
   return false;
+}
+
+Qt::ItemFlags ParticipantsModel::flags(const QModelIndex& index) const
+{
+  if (!index.isValid())
+  {
+    return Qt::ItemIsEnabled;
+  }
+
+  if (index.column() == 1 || index.column() == 2)
+  {
+    return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
+  }
+
+  return QAbstractItemModel::flags(index);
 }

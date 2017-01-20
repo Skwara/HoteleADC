@@ -3,6 +3,7 @@
 #include "data/DatabaseHandler.h"
 
 
+// TODO Refactoring with SummaryModel class
 Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace)
   : _parkingPrice(0)
   , _beginDate(beginDate)
@@ -28,61 +29,98 @@ void Price::update(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>
   calculatePrice();
 }
 
-int Price::roomsPrice() const
+PricePair Price::roomsPrice() const
 {
-  if (_roomParticipantsPrices.size() > 0)
+  int calculated = roomsCalculatedPrice();
+  bool hasManual = _manualRoomsPrice >= 0;
+  return PricePair(calculated, hasManual ? _manualRoomsPrice : calculated, hasManual);
+}
+
+PricePair Price::roomsEmptyPlacePrice() const
+{
+  int calculated = roomsCalculatedEmptyPlacePrice();
+  bool hasManual = _manualRoomsEmptyPlacePrice >= 0;
+  return PricePair(calculated, hasManual ? _manualRoomsEmptyPlacePrice : calculated, hasManual);
+}
+
+PricePair Price::roomsAdditionalPlacePrice() const
+{
+  int calculated = roomsCalculatedAdditionalPlacePrice();
+  bool hasManual = _manualRoomsAdditionalPlacePrice >= 0;
+  return PricePair(calculated, hasManual ? _manualRoomsAdditionalPlacePrice : calculated, hasManual);
+}
+
+PricePair Price::parkingPrice() const
+{
+  int calculated = parkingCalculatedPrice();
+  bool hasManual = _manualParkingPrice >= 0;
+  return PricePair(calculated, hasManual ? _manualParkingPrice : calculated, hasManual);
+}
+
+PricePair Price::fullPrice() const
+{
+  bool hasManual = _manualRoomsPrice >= 0 || _manualRoomsEmptyPlacePrice >= 0 || _manualRoomsAdditionalPlacePrice >= 0 || _manualParkingPrice >= 0;
+  return PricePair(fullCalculatedPrice(), fullManualPrice(), hasManual);
+}
+
+void Price::setRoomsPrice(int value)
+{
+  if (value != roomsCalculatedPrice())
   {
-    QList<int> values = _roomParticipantsPrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    _manualRoomsPrice = value;
   }
   else
   {
-    return 0;
+    _manualRoomsPrice = -1;
   }
 }
 
-int Price::roomsEmptyPlacePrice() const
+void Price::setRoomsEmptyPlacePrice(int value)
 {
-  if (_roomEmptyPlacePrices.size() > 0)
+  if (value != roomsCalculatedEmptyPlacePrice())
   {
-    QList<int> values = _roomEmptyPlacePrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    _manualRoomsEmptyPlacePrice = value;
   }
   else
   {
-    return 0;
+    _manualRoomsEmptyPlacePrice = -1;
   }
 }
 
-int Price::roomsAdditionalPlacePrice() const
+void Price::setRoomsAdditionalPlacePrice(int value)
 {
-  if (_roomAdditionalParticipantsPrices.size() > 0)
+  if (value != roomsCalculatedAdditionalPlacePrice())
   {
-    QList<int> values = _roomAdditionalParticipantsPrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    _manualRoomsAdditionalPlacePrice = value;
   }
   else
   {
-    return 0;
+    _manualRoomsAdditionalPlacePrice = -1;
   }
 }
 
-int Price::fullPrice() const
+void Price::setParkingPrice(int value)
 {
-  int price = 0;
-  foreach (RoomPtr room, _rooms.keys())
+  if (value != parkingCalculatedPrice())
   {
-    price += _roomParticipantsPrices[room];
-    price += _roomEmptyPlacePrices[room];
-    price += _roomAdditionalParticipantsPrices[room];
+    _manualParkingPrice = value;
   }
-
-  if (_parking)
+  else
   {
-    price += _parkingPrice;
+    _manualParkingPrice = -1;
   }
+}
 
-  return price;
+void Price::setFullPrice(int value)
+{
+  if (value != fullCalculatedPrice())
+  {
+    _manualFullPrice = value;
+  }
+  else
+  {
+    _manualFullPrice = -1;
+  }
 }
 
 void Price::calculatePrice()
@@ -125,4 +163,73 @@ void Price::addEmptyPlacePrice(QDate currentDate, RoomPtr room)
 void Price::addParkingPrice(QDate currentDate)
 {
   _parkingPrice += DatabaseHandler::instance()->parkingCost(currentDate);
+}
+
+int Price::roomsCalculatedPrice() const
+{
+  if (_roomParticipantsPrices.size() > 0)
+  {
+    QList<int> values = _roomParticipantsPrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int Price::roomsCalculatedEmptyPlacePrice() const
+{
+  if (_roomEmptyPlacePrices.size() > 0)
+  {
+    QList<int> values = _roomEmptyPlacePrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int Price::roomsCalculatedAdditionalPlacePrice() const
+{
+  if (_roomAdditionalParticipantsPrices.size() > 0)
+  {
+    QList<int> values = _roomAdditionalParticipantsPrices.values();
+    return std::accumulate(values.begin(), values.end(), 0);
+  }
+  else
+  {
+    return 0;
+  }
+}
+
+int Price::parkingCalculatedPrice() const
+{
+  return _parkingPrice;
+}
+
+int Price::fullCalculatedPrice() const
+{
+  return roomsCalculatedPrice() +
+         roomsCalculatedEmptyPlacePrice() +
+         roomsCalculatedAdditionalPlacePrice() +
+         parkingCalculatedPrice();
+}
+
+int Price::fullManualPrice() const
+{
+  if (_manualFullPrice >= 0)
+  {
+    return _manualFullPrice;
+  }
+  else
+  {
+    int price = 0;
+    price += _manualRoomsPrice >= 0 ? _manualRoomsPrice : roomsCalculatedPrice();
+    price += _manualRoomsEmptyPlacePrice >= 0 ? _manualRoomsEmptyPlacePrice : roomsCalculatedEmptyPlacePrice();
+    price += _manualRoomsAdditionalPlacePrice >= 0 ? _manualRoomsAdditionalPlacePrice : roomsCalculatedAdditionalPlacePrice();
+    price += _manualParkingPrice >= 0 ? _manualParkingPrice : parkingCalculatedPrice();
+    return price;
+  }
 }
