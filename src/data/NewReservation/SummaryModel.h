@@ -25,7 +25,6 @@ private:
   QVariant rowValue(int row) const;
   QVariant costRowValue(int row) const;
   QVariant formatPrice(PricePair price) const;
-  bool isCostRow(int row) const { return row >= 5; }
 
 private:
   static const int _rowCount = 10;
@@ -43,6 +42,7 @@ private:
                                             "Koszt całkowity"};
     return rows[row];
   }
+  bool isCostRow(int row) const { return row >= 5; }
 
   Reservation& _reservation;
 
