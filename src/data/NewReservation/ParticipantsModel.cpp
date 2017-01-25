@@ -6,7 +6,7 @@ ParticipantsModel::ParticipantsModel(Reservation& reservation)
 {
 }
 
-SpinBoxDelegate& ParticipantsModel::delegate()
+ParticipantsSpinBoxDelegate& ParticipantsModel::delegate()
 {
   return _spinBoxDelegate;
 }

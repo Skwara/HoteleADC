@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 
-#include "SpinBoxDelegate.h"
+#include "ParticipantsSpinBoxDelegate.h"
 #include "logic/Reservation.h"
 
 
@@ -15,7 +15,7 @@ public:
   ParticipantsModel(Reservation& reservation);
 
 public:
-  SpinBoxDelegate& delegate();
+  ParticipantsSpinBoxDelegate& delegate();
 
   int rowCount(const QModelIndex& parent = QModelIndex()) const;
   int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -26,7 +26,7 @@ public:
   Qt::ItemFlags flags(const QModelIndex& index) const;
 
 private:
-  SpinBoxDelegate _spinBoxDelegate;
+  ParticipantsSpinBoxDelegate _spinBoxDelegate;
 
 private:
   Reservation& _reservation;

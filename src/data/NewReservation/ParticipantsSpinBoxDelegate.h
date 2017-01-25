@@ -6,12 +6,12 @@
 #include "logic/Reservation.h"
 
 
-class SpinBoxDelegate : public QStyledItemDelegate
+class ParticipantsSpinBoxDelegate : public QStyledItemDelegate
 {
   Q_OBJECT
 
 public:
-  SpinBoxDelegate(Reservation& reservation, QObject* parent = 0);
+  ParticipantsSpinBoxDelegate(Reservation& reservation, QObject* parent = 0);
 
   QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
   void setEditorData(QWidget* editor, const QModelIndex& index) const;
