@@ -25,9 +25,10 @@ private:
   QVariant rowValue(int row) const;
   QVariant rowEditValue(int row) const;
   QVariant formatPrice(PricePair price) const;
+  QVariant formatDiscount(double discount) const;
 
 private:
-  static const int _rowCount = 10;
+  static const int _rowCount = 11;
   static const QString rowName(int row)
   {
     static const QString rows[_rowCount] = {"Ilość dni",
@@ -39,10 +40,11 @@ private:
                                             "Koszt pustych",
                                             "Koszt dostawek",
                                             "Koszt parkingu",
-                                            "Koszt całkowity"};
+                                            "Koszt całkowity",
+                                            "Rabat"};
     return rows[row];
   }
-  bool isCostRow(int row) const { return row >= 5; }
+  bool isRowEditable(int row) const { return row >= 5; }
 
   Reservation& _reservation;
 

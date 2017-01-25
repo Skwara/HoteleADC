@@ -164,6 +164,11 @@ void Reservation::setFullPrice(int value)
   _price.setFullPrice(value);
 }
 
+void Reservation::setDiscount(double value)
+{
+  _price.setDiscount(value);
+}
+
 void Reservation::updatePrice()
 {
   _price.update(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);

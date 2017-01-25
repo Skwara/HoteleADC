@@ -37,7 +37,7 @@ QVariant SummaryModel::data(const QModelIndex& index, int role) const
   }
   else if (role == Qt::EditRole)
   {
-    if (index.column() == 1 && isCostRow(index.row()))
+    if (index.column() == 1 && isRowEditable(index.row()))
     {
       return QVariant(QString("%1").arg(rowEditValue(index.row()).toInt()));
     }
@@ -52,7 +52,7 @@ bool SummaryModel::setData(const QModelIndex& index, const QVariant& value, int 
   value.toInt(&isNumber);
   if (index.isValid() && role == Qt::EditRole && (isNumber || value.toString().isEmpty()))
   {
-    if (index.column() == 1 && isCostRow(index.row()))
+    if (index.column() == 1 && isRowEditable(index.row()))
     {
       switch (index.row())
       {
@@ -71,6 +71,8 @@ bool SummaryModel::setData(const QModelIndex& index, const QVariant& value, int 
       case 9:
         _reservation.setFullPrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().fullPrice().calculated());
         break;
+      case 10:
+        _reservation.setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
       default:
         return false;
         break;
@@ -89,7 +91,7 @@ Qt::ItemFlags SummaryModel::flags(const QModelIndex& index) const
     return Qt::ItemIsEnabled;
   }
 
-  if (index.column() == 1 && isCostRow(index.row()))
+  if (index.column() == 1 && isRowEditable(index.row()))
   {
     return QAbstractItemModel::flags(index) | Qt::ItemIsEditable;
   }
@@ -103,39 +105,29 @@ QVariant SummaryModel::rowValue(int row) const
   {
   case 0:
     return _reservation.days();
-    break;
   case 1:
     return _reservation.rooms().size();
-    break;
   case 2:
     return _reservation.mainParticipantsCount();
-    break;
   case 3:
     return _reservation.emptyPlaceCount();
-    break;
   case 4:
     return _reservation.additionalParticipantsCount();
-    break;
   case 5:
     return formatPrice(_reservation.price().roomsPrice());
-    break;
   case 6:
     return formatPrice(_reservation.price().roomsEmptyPlacePrice());
-    break;
   case 7:
     return formatPrice(_reservation.price().roomsAdditionalPlacePrice());
-    break;
   case 8:
     return formatPrice(_reservation.price().parkingPrice());
-    break;
   case 9:
     return formatPrice(_reservation.price().fullPrice());
-    break;
+  case 10:
+    return formatDiscount(_reservation.price().discount());
   default:
-    break;
+    return QVariant();
   }
-
-  return QVariant();
 }
 
 QVariant SummaryModel::rowEditValue(int row) const
@@ -144,22 +136,18 @@ QVariant SummaryModel::rowEditValue(int row) const
   {
   case 5:
     return _reservation.price().roomsPrice().manual();
-    break;
   case 6:
     return _reservation.price().roomsEmptyPlacePrice().manual();
-    break;
   case 7:
     return _reservation.price().roomsAdditionalPlacePrice().manual();
-    break;
   case 8:
     return _reservation.price().parkingPrice().manual();
-    break;
   case 9:
     return _reservation.price().fullPrice().manual();
-    break;
+  case 10:
+    return _reservation.price().discount() * 100;
   default:
     return QVariant();
-    break;
   }
 }
 
@@ -174,4 +162,9 @@ QVariant SummaryModel::formatPrice(PricePair price) const
   {
     return QVariant(QString("%1").arg(price.calculated()));
   }
+}
+
+QVariant SummaryModel::formatDiscount(double discount) const
+{
+  return QVariant(QString("%1 %").arg(discount * 100));
 }

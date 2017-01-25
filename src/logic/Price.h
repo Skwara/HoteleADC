@@ -43,6 +43,9 @@ public:
   void setParkingPrice(int value);
   void setFullPrice(int value);
 
+  double discount() const { return _discount; }
+  void setDiscount(double value);
+
 private:
   void calculatePrice();
   void addRoomsPrice(QDate currentDate);
@@ -67,6 +70,8 @@ private:
   int _manualRoomsAdditionalPlacePrice = -1;
   int _manualParkingPrice = -1;
   int _manualFullPrice = -1;
+
+  double _discount;
 
 private:
   QDate _beginDate;

@@ -6,6 +6,7 @@
 // TODO Refactoring with SummaryModel class
 Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> rooms, bool parking, bool countEmptyPlace)
   : _parkingPrice(0)
+  , _discount(0.0)
   , _beginDate(beginDate)
   , _endDate(endDate)
   , _rooms(rooms)
@@ -59,7 +60,7 @@ PricePair Price::parkingPrice() const
 
 PricePair Price::fullPrice() const
 {
-  bool hasManual = _manualRoomsPrice >= 0 || _manualRoomsEmptyPlacePrice >= 0 || _manualRoomsAdditionalPlacePrice >= 0 || _manualParkingPrice >= 0;
+  bool hasManual = _manualRoomsPrice >= 0 || _manualRoomsEmptyPlacePrice >= 0 || _manualRoomsAdditionalPlacePrice >= 0 || _manualParkingPrice >= 0 || _manualFullPrice >= 0;
   return PricePair(fullCalculatedPrice(), fullManualPrice(), hasManual);
 }
 
@@ -123,6 +124,14 @@ void Price::setFullPrice(int value)
   }
 }
 
+void Price::setDiscount(double value)
+{
+  if (value >= 0.0)
+  {
+    _discount = value;
+  }
+}
+
 void Price::calculatePrice()
 {
   QDate currentDate = _beginDate;
@@ -170,7 +179,8 @@ int Price::roomsCalculatedPrice() const
   if (_roomParticipantsPrices.size() > 0)
   {
     QList<int> values = _roomParticipantsPrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    //double multiplier = 1.0 - _discount; // TODO In MinGW 5.3.0 Without this line, 240 * (1.0 - 0.1) gives 215 instead of 216. Same below
+    return std::accumulate(values.begin(), values.end(), 0) * (1.0 - _discount);
   }
   else
   {
@@ -183,7 +193,7 @@ int Price::roomsCalculatedEmptyPlacePrice() const
   if (_roomEmptyPlacePrices.size() > 0)
   {
     QList<int> values = _roomEmptyPlacePrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    return std::accumulate(values.begin(), values.end(), 0) * (1.0 - _discount);
   }
   else
   {
@@ -196,7 +206,7 @@ int Price::roomsCalculatedAdditionalPlacePrice() const
   if (_roomAdditionalParticipantsPrices.size() > 0)
   {
     QList<int> values = _roomAdditionalParticipantsPrices.values();
-    return std::accumulate(values.begin(), values.end(), 0);
+    return std::accumulate(values.begin(), values.end(), 0) * (1.0 - _discount);
   }
   else
   {
@@ -206,7 +216,7 @@ int Price::roomsCalculatedAdditionalPlacePrice() const
 
 int Price::parkingCalculatedPrice() const
 {
-  return _parkingPrice;
+  return _parkingPrice * (1.0 - _discount);
 }
 
 int Price::fullCalculatedPrice() const
@@ -219,17 +229,18 @@ int Price::fullCalculatedPrice() const
 
 int Price::fullManualPrice() const
 {
+  double multiplier = 1.0 - _discount;
   if (_manualFullPrice >= 0)
   {
-    return _manualFullPrice;
+    return _manualFullPrice * multiplier;
   }
   else
   {
     int price = 0;
-    price += _manualRoomsPrice >= 0 ? _manualRoomsPrice : roomsCalculatedPrice();
-    price += _manualRoomsEmptyPlacePrice >= 0 ? _manualRoomsEmptyPlacePrice : roomsCalculatedEmptyPlacePrice();
-    price += _manualRoomsAdditionalPlacePrice >= 0 ? _manualRoomsAdditionalPlacePrice : roomsCalculatedAdditionalPlacePrice();
-    price += _manualParkingPrice >= 0 ? _manualParkingPrice : parkingCalculatedPrice();
+    price += _manualRoomsPrice >= 0 ? _manualRoomsPrice * multiplier : roomsCalculatedPrice();
+    price += _manualRoomsEmptyPlacePrice >= 0 ? _manualRoomsEmptyPlacePrice * multiplier : roomsCalculatedEmptyPlacePrice();
+    price += _manualRoomsAdditionalPlacePrice >= 0 ? _manualRoomsAdditionalPlacePrice * multiplier : roomsCalculatedAdditionalPlacePrice();
+    price += _manualParkingPrice >= 0 ? _manualParkingPrice * multiplier : parkingCalculatedPrice();
     return price;
   }
 }

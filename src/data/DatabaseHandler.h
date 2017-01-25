@@ -51,8 +51,8 @@ private:
   QList<RoomPtr> _rooms;
   QList<ReservationPtr> _reservations;
 
-  float _emptyPlaceFactor;
-  float _additionalPlaceFactor;
+  double _emptyPlaceFactor;
+  double _additionalPlaceFactor;
 
   bool _fetched;
 

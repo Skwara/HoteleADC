@@ -48,6 +48,7 @@ public:
   void setRoomsAdditionalPlacePrice(int value);
   void setParkingPrice(int value);
   void setFullPrice(int value);
+  void setDiscount(double value);
 
 signals:
   void clientChanged();

@@ -183,6 +183,6 @@ void DatabaseHandler::fetchReservations()
 
 void DatabaseHandler::fetchOther()
 {
-  _emptyPlaceFactor = 0.6f;
-  _additionalPlaceFactor = 0.6f;
+  _emptyPlaceFactor = 0.6;
+  _additionalPlaceFactor = 0.6;
 }
