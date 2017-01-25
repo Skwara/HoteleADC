@@ -23,7 +23,7 @@ public:
 
 private:
   QVariant rowValue(int row) const;
-  QVariant costRowValue(int row) const;
+  QVariant rowEditValue(int row) const;
   QVariant formatPrice(PricePair price) const;
 
 private:

@@ -39,7 +39,7 @@ QVariant SummaryModel::data(const QModelIndex& index, int role) const
   {
     if (index.column() == 1 && isCostRow(index.row()))
     {
-      return QVariant(QString("%1").arg(costRowValue(index.row()).toInt()));
+      return QVariant(QString("%1").arg(rowEditValue(index.row()).toInt()));
     }
   }
 
@@ -138,7 +138,7 @@ QVariant SummaryModel::rowValue(int row) const
   return QVariant();
 }
 
-QVariant SummaryModel::costRowValue(int row) const
+QVariant SummaryModel::rowEditValue(int row) const
 {
   switch (row)
   {
