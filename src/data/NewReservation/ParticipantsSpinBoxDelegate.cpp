@@ -3,7 +3,7 @@
 #include <QSpinBox>
 
 
-ParticipantsSpinBoxDelegate::ParticipantsSpinBoxDelegate(Reservation& reservation, QObject* parent)
+ParticipantsSpinBoxDelegate::ParticipantsSpinBoxDelegate(ReservationPtr reservation, QObject* parent)
   : QStyledItemDelegate(parent)
   , _reservation(reservation)
 {
@@ -14,7 +14,7 @@ QWidget* ParticipantsSpinBoxDelegate::createEditor(QWidget* parent, const QStyle
   QSpinBox *editor = new QSpinBox(parent);
   editor->setFrame(false);
   editor->setMinimum(0);
-  editor->setMaximum(_reservation.rooms()[index.row()]->maxParticipants());
+  editor->setMaximum(_reservation->rooms()[index.row()]->maxParticipants());
 
   return editor;
 }

@@ -2,7 +2,7 @@
 #include "ui_NewReservationDialog.h"
 
 
-RoomsHandler::RoomsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent)
+RoomsHandler::RoomsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent)
   : QObject(parent)
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())
@@ -40,12 +40,12 @@ void RoomsHandler::onRoomListViewSelectionChanged(const QItemSelection& selected
   foreach (QModelIndex index, selected.indexes())
   {
     RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
-    _reservation.addRoom(room);
+    _reservation->addRoom(room);
   }
 
   foreach (QModelIndex index, deselected.indexes())
   {
     RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
-    _reservation.removeRoom(room);
+    _reservation->removeRoom(room);
   }
 }

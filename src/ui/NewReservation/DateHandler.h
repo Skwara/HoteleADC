@@ -17,7 +17,7 @@ class DateHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit DateHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
+  explicit DateHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -35,7 +35,7 @@ private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
 
-  Reservation& _reservation;
+  ReservationPtr _reservation;
 };
 
 #endif // DATEHANDLER_H

@@ -27,6 +27,7 @@ void MainWindow::on_newReservationButton_clicked()
   NewReservationDialog* dialog = new NewReservationDialog(this);
   connect(_scheduleTableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
           dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
+  connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));
   dialog->show();
 }
 

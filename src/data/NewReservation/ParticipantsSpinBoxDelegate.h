@@ -11,7 +11,7 @@ class ParticipantsSpinBoxDelegate : public QStyledItemDelegate
   Q_OBJECT
 
 public:
-  ParticipantsSpinBoxDelegate(Reservation& reservation, QObject* parent = 0);
+  ParticipantsSpinBoxDelegate(ReservationPtr reservation, QObject* parent = 0);
 
   QWidget* createEditor(QWidget* parent, const QStyleOptionViewItem& option, const QModelIndex& index) const;
   void setEditorData(QWidget* editor, const QModelIndex& index) const;
@@ -19,7 +19,7 @@ public:
   void updateEditorGeometry(QWidget* editor, const QStyleOptionViewItem& option, const QModelIndex& index) const;
 
 private:
-  Reservation& _reservation;
+  ReservationPtr _reservation;
 };
 
 #endif // SPINBOXDELEGATE_H

@@ -1,6 +1,6 @@
 #include "ParticipantsModel.h"
 
-ParticipantsModel::ParticipantsModel(Reservation& reservation)
+ParticipantsModel::ParticipantsModel(ReservationPtr reservation)
   : _spinBoxDelegate(reservation, this)
   , _reservation(reservation)
 {
@@ -13,7 +13,7 @@ ParticipantsSpinBoxDelegate& ParticipantsModel::delegate()
 
 int ParticipantsModel::rowCount(const QModelIndex& /*parent*/) const
 {
-  return _reservation.rooms().size();
+  return _reservation->rooms().size();
 }
 
 int ParticipantsModel::columnCount(const QModelIndex& /*parent*/) const
@@ -30,18 +30,18 @@ QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
 
   if (role == Qt::DisplayRole || role == Qt::EditRole)
   {
-    RoomPtr room = _reservation.rooms()[index.row()];
+    RoomPtr room = _reservation->rooms()[index.row()];
     if (index.column() == 0)
     {
       return room->number();
     }
     else if (index.column() == 1)
     {
-      return _reservation.mainParticipantsCountPerRoom(room);
+      return _reservation->mainParticipantsCountPerRoom(room);
     }
     else if (index.column() == 2)
     {
-      return _reservation.additionalParticipantsCountPerRoom(room);
+      return _reservation->additionalParticipantsCountPerRoom(room);
     }
   }
 
@@ -78,12 +78,12 @@ bool ParticipantsModel::setData(const QModelIndex& index, const QVariant& value,
   {
     if (index.column() == 1)
     {
-      _reservation.setRoomMainParticipants(_reservation.rooms()[index.row()], value.toInt());
+      _reservation->setRoomMainParticipants(_reservation->rooms()[index.row()], value.toInt());
       return true;
     }
     else if (index.column() == 2)
     {
-      _reservation.setRoomAdditionalParticipants(_reservation.rooms()[index.row()], value.toInt());
+      _reservation->setRoomAdditionalParticipants(_reservation->rooms()[index.row()], value.toInt());
       return true;
     }
   }

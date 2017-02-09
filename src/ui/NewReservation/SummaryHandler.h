@@ -16,18 +16,21 @@ class SummaryHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit SummaryHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
+  explicit SummaryHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
 public slots:
   void update();
 
+private slots:
+  void onSaveButtonClicked();
+
 private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
 
-  Reservation& _reservation;
+  ReservationPtr _reservation;
   SummaryModel _summaryModel;
 };
 

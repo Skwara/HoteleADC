@@ -12,7 +12,7 @@ class ParticipantsModel : public QAbstractTableModel
   Q_OBJECT
 
 public:
-  ParticipantsModel(Reservation& reservation);
+  ParticipantsModel(ReservationPtr reservation);
 
 public:
   ParticipantsSpinBoxDelegate& delegate();
@@ -29,7 +29,7 @@ private:
   ParticipantsSpinBoxDelegate _spinBoxDelegate;
 
 private:
-  Reservation& _reservation;
+  ReservationPtr _reservation;
 
 };
 

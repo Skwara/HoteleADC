@@ -37,7 +37,11 @@ public:
   QList<ReservationPtr> reservations() const { return _reservations; }
   ReservationPtr reservation(const QDate& beginDate, const RoomPtr& room) const;
 
-  bool hasAvailableParkingSpace(const Reservation& reservation) const;
+  bool hasAvailableParkingSpace(const ReservationPtr reservation) const;
+
+
+
+  bool saveReservation(const ReservationPtr reservation);
 
 private:
   void fetch();

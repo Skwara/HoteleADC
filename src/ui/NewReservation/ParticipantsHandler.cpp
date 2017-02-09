@@ -1,14 +1,14 @@
 #include "ParticipantsHandler.h"
 #include "ui_NewReservationDialog.h"
 
-ParticipantsHandler::ParticipantsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent)
+ParticipantsHandler::ParticipantsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent)
   : QObject(parent)
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
   , _participantsModel(reservation)
 {
-  connect(&_reservation, SIGNAL(roomsChanged()), this, SLOT(update()));
+  connect(_reservation.get(), SIGNAL(roomsChanged()), this, SLOT(update()));
 }
 
 void ParticipantsHandler::setup()

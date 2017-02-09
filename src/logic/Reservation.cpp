@@ -8,10 +8,6 @@ Reservation::Reservation()
   , _countEmptyPlace(true)
   , _price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace)
 {
-  connect(this, SIGNAL(dateChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
-  connect(this, SIGNAL(roomsChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
-  connect(this, SIGNAL(participantsChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
-  connect(this, SIGNAL(additionalChanged()), this, SLOT(updatePrice()), Qt::DirectConnection);
 }
 
 ClientPtr Reservation::client() const
@@ -94,48 +90,56 @@ void Reservation::setClient(ClientPtr client)
 void Reservation::addRoom(RoomPtr room)
 {
   _rooms.insert(room, QPair<int, int>(0, 0));
+  updatePrice();
   emit roomsChanged();
 }
 
 void Reservation::removeRoom(RoomPtr room)
 {
   _rooms.remove(room);
+  updatePrice();
   emit roomsChanged();
 }
 
 void Reservation::setRoomMainParticipants(RoomPtr room, int mainParticipantsCount)
 {
   _rooms[room].first = mainParticipantsCount;
+  updatePrice();
   emit participantsChanged();
 }
 
 void Reservation::setRoomAdditionalParticipants(RoomPtr room, int additionalParticipantsCount)
 {
   _rooms[room].second = additionalParticipantsCount;
+  updatePrice();
   emit participantsChanged();
 }
 
 void Reservation::setBeginDate(const QDate& date)
 {
   _beginDate = date;
+  updatePrice();
   emit dateChanged();
 }
 
 void Reservation::setEndDate(const QDate& date)
 {
   _endDate = date;
+  updatePrice();
   emit dateChanged();
 }
 
 void Reservation::setParking(bool value)
 {
   _parking = value;
+  updatePrice();
   emit additionalChanged();
 }
 
 void Reservation::setCountEmptyPlace(bool value)
 {
   _countEmptyPlace = value;
+  updatePrice();
   emit additionalChanged();
 }
 

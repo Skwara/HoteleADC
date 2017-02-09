@@ -2,7 +2,7 @@
 
 
 // TODO Refactoring with Price class
-SummaryModel::SummaryModel(Reservation& reservation)
+SummaryModel::SummaryModel(ReservationPtr reservation)
   : _reservation(reservation)
 {
 }
@@ -57,22 +57,22 @@ bool SummaryModel::setData(const QModelIndex& index, const QVariant& value, int 
       switch (index.row())
       {
       case 5:
-        _reservation.setRoomsPrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().roomsPrice().calculated());
+        _reservation->setRoomsPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsPrice().calculated());
         break;
       case 6:
-        _reservation.setRoomsEmptyPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().roomsEmptyPlacePrice().calculated());
+        _reservation->setRoomsEmptyPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsEmptyPlacePrice().calculated());
         break;
       case 7:
-        _reservation.setRoomsAdditionalPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().roomsAdditionalPlacePrice().calculated());
+        _reservation->setRoomsAdditionalPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsAdditionalPlacePrice().calculated());
         break;
       case 8:
-        _reservation.setParkingPrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().parkingPrice().calculated());
+        _reservation->setParkingPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().parkingPrice().calculated());
         break;
       case 9:
-        _reservation.setFullPrice(!value.toString().isEmpty() ? value.toInt() : _reservation.price().fullPrice().calculated());
+        _reservation->setFullPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().fullPrice().calculated());
         break;
       case 10:
-        _reservation.setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
+        _reservation->setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
       default:
         return false;
         break;
@@ -104,27 +104,27 @@ QVariant SummaryModel::rowValue(int row) const
   switch (row)
   {
   case 0:
-    return _reservation.days();
+    return _reservation->days();
   case 1:
-    return _reservation.rooms().size();
+    return _reservation->rooms().size();
   case 2:
-    return _reservation.mainParticipantsCount();
+    return _reservation->mainParticipantsCount();
   case 3:
-    return _reservation.emptyPlaceCount();
+    return _reservation->emptyPlaceCount();
   case 4:
-    return _reservation.additionalParticipantsCount();
+    return _reservation->additionalParticipantsCount();
   case 5:
-    return formatPrice(_reservation.price().roomsPrice());
+    return formatPrice(_reservation->price().roomsPrice());
   case 6:
-    return formatPrice(_reservation.price().roomsEmptyPlacePrice());
+    return formatPrice(_reservation->price().roomsEmptyPlacePrice());
   case 7:
-    return formatPrice(_reservation.price().roomsAdditionalPlacePrice());
+    return formatPrice(_reservation->price().roomsAdditionalPlacePrice());
   case 8:
-    return formatPrice(_reservation.price().parkingPrice());
+    return formatPrice(_reservation->price().parkingPrice());
   case 9:
-    return formatPrice(_reservation.price().fullPrice());
+    return formatPrice(_reservation->price().fullPrice());
   case 10:
-    return formatDiscount(_reservation.price().discount());
+    return formatDiscount(_reservation->price().discount());
   default:
     return QVariant();
   }
@@ -135,17 +135,17 @@ QVariant SummaryModel::rowEditValue(int row) const
   switch (row)
   {
   case 5:
-    return _reservation.price().roomsPrice().manual();
+    return _reservation->price().roomsPrice().manual();
   case 6:
-    return _reservation.price().roomsEmptyPlacePrice().manual();
+    return _reservation->price().roomsEmptyPlacePrice().manual();
   case 7:
-    return _reservation.price().roomsAdditionalPlacePrice().manual();
+    return _reservation->price().roomsAdditionalPlacePrice().manual();
   case 8:
-    return _reservation.price().parkingPrice().manual();
+    return _reservation->price().parkingPrice().manual();
   case 9:
-    return _reservation.price().fullPrice().manual();
+    return _reservation->price().fullPrice().manual();
   case 10:
-    return _reservation.price().discount() * 100;
+    return _reservation->price().discount() * 100;
   default:
     return QVariant();
   }

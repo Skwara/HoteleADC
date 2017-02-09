@@ -12,7 +12,7 @@ class SummaryModel : public QAbstractTableModel
   Q_OBJECT
 
 public:
-  SummaryModel(Reservation& reservation);
+  SummaryModel(ReservationPtr reservation);
 
   int rowCount(const QModelIndex& parent = QModelIndex()) const;
   int columnCount(const QModelIndex& parent = QModelIndex()) const;
@@ -46,7 +46,7 @@ private:
   }
   bool isRowEditable(int row) const { return row >= 5; }
 
-  Reservation& _reservation;
+  ReservationPtr _reservation;
 
 };
 

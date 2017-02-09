@@ -39,7 +39,11 @@ ScheduleTableView::~ScheduleTableView()
 void ScheduleTableView::setModel(QAbstractItemModel* model)
 {
   QTableView::setModel(model);
+  updateSpan();
+}
 
+void ScheduleTableView::updateSpan()
+{
   for (int row = 0; row < this->model()->rowCount(); ++row)
   {
     for (int col = 0; col < this->model()->columnCount(); ++col)

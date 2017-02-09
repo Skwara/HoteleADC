@@ -5,7 +5,7 @@
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewReservationDialog)
-  , _reservation()
+  , _reservation(std::make_shared<Reservation>())
   , _dbHandler(DatabaseHandler::instance())
   , _main(ui, this)
   , _rooms(ui, _reservation, this)
@@ -16,6 +16,8 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
 {
   ui->setupUi(this);
   setupHandlers();
+
+  connect(ui->summarySaveButton, SIGNAL(clicked(bool)), this, SIGNAL(reservationSaved()));
 
   this->resize(this->minimumWidth(), this->minimumHeight());
   setAttribute(Qt::WA_DeleteOnClose, true);

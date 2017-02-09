@@ -86,8 +86,15 @@ ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPt
   return nullptr;
 }
 
-bool DatabaseHandler::hasAvailableParkingSpace(const Reservation& /*reservation*/) const
+bool DatabaseHandler::hasAvailableParkingSpace(const ReservationPtr /*reservation*/) const
 {
+  return true;
+}
+
+bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
+{
+  _reservations.append(reservation);
+
   return true;
 }
 

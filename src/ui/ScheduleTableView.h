@@ -6,12 +6,17 @@
 
 class ScheduleTableView : public QTableView
 {
+  Q_OBJECT
+
 public:
   explicit ScheduleTableView(QWidget* parent = nullptr);
   ~ScheduleTableView();
 
 public:
   void setModel(QAbstractItemModel* model);
+
+public slots:
+  void updateSpan();
 
 private:
   const int _horizontalHeaderWidth = 30;

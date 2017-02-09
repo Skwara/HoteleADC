@@ -16,7 +16,7 @@ class ParticipantsHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, Reservation& reservation, QObject* parent = 0);
+  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -27,7 +27,7 @@ private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
 
-  Reservation& _reservation;
+  ReservationPtr _reservation;
   ParticipantsModel _participantsModel;
 };
 

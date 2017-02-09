@@ -28,6 +28,9 @@ public:
   explicit NewReservationDialog(QWidget* parent = 0);
   ~NewReservationDialog();
 
+signals:
+  void reservationSaved();
+
 public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
@@ -40,7 +43,7 @@ private:
 private:
   Ui::NewReservationDialog* ui;
 
-  Reservation _reservation;
+  ReservationPtr _reservation;
   DatabaseHandler* _dbHandler;
 
   MainHandler _main;
