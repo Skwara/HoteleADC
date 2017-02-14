@@ -1,6 +1,8 @@
 #include "NewReservationDialog.h"
 #include "ui_NewReservationDialog.h"
 
+#include <QMessageBox>
+
 
 NewReservationDialog::NewReservationDialog(QWidget* parent)
   : QDialog(parent)
@@ -58,7 +60,17 @@ void NewReservationDialog::onSaveButtonClicked()
 
   if (!_dbHandler->saveReservation(_reservation))
   {
-    // TODO handle error
+    int ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
+    while (ret == QMessageBox::Retry)
+    {
+      if (!_dbHandler->saveReservation(_reservation))
+      {
+        ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
+        continue;
+      }
+      emit reservationSaved();
+    }
+    return;
   }
 
   emit reservationSaved();
