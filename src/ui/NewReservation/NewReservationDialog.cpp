@@ -43,17 +43,22 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
 void NewReservationDialog::onSaveButtonClicked()
 {
   QList<ClientPtr> clients = _dbHandler->clients(ui->surnameLineEdit->text(), ui->nameLineEdit->text(), ui->streetLineEdit->text());
-  if (clients.size() == 1)
+  if (clients.size() == 0)
+  {
+    _reservation->setClient(createClient());
+  }
+  else if (clients.size() == 1)
   {
     _reservation->setClient(clients.first());
-    if (!_dbHandler->saveReservation(_reservation))
-    {
-      // TODO handle error
-    }
   }
   else
   {
     // TODO handle selection of multiple clients
+  }
+
+  if (!_dbHandler->saveReservation(_reservation))
+  {
+    // TODO handle error
   }
 
   emit reservationSaved();
@@ -89,4 +94,17 @@ QSet<int> NewReservationDialog::getSelectedCols(QSet<QModelIndex> allSelected)
   }
 
   return selectedCols;
+}
+
+ClientPtr NewReservationDialog::createClient() const
+{
+  return std::make_shared<Client>(ui->surnameLineEdit->text(),
+                                  ui->nameLineEdit->text(),
+                                  Address(ui->streetLineEdit->text(),
+                                          ui->numberLineEdit->text(),
+                                          ui->postalCodeLineEdit->text(),
+                                          ui->cityLineEdit->text(),
+                                          ui->countryLineEdit->text()),
+                                  ui->phoneLineEdit->text(),
+                                  ui->emailLineEdit->text());
 }

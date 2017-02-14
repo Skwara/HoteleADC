@@ -93,7 +93,22 @@ bool DatabaseHandler::hasAvailableParkingSpace(const ReservationPtr /*reservatio
 
 bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
 {
+  if (!saveClient(reservation->client()))
+  {
+    return false;
+  }
+
   _reservations.append(reservation);
+
+  return true;
+}
+
+bool DatabaseHandler::saveClient(const ClientPtr client)
+{
+  if (!_clients.contains(client))
+  {
+    _clients.push_back(client);
+  }
 
   return true;
 }

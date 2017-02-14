@@ -42,6 +42,7 @@ public:
 
 
   bool saveReservation(const ReservationPtr reservation);
+  bool saveClient(const ClientPtr client);
 
 private:
   void fetch();
