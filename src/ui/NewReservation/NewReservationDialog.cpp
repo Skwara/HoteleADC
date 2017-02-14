@@ -17,7 +17,7 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   ui->setupUi(this);
   setupHandlers();
 
-  connect(ui->summarySaveButton, SIGNAL(clicked(bool)), this, SIGNAL(reservationSaved()));
+  connect(ui->summarySaveButton, SIGNAL(clicked(bool)), this, SLOT(onSaveButtonClicked()));
 
   this->resize(this->minimumWidth(), this->minimumHeight());
   setAttribute(Qt::WA_DeleteOnClose, true);
@@ -38,6 +38,25 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
 
   _rooms.update(selectedRows);
   _date.update(selectedCols);
+}
+
+void NewReservationDialog::onSaveButtonClicked()
+{
+  QList<ClientPtr> clients = _dbHandler->clients(ui->surnameLineEdit->text(), ui->nameLineEdit->text(), ui->streetLineEdit->text());
+  if (clients.size() == 1)
+  {
+    _reservation->setClient(clients.first());
+    if (!_dbHandler->saveReservation(_reservation))
+    {
+      // TODO handle error
+    }
+  }
+  else
+  {
+    // TODO handle selection of multiple clients
+  }
+
+  emit reservationSaved();
 }
 
 void NewReservationDialog::setupHandlers()

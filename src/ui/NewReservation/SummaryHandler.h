@@ -23,9 +23,6 @@ public:
 public slots:
   void update();
 
-private slots:
-  void onSaveButtonClicked();
-
 private:
   Ui::NewReservationDialog* ui;
   DatabaseHandler* _dbHandler;
