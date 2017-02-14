@@ -153,7 +153,6 @@ QVariant SummaryModel::rowEditValue(int row) const
 
 QVariant SummaryModel::formatPrice(PricePair price) const
 {
-  // TODO If fullManualPrice is calculated on manual prices, but is same as calculated, then it's not showed
   if (price.hasManual())
   {
     return QVariant(QString("%1 (%2)").arg(price.manual()).arg(price.calculated()));

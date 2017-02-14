@@ -179,7 +179,6 @@ int Price::roomsCalculatedPrice() const
   if (_roomParticipantsPrices.size() > 0)
   {
     QList<int> values = _roomParticipantsPrices.values();
-    //double multiplier = 1.0 - _discount; // TODO In MinGW 5.3.0 Without this line, 240 * (1.0 - 0.1) gives 215 instead of 216. Same below
     return std::accumulate(values.begin(), values.end(), 0) * (1.0 - _discount);
   }
   else
