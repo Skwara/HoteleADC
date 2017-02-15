@@ -9,7 +9,7 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
 class MainHandler : public QObject
@@ -17,7 +17,7 @@ class MainHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit MainHandler(Ui::NewReservationDialog* ui, QObject* parent = 0);
+  explicit MainHandler(Ui::NewSingleDialog* ui, QObject* parent = 0);
 
   void setup();
 
@@ -34,7 +34,7 @@ private:
   void fillRemainingClientData(QString surname, QString name = "", QString street = "");
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
   DatabaseHandler* _dbHandler;
 };
 

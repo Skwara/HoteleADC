@@ -8,7 +8,7 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
 class ParticipantsHandler : public QObject
@@ -16,7 +16,7 @@ class ParticipantsHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit ParticipantsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
+  explicit ParticipantsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -24,7 +24,7 @@ public slots:
   void update();
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;

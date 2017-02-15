@@ -10,7 +10,7 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
 class RoomsHandler : public QObject
@@ -18,7 +18,7 @@ class RoomsHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit RoomsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
+  explicit RoomsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -29,7 +29,7 @@ private slots:
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;

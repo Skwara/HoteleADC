@@ -1,8 +1,8 @@
 #include "RoomsHandler.h"
-#include "ui_NewReservationDialog.h"
+#include "ui_NewSingleDialog.h"
 
 
-RoomsHandler::RoomsHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent)
+RoomsHandler::RoomsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent)
   : QObject(parent)
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())

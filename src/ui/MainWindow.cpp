@@ -1,7 +1,7 @@
 #include "MainWindow.h"
 #include "ui_MainWindow.h"
 
-#include "ui/NewReservation/NewReservationDialog.h"
+#include "ui/NewReservation/NewSingleDialog.h"
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -24,7 +24,7 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_newReservationButton_clicked()
 {
-  NewReservationDialog* dialog = new NewReservationDialog(this);
+  NewSingleDialog* dialog = new NewSingleDialog(this);
   connect(_scheduleTableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
           dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
   connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));

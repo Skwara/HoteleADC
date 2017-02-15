@@ -7,7 +7,7 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
 class AdditionalHandler : public QObject
@@ -15,7 +15,7 @@ class AdditionalHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit AdditionalHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
+  explicit AdditionalHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -27,7 +27,7 @@ private slots:
   void onEmptyPlaceCheckBoxToggled(bool checked);
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;

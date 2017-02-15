@@ -1,12 +1,12 @@
-#include "NewReservationDialog.h"
-#include "ui_NewReservationDialog.h"
+#include "NewSingleDialog.h"
+#include "ui_NewSingleDialog.h"
 
 #include <QMessageBox>
 
 
-NewReservationDialog::NewReservationDialog(QWidget* parent)
+NewSingleDialog::NewSingleDialog(QWidget* parent)
   : QDialog(parent)
-  , ui(new Ui::NewReservationDialog)
+  , ui(new Ui::NewSingleDialog)
   , _reservation(std::make_shared<Reservation>())
   , _dbHandler(DatabaseHandler::instance())
   , _main(ui, this)
@@ -25,12 +25,12 @@ NewReservationDialog::NewReservationDialog(QWidget* parent)
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
-NewReservationDialog::~NewReservationDialog()
+NewSingleDialog::~NewSingleDialog()
 {
   delete ui;
 }
 
-void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+void NewSingleDialog::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
 {
   QItemSelectionModel* selectionModel = qobject_cast<QItemSelectionModel*>(sender());
   QSet<QModelIndex> allSelected = selectionModel->selectedIndexes().toSet();
@@ -42,7 +42,7 @@ void NewReservationDialog::scheduleSelectionChanged(const QItemSelection& /*sele
   _date.update(selectedCols);
 }
 
-void NewReservationDialog::onSaveButtonClicked()
+void NewSingleDialog::onSaveButtonClicked()
 {
   QList<ClientPtr> clients = _dbHandler->clients(ui->surnameLineEdit->text(), ui->nameLineEdit->text(), ui->streetLineEdit->text());
   if (clients.size() == 0)
@@ -76,7 +76,7 @@ void NewReservationDialog::onSaveButtonClicked()
   emit reservationSaved();
 }
 
-void NewReservationDialog::setupHandlers()
+void NewSingleDialog::setupHandlers()
 {
   _main.setup();
   _rooms.setup();
@@ -86,7 +86,7 @@ void NewReservationDialog::setupHandlers()
   _summary.setup();
 }
 
-QSet<int> NewReservationDialog::getSelectedRows(QSet<QModelIndex> allSelected)
+QSet<int> NewSingleDialog::getSelectedRows(QSet<QModelIndex> allSelected)
 {
   QSet<int> selectedRows;
   foreach (QModelIndex index, allSelected)
@@ -97,7 +97,7 @@ QSet<int> NewReservationDialog::getSelectedRows(QSet<QModelIndex> allSelected)
   return selectedRows;
 }
 
-QSet<int> NewReservationDialog::getSelectedCols(QSet<QModelIndex> allSelected)
+QSet<int> NewSingleDialog::getSelectedCols(QSet<QModelIndex> allSelected)
 {
   QSet<int> selectedCols;
   foreach (QModelIndex index, allSelected)
@@ -108,7 +108,7 @@ QSet<int> NewReservationDialog::getSelectedCols(QSet<QModelIndex> allSelected)
   return selectedCols;
 }
 
-ClientPtr NewReservationDialog::createClient() const
+ClientPtr NewSingleDialog::createClient() const
 {
   return std::make_shared<Client>(ui->surnameLineEdit->text(),
                                   ui->nameLineEdit->text(),

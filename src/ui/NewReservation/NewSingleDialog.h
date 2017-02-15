@@ -1,5 +1,5 @@
-#ifndef NEWRESERVATIONDIALOG_H
-#define NEWRESERVATIONDIALOG_H
+#ifndef NEWSINGLEDIALOG_H
+#define NEWSINGLEDIALOG_H
 
 #include <QDialog>
 #include <QItemSelection>
@@ -17,16 +17,16 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
-class NewReservationDialog : public QDialog
+class NewSingleDialog : public QDialog
 {
   Q_OBJECT
 
 public:
-  explicit NewReservationDialog(QWidget* parent = 0);
-  ~NewReservationDialog();
+  explicit NewSingleDialog(QWidget* parent = 0);
+  ~NewSingleDialog();
 
 public slots:
   void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
@@ -46,7 +46,7 @@ private:
   ClientPtr createClient() const;
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
 
   ReservationPtr _reservation;
   DatabaseHandler* _dbHandler;
@@ -59,4 +59,4 @@ private:
   SummaryHandler _summary;
 };
 
-#endif // NEWRESERVATIONDIALOG_H
+#endif // NewSingleDialog_H

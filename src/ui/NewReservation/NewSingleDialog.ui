@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>NewReservationDialog</class>
- <widget class="QDialog" name="NewReservationDialog">
+ <class>NewSingleDialog</class>
+ <widget class="QDialog" name="NewSingleDialog">
   <property name="geometry">
    <rect>
     <x>0</x>

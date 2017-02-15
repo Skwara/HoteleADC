@@ -1,12 +1,12 @@
 #include "MainHandler.h"
-#include "ui_NewReservationDialog.h"
+#include "ui_NewSingleDialog.h"
 
 #include "logic/Client.h"
 
 #include <QCompleter>
 
 
-MainHandler::MainHandler(Ui::NewReservationDialog* ui, QObject* parent)
+MainHandler::MainHandler(Ui::NewSingleDialog* ui, QObject* parent)
   : QObject(parent)
   , ui(ui)
   , _dbHandler(DatabaseHandler::instance())

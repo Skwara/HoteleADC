@@ -7,7 +7,7 @@
 
 
 namespace Ui {
-class NewReservationDialog;
+class NewSingleDialog;
 }
 
 using BeginEndDates = std::pair<QDate, QDate>;
@@ -17,7 +17,7 @@ class DateHandler : public QObject
   Q_OBJECT
 
 public:
-  explicit DateHandler(Ui::NewReservationDialog* ui, ReservationPtr reservation, QObject* parent = 0);
+  explicit DateHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
 
   void setup();
 
@@ -32,7 +32,7 @@ private:
   void setEndDateToBeginDate();
 
 private:
-  Ui::NewReservationDialog* ui;
+  Ui::NewSingleDialog* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;

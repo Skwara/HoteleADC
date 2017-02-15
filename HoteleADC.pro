@@ -28,7 +28,7 @@ SOURCES  += src/main.cpp \
             src/logic/Price.cpp \
             src/ui/MainWindow.cpp \
             src/ui/ScheduleTableView.cpp \
-            src/ui/NewReservation/NewReservationDialog.cpp \
+            src/ui/NewReservation/NewSingleDialog.cpp \
             src/ui/NewReservation/MainHandler.cpp \
             src/ui/NewReservation/ParticipantsHandler.cpp \
             src/ui/NewReservation/RoomsHandler.cpp \
@@ -49,7 +49,7 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/logic/Price.h \
             src/ui/MainWindow.h \
             src/ui/ScheduleTableView.h \
-            src/ui/NewReservation/NewReservationDialog.h \
+            src/ui/NewReservation/NewSingleDialog.h \
             src/ui/NewReservation/MainHandler.h \
             src/ui/NewReservation/ParticipantsHandler.h \
             src/ui/NewReservation/RoomsHandler.h \
@@ -59,5 +59,5 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/ui/NewReservation/NewBatchDialog.h
 
 FORMS    += src/ui/MainWindow.ui \
-            src/ui/NewReservation/NewReservationDialog.ui \
+            src/ui/NewReservation/NewSingleDialog.ui \
             src/ui/NewReservation/NewBatchDialog.ui
