@@ -43,8 +43,6 @@ private:
   QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
   QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);
 
-  ClientPtr createClient() const;
-
 private:
   Ui::NewSingleDialog* ui;
 

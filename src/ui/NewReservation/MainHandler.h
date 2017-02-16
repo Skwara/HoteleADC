@@ -21,6 +21,8 @@ public:
 
   void setup();
 
+  ClientPtr createClient() const;
+
 public slots:
   void update();
 

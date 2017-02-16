@@ -27,6 +27,19 @@ void MainHandler::setup()
   connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(onStreetLineEditEditingFinished()));
 }
 
+ClientPtr MainHandler::createClient() const
+{
+  return std::make_shared<Client>(ui->surnameLineEdit->text(),
+                                  ui->nameLineEdit->text(),
+                                  Address(ui->streetLineEdit->text(),
+                                          ui->numberLineEdit->text(),
+                                          ui->postalCodeLineEdit->text(),
+                                          ui->cityLineEdit->text(),
+                                          ui->countryLineEdit->text()),
+                                  ui->phoneLineEdit->text(),
+                                  ui->emailLineEdit->text());
+}
+
 void MainHandler::update()
 {
 }

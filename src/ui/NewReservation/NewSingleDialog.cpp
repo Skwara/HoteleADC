@@ -47,7 +47,7 @@ void NewSingleDialog::onSaveButtonClicked()
   QList<ClientPtr> clients = _dbHandler->clients(ui->surnameLineEdit->text(), ui->nameLineEdit->text(), ui->streetLineEdit->text());
   if (clients.size() == 0)
   {
-    _reservation->setClient(createClient());
+    _reservation->setClient(_main.createClient());
   }
   else if (clients.size() == 1)
   {
@@ -106,17 +106,4 @@ QSet<int> NewSingleDialog::getSelectedCols(QSet<QModelIndex> allSelected)
   }
 
   return selectedCols;
-}
-
-ClientPtr NewSingleDialog::createClient() const
-{
-  return std::make_shared<Client>(ui->surnameLineEdit->text(),
-                                  ui->nameLineEdit->text(),
-                                  Address(ui->streetLineEdit->text(),
-                                          ui->numberLineEdit->text(),
-                                          ui->postalCodeLineEdit->text(),
-                                          ui->cityLineEdit->text(),
-                                          ui->countryLineEdit->text()),
-                                  ui->phoneLineEdit->text(),
-                                  ui->emailLineEdit->text());
 }
