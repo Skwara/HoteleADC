@@ -3,18 +3,20 @@
 
 #include <QMessageBox>
 
+#include "MainGroupBox.h"
+
 
 NewSingleDialog::NewSingleDialog(QWidget* parent)
   : QDialog(parent)
   , ui(new Ui::NewSingleDialog)
   , _reservation(std::make_shared<Reservation>())
   , _dbHandler(DatabaseHandler::instance())
-  , _main(ui, this)
   , _rooms(ui, _reservation, this)
   , _participants(ui, _reservation, this)
   , _additional(ui, _reservation, this)
   , _date(ui, _reservation, this)
   , _summary(ui, _reservation, this)
+  , _mainGroupBox(this)
 {
   ui->setupUi(this);
   setupHandlers();
@@ -44,10 +46,10 @@ void NewSingleDialog::scheduleSelectionChanged(const QItemSelection& /*selected*
 
 void NewSingleDialog::onSaveButtonClicked()
 {
-  QList<ClientPtr> clients = _dbHandler->clients(ui->surnameLineEdit->text(), ui->nameLineEdit->text(), ui->streetLineEdit->text());
+  QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
   {
-    _reservation->setClient(_main.createClient());
+    _reservation->setClient(_mainGroupBox.createClient());
   }
   else if (clients.size() == 1)
   {
@@ -78,12 +80,13 @@ void NewSingleDialog::onSaveButtonClicked()
 
 void NewSingleDialog::setupHandlers()
 {
-  _main.setup();
   _rooms.setup();
   _participants.setup();
   _additional.setup();
   _date.setup();
   _summary.setup();
+
+  ui->horizontalLayout_1->insertWidget(0, &_mainGroupBox);
 }
 
 QSet<int> NewSingleDialog::getSelectedRows(QSet<QModelIndex> allSelected)

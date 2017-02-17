@@ -29,13 +29,13 @@ SOURCES  += src/main.cpp \
             src/ui/MainWindow.cpp \
             src/ui/ScheduleTableView.cpp \
             src/ui/NewReservation/NewSingleDialog.cpp \
-            src/ui/NewReservation/MainHandler.cpp \
             src/ui/NewReservation/ParticipantsHandler.cpp \
             src/ui/NewReservation/RoomsHandler.cpp \
             src/ui/NewReservation/DateHandler.cpp \
             src/ui/NewReservation/AdditionalHandler.cpp \
             src/ui/NewReservation/SummaryHandler.cpp \
-            src/ui/NewReservation/NewBatchDialog.cpp
+            src/ui/NewReservation/NewBatchDialog.cpp \
+            src/ui/NewReservation/MainGroupBox.cpp
 
 HEADERS  += src/data/DatabaseHandler.h \
             src/data/NewReservation/ScheduleModel.h \
@@ -50,14 +50,15 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/ui/MainWindow.h \
             src/ui/ScheduleTableView.h \
             src/ui/NewReservation/NewSingleDialog.h \
-            src/ui/NewReservation/MainHandler.h \
             src/ui/NewReservation/ParticipantsHandler.h \
             src/ui/NewReservation/RoomsHandler.h \
             src/ui/NewReservation/DateHandler.h \
             src/ui/NewReservation/AdditionalHandler.h \
             src/ui/NewReservation/SummaryHandler.h \
-            src/ui/NewReservation/NewBatchDialog.h
+            src/ui/NewReservation/NewBatchDialog.h \
+            src/ui/NewReservation/MainGroupBox.h
 
 FORMS    += src/ui/MainWindow.ui \
             src/ui/NewReservation/NewSingleDialog.ui \
-            src/ui/NewReservation/NewBatchDialog.ui
+            src/ui/NewReservation/NewBatchDialog.ui \
+            src/ui/NewReservation/MainGroupBox.ui
