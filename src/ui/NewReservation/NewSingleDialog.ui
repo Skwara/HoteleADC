@@ -26,43 +26,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_1">
      <item>
-      <widget class="QGroupBox" name="participantGroupBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="maximumSize">
-        <size>
-         <width>250</width>
-         <height>16777215</height>
-        </size>
-       </property>
-       <property name="title">
-        <string>Uczestnicy</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_5">
-        <item>
-         <widget class="QTableView" name="participantTableView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>190</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <widget class="QGroupBox" name="additionalGroupBox">
        <property name="title">
         <string>Dodatkowe</string>
@@ -226,7 +189,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>participantTableView</tabstop>
   <tabstop>parkingCheckBox</tabstop>
   <tabstop>emptyPlaceCheckBox</tabstop>
   <tabstop>beginCalendarWidget</tabstop>

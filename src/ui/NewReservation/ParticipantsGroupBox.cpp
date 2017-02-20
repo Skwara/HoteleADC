@@ -1,18 +1,31 @@
-#include "ParticipantsHandler.h"
-#include "ui_NewSingleDialog.h"
+#include "ParticipantsGroupBox.h"
+#include "ui_ParticipantsGroupBox.h"
 
-ParticipantsHandler::ParticipantsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent)
-  : QObject(parent)
-  , ui(ui)
+ParticipantsGroupBox::ParticipantsGroupBox(ReservationPtr reservation, QWidget* parent)
+  : QGroupBox(parent)
+  , ui(new Ui::ParticipantsGroupBox)
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
   , _participantsModel(reservation)
 {
-  connect(_reservation.get(), SIGNAL(roomsChanged()), this, SLOT(update()));
+  ui->setupUi(this);
+  setup();
 }
 
-void ParticipantsHandler::setup()
+ParticipantsGroupBox::~ParticipantsGroupBox()
 {
+  delete ui;
+}
+
+void ParticipantsGroupBox::update()
+{
+  _participantsModel.layoutChanged();
+}
+
+void ParticipantsGroupBox::setup()
+{
+  connect(_reservation.get(), SIGNAL(roomsChanged()), this, SLOT(update()));
+
   ui->participantTableView->setModel(&_participantsModel);
   ui->participantTableView->setItemDelegate(&_participantsModel.delegate());
 
@@ -21,9 +34,4 @@ void ParticipantsHandler::setup()
   ui->participantTableView->resizeColumnsToContents();
 
   ui->participantTableView->verticalHeader()->hide();
-}
-
-void ParticipantsHandler::update()
-{
-  _participantsModel.layoutChanged();
 }

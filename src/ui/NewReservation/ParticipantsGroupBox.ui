@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>RoomsGroupBox</class>
- <widget class="QGroupBox" name="RoomsGroupBox">
+ <class>ParticipantsGroupBox</class>
+ <widget class="QGroupBox" name="ParticipantsGroupBox">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -10,21 +10,21 @@
     <height>300</height>
    </rect>
   </property>
-  <property name="sizePolicy">
-   <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
-    <horstretch>0</horstretch>
-    <verstretch>0</verstretch>
-   </sizepolicy>
+  <property name="maximumSize">
+   <size>
+    <width>16777215</width>
+    <height>16777215</height>
+   </size>
   </property>
   <property name="windowTitle">
    <string>GroupBox</string>
   </property>
   <property name="title">
-   <string>Pokoje</string>
+   <string>Uczestnicy</string>
   </property>
   <layout class="QVBoxLayout" name="verticalLayout">
    <item>
-    <widget class="QListView" name="roomListView">
+    <widget class="QTableView" name="participantTableView">
      <property name="sizePolicy">
       <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
        <horstretch>0</horstretch>
@@ -33,7 +33,7 @@
      </property>
      <property name="minimumSize">
       <size>
-       <width>50</width>
+       <width>190</width>
        <height>0</height>
       </size>
      </property>
