@@ -11,17 +11,17 @@ NewSingleDialog::NewSingleDialog(QWidget* parent)
   , ui(new Ui::NewSingleDialog)
   , _reservation(std::make_shared<Reservation>())
   , _dbHandler(DatabaseHandler::instance())
-  , _summary(ui, _reservation, this)
   , _mainGroupBox(this)
   , _roomsGroupBox(_reservation, this)
   , _participantsGroupBox(_reservation, this)
   , _additionalGroupBox(_reservation, this)
   , _singleDateGroupBox(_reservation, this)
+  , _summaryGroupBox(_reservation, this)
 {
   ui->setupUi(this);
   setupHandlers();
 
-  connect(ui->summarySaveButton, SIGNAL(clicked(bool)), this, SLOT(onSaveButtonClicked()));
+  connect(&_summaryGroupBox, SIGNAL(saveButtonClicked()), this, SLOT(onSaveButtonClicked()));
 
   this->resize(this->minimumWidth(), this->minimumHeight());
   setAttribute(Qt::WA_DeleteOnClose, true);
@@ -80,13 +80,12 @@ void NewSingleDialog::onSaveButtonClicked()
 
 void NewSingleDialog::setupHandlers()
 {
-  _summary.setup();
-
   ui->horizontalLayout_1->insertWidget(0, &_mainGroupBox);
   ui->horizontalLayout_1->insertWidget(1, &_roomsGroupBox);
   ui->horizontalLayout_1->insertWidget(2, &_participantsGroupBox);
   ui->horizontalLayout_1->insertWidget(3, &_additionalGroupBox);
   ui->horizontalLayout_2->insertWidget(0, &_singleDateGroupBox);
+  ui->horizontalLayout_2->insertWidget(1, &_summaryGroupBox);
 }
 
 QSet<int> NewSingleDialog::getSelectedRows(QSet<QModelIndex> allSelected)
