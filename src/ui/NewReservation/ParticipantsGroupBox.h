@@ -19,6 +19,7 @@ public:
   explicit ParticipantsGroupBox(ReservationPtr reservation, QWidget* parent = 0);
   ~ParticipantsGroupBox();
 
+public slots:
   void update();
 
 private:

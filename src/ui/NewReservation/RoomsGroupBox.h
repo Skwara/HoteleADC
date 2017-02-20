@@ -21,6 +21,7 @@ public:
   explicit RoomsGroupBox(ReservationPtr reservation, QWidget* parent = 0);
   ~RoomsGroupBox();
 
+public slots:
   void update(QSet<int> selectedRows);
 
 private:
