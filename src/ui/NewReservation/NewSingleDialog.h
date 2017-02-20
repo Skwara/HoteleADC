@@ -8,13 +8,13 @@
 
 #include "logic/Reservation.h"
 #include "data/DatabaseHandler.h"
-#include "DateHandler.h"
 #include "SummaryHandler.h"
 
 #include "MainGroupBox.h"
 #include "RoomsGroupBox.h"
 #include "ParticipantsGroupBox.h"
 #include "AdditionalGroupBox.h"
+#include "SingleDateGroupBox.h"
 
 
 namespace Ui {
@@ -50,13 +50,13 @@ private:
   ReservationPtr _reservation;
   DatabaseHandler* _dbHandler;
 
-  DateHandler _date;
   SummaryHandler _summary;
 
   MainGroupBox _mainGroupBox;
   RoomsGroupBox _roomsGroupBox;
   ParticipantsGroupBox _participantsGroupBox;
   AdditionalGroupBox _additionalGroupBox;
+  SingleDateGroupBox _singleDateGroupBox;
 };
 
 #endif // NewSingleDialog_H

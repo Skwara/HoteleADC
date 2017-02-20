@@ -1,41 +1,40 @@
-#ifndef DATEHANDLER_H
-#define DATEHANDLER_H
+#ifndef SINGLEDATEGROUPBOX_H
+#define SINGLEDATEGROUPBOX_H
 
-#include <QObject>
+#include <QGroupBox>
 
 #include "data/DatabaseHandler.h"
 
 
 namespace Ui {
-class NewSingleDialog;
+class SingleDateGroupBox;
 }
 
-using BeginEndDates = std::pair<QDate, QDate>;
-
-class DateHandler : public QObject
+class SingleDateGroupBox : public QGroupBox
 {
   Q_OBJECT
 
 public:
-  explicit DateHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
-
-  void setup();
+  explicit SingleDateGroupBox(ReservationPtr reservation, QWidget* parent = 0);
+  ~SingleDateGroupBox();
 
 public slots:
   void update(QSet<int> selectedCols);
 
+private:
+  void setup();
+
 private slots:
   void onBeginCalendarWidgetClicked(const QDate &date);
   void onEndCalendarWidgetClicked(const QDate &date);
-
 private:
   void setEndDateToBeginDate();
 
 private:
-  Ui::NewSingleDialog* ui;
+  Ui::SingleDateGroupBox* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;
 };
 
-#endif // DATEHANDLER_H
+#endif // SINGLEDATEGROUPBOX_H
