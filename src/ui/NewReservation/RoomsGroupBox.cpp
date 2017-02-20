@@ -1,25 +1,23 @@
-#include "RoomsHandler.h"
-#include "ui_NewSingleDialog.h"
+#include "RoomsGroupBox.h"
+#include "ui_RoomsGroupBox.h"
 
-
-RoomsHandler::RoomsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent)
-  : QObject(parent)
-  , ui(ui)
+RoomsGroupBox::RoomsGroupBox(ReservationPtr reservation, QWidget* parent)
+  : QGroupBox(parent)
+  , ui(new Ui::RoomsGroupBox)
   , _dbHandler(DatabaseHandler::instance())
   , _reservation(reservation)
   , _roomsModel()
 {
+  ui->setupUi(this);
+  setup();
 }
 
-void RoomsHandler::setup()
+RoomsGroupBox::~RoomsGroupBox()
 {
-  ui->roomListView->setModel(&_roomsModel);
-  ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
-
-  connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
+  delete ui;
 }
 
-void RoomsHandler::update(QSet<int> selectedRows)
+void RoomsGroupBox::update(QSet<int> selectedRows)
 {
   QAbstractItemModel* model = ui->roomListView->model();
   for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)
@@ -35,7 +33,15 @@ void RoomsHandler::update(QSet<int> selectedRows)
   }
 }
 
-void RoomsHandler::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
+void RoomsGroupBox::setup()
+{
+  ui->roomListView->setModel(&_roomsModel);
+  ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+  connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
+}
+
+void RoomsGroupBox::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
   foreach (QModelIndex index, selected.indexes())
   {

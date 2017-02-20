@@ -26,37 +26,6 @@
    <item>
     <layout class="QHBoxLayout" name="horizontalLayout_1">
      <item>
-      <widget class="QGroupBox" name="roomGroupBox">
-       <property name="sizePolicy">
-        <sizepolicy hsizetype="Preferred" vsizetype="Minimum">
-         <horstretch>0</horstretch>
-         <verstretch>0</verstretch>
-        </sizepolicy>
-       </property>
-       <property name="title">
-        <string>Pokój</string>
-       </property>
-       <layout class="QVBoxLayout" name="verticalLayout_2">
-        <item>
-         <widget class="QListView" name="roomListView">
-          <property name="sizePolicy">
-           <sizepolicy hsizetype="Ignored" vsizetype="Ignored">
-            <horstretch>0</horstretch>
-            <verstretch>0</verstretch>
-           </sizepolicy>
-          </property>
-          <property name="minimumSize">
-           <size>
-            <width>50</width>
-            <height>0</height>
-           </size>
-          </property>
-         </widget>
-        </item>
-       </layout>
-      </widget>
-     </item>
-     <item>
       <widget class="QGroupBox" name="participantGroupBox">
        <property name="sizePolicy">
         <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
@@ -257,7 +226,6 @@
   </layout>
  </widget>
  <tabstops>
-  <tabstop>roomListView</tabstop>
   <tabstop>participantTableView</tabstop>
   <tabstop>parkingCheckBox</tabstop>
   <tabstop>emptyPlaceCheckBox</tabstop>

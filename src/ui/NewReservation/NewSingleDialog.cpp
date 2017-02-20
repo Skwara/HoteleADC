@@ -11,12 +11,12 @@ NewSingleDialog::NewSingleDialog(QWidget* parent)
   , ui(new Ui::NewSingleDialog)
   , _reservation(std::make_shared<Reservation>())
   , _dbHandler(DatabaseHandler::instance())
-  , _rooms(ui, _reservation, this)
   , _participants(ui, _reservation, this)
   , _additional(ui, _reservation, this)
   , _date(ui, _reservation, this)
   , _summary(ui, _reservation, this)
   , _mainGroupBox(this)
+  , _roomsGroupBox(_reservation, this)
 {
   ui->setupUi(this);
   setupHandlers();
@@ -40,7 +40,7 @@ void NewSingleDialog::scheduleSelectionChanged(const QItemSelection& /*selected*
   QSet<int> selectedRows = getSelectedRows(allSelected);
   QSet<int> selectedCols = getSelectedCols(allSelected);
 
-  _rooms.update(selectedRows);
+  _roomsGroupBox.update(selectedRows);
   _date.update(selectedCols);
 }
 
@@ -80,13 +80,13 @@ void NewSingleDialog::onSaveButtonClicked()
 
 void NewSingleDialog::setupHandlers()
 {
-  _rooms.setup();
   _participants.setup();
   _additional.setup();
   _date.setup();
   _summary.setup();
 
   ui->horizontalLayout_1->insertWidget(0, &_mainGroupBox);
+  ui->horizontalLayout_1->insertWidget(1, &_roomsGroupBox);
 }
 
 QSet<int> NewSingleDialog::getSelectedRows(QSet<QModelIndex> allSelected)

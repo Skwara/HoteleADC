@@ -1,7 +1,7 @@
-#ifndef ROOMSHANDLER_H
-#define ROOMSHANDLER_H
+#ifndef ROOMSGROUPBOX_H
+#define ROOMSGROUPBOX_H
 
-#include <QObject>
+#include <QGroupBox>
 #include <QSet>
 #include <QItemSelection>
 
@@ -10,30 +10,31 @@
 
 
 namespace Ui {
-class NewSingleDialog;
+class RoomsGroupBox;
 }
 
-class RoomsHandler : public QObject
+class RoomsGroupBox : public QGroupBox
 {
   Q_OBJECT
 
 public:
-  explicit RoomsHandler(Ui::NewSingleDialog* ui, ReservationPtr reservation, QObject* parent = 0);
+  explicit RoomsGroupBox(ReservationPtr reservation, QWidget* parent = 0);
+  ~RoomsGroupBox();
 
-  void setup();
-
-public slots:
   void update(QSet<int> selectedRows);
+
+private:
+  void setup();
 
 private slots:
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  Ui::NewSingleDialog* ui;
+  Ui::RoomsGroupBox* ui;
   DatabaseHandler* _dbHandler;
 
   ReservationPtr _reservation;
   RoomsModel _roomsModel;
 };
 
-#endif // ROOMSHANDLER_H
+#endif // ROOMSGROUPBOX_H
