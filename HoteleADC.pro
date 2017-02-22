@@ -17,7 +17,7 @@ INCLUDEPATH = src
 
 SOURCES  += src/main.cpp \
             src/data/DatabaseHandler.cpp \
-            src/data/NewReservation/ScheduleModel.cpp \
+            src/data/ScheduleModel.cpp \
             src/data/NewReservation/RoomsModel.cpp \
             src/data/NewReservation/ParticipantsModel.cpp \
             src/data/NewReservation/SummaryModel.cpp \
@@ -38,7 +38,7 @@ SOURCES  += src/main.cpp \
             src/ui/NewReservation/SummaryGroupBox.cpp
 
 HEADERS  += src/data/DatabaseHandler.h \
-            src/data/NewReservation/ScheduleModel.h \
+            src/data/ScheduleModel.h \
             src/data/NewReservation/RoomsModel.h \
             src/data/NewReservation/ParticipantsModel.h \
             src/data/NewReservation/SummaryModel.h \

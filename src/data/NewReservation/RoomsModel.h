@@ -3,7 +3,7 @@
 
 #include <QAbstractListModel>
 
-#include "ScheduleModel.h"
+#include "data/ScheduleModel.h"
 
 
 class RoomsModel : public QAbstractListModel
