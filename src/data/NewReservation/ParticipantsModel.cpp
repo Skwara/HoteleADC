@@ -48,6 +48,7 @@ QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
   return QVariant();
 }
 
+// TODO Refactor like in BatchDateModel
 QVariant ParticipantsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if (orientation == Qt::Horizontal)

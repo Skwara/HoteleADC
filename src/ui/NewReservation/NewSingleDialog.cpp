@@ -3,8 +3,6 @@
 
 #include <QMessageBox>
 
-#include "MainGroupBox.h"
-
 
 NewSingleDialog::NewSingleDialog(QWidget* parent)
   : QDialog(parent)
@@ -46,6 +44,7 @@ void NewSingleDialog::scheduleSelectionChanged(const QItemSelection& /*selected*
 
 void NewSingleDialog::onSaveButtonClicked()
 {
+  // TODO Check if room and date is available
   QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
   {

@@ -2,6 +2,7 @@
 #include "ui_MainWindow.h"
 
 #include "ui/NewReservation/NewSingleDialog.h"
+#include "ui/NewReservation/NewBatchDialog.h"
 
 
 MainWindow::MainWindow(QWidget* parent)
@@ -25,6 +26,15 @@ MainWindow::~MainWindow()
 void MainWindow::on_newReservationButton_clicked()
 {
   NewSingleDialog* dialog = new NewSingleDialog(this);
+  connect(_scheduleTableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+          dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
+  connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));
+  dialog->show();
+}
+
+void MainWindow::on_newBatchButton_clicked()
+{
+  NewBatchDialog* dialog = new NewBatchDialog(this);
   connect(_scheduleTableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
           dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
   connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));

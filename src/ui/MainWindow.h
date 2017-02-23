@@ -20,6 +20,7 @@ public:
 
 private slots:
   void on_newReservationButton_clicked();
+  void on_newBatchButton_clicked();
   void on_dockWidget_topLevelChanged(bool isFloating);
 
 private:

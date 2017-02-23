@@ -4,6 +4,7 @@
 
 Reservation::Reservation()
   : _client(nullptr)
+  , _batch(nullptr)
   , _parking(false)
   , _countEmptyPlace(true)
   , _price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace)
@@ -49,6 +50,11 @@ int Reservation::emptyPlaceCount() const
   QList<RoomPtr> rooms = _rooms.keys();
   int placeCount = std::accumulate(rooms.begin(), rooms.end(), 0, [](int sum, const RoomPtr& room){ return sum + room->maxParticipants(); });
   return placeCount - mainParticipantsCount();
+}
+
+bool Reservation::isBatch() const
+{
+  return _batch != nullptr;
 }
 
 Price Reservation::price() const
@@ -113,6 +119,13 @@ void Reservation::setRoomAdditionalParticipants(RoomPtr room, int additionalPart
   _rooms[room].second = additionalParticipantsCount;
   updatePrice();
   emit participantsChanged();
+}
+
+void Reservation::setBatch(BatchPtr batch)
+{
+  _batch = batch;
+  setBeginDate(batch->beginDate());
+  setEndDate(batch->endDate());
 }
 
 void Reservation::setBeginDate(const QDate& date)

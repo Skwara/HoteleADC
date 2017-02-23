@@ -6,6 +6,7 @@
 #include <src/data/DatabaseHandler.h>
 
 
+// TODO Remove singleton, set model in MainWindow
 class ScheduleModel : public QAbstractTableModel
 {
   ScheduleModel();

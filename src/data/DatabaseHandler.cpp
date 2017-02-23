@@ -28,7 +28,7 @@ QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString
 
 QDate DatabaseHandler::firstDate() const
 {
-  return QDate(QDate::currentDate().year(), 5, 1);
+  return QDate(QDate::currentDate().year(), 4, 30);
 }
 
 QDate DatabaseHandler::lastDate() const
@@ -50,12 +50,12 @@ int DatabaseHandler::roomCost(QDate date) const
 
 int DatabaseHandler::emptyPlaceCost(QDate date) const
 {
-  return roomCost(date) * _emptyPlaceFactor;
+  return static_cast<int>(roomCost(date) * _emptyPlaceFactor);
 }
 
 int DatabaseHandler::additionalPlaceCost(QDate date) const
 {
-  return roomCost(date) * _additionalPlaceFactor;
+  return static_cast<int>(roomCost(date) * _additionalPlaceFactor);
 }
 
 int DatabaseHandler::parkingCost(QDate date) const
@@ -91,6 +91,29 @@ bool DatabaseHandler::hasAvailableParkingSpace(const ReservationPtr /*reservatio
   return true;
 }
 
+QList<BatchPtr> DatabaseHandler::batchPeriods() const
+{
+  return _batchPeriods;
+}
+
+BatchPtr DatabaseHandler::batchPeriod(int index) const
+{
+  return _batchPeriods[index];
+}
+
+BatchPtr DatabaseHandler::batchPeriod(QDate beginDate, QDate endDate)
+{
+  foreach (BatchPtr batch, _batchPeriods)
+  {
+    if (batch->beginDate() == beginDate && batch->endDate() == endDate)
+    {
+      return batch;
+    }
+  }
+
+  return nullptr;
+}
+
 bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
 {
   if (!saveClient(reservation->client()))
@@ -123,6 +146,7 @@ void DatabaseHandler::fetch()
   fetchClients();
   fetchRooms();
   fetchReservations();
+  fetchBatchPeriods();
   fetchOther();
 
   _fetched = true;
@@ -201,6 +225,33 @@ void DatabaseHandler::fetchReservations()
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 7));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 14));
   _reservations.push_back(reservation);
+}
+
+void DatabaseHandler::fetchBatchPeriods()
+{
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 4, 30), QDate(2017, 5, 14), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 5, 7), QDate(2017, 5, 21), {"B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 5, 14), QDate(2017, 5, 28), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 5, 21), QDate(2017, 6, 4), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 5, 28), QDate(2017, 6, 11), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 6, 4), QDate(2017, 6, 18), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 6, 11), QDate(2017, 6, 25), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 6, 18), QDate(2017, 7, 2), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 6, 25), QDate(2017, 7, 9), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 7, 2), QDate(2017, 7, 16), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 7, 9), QDate(2017, 7, 23), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 7, 16), QDate(2017, 7, 30), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 7, 23), QDate(2017, 8, 6), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 7, 30), QDate(2017, 8, 13), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 8, 6), QDate(2017, 8, 20), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 8, 13), QDate(2017, 8, 27), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 8, 20), QDate(2017, 9, 3), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 8, 27), QDate(2017, 9, 10), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 9, 3), QDate(2017, 9, 17), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 9, 10), QDate(2017, 9, 24), {"A", "B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 9, 17), QDate(2017, 10, 1), {"D"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 9, 24), QDate(2017, 10, 8), {"B", "C"})));
+  _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 10, 1), QDate(2017, 10, 15), {"D"})));
 }
 
 void DatabaseHandler::fetchOther()

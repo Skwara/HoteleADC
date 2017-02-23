@@ -35,6 +35,7 @@ void SummaryGroupBox::setup()
   ui->summaryTableView->horizontalHeader()->hide();
   ui->summaryTableView->verticalHeader()->hide();
   ui->summaryTableView->horizontalHeader()->setSectionResizeMode(_summaryModel.columnCount() - 1, QHeaderView::Stretch);
+  ui->summaryTableView->setMinimumHeight(_summaryModel.rowCount() * ui->summaryTableView->rowHeight(0) + (2 * ui->summaryTableView->frameWidth()));
 
   update();
 }

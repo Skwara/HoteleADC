@@ -19,7 +19,7 @@ int ScheduleModel::rowCount(const QModelIndex& /*parent*/) const
 
 int ScheduleModel::columnCount(const QModelIndex& /*parent*/) const
 {
-  return _dbhandler->firstDate().daysTo(_dbhandler->lastDate());
+  return static_cast<int>(_dbhandler->firstDate().daysTo(_dbhandler->lastDate()));
 }
 
 QVariant ScheduleModel::data(const QModelIndex& index, int role) const
@@ -38,6 +38,10 @@ QVariant ScheduleModel::data(const QModelIndex& index, int role) const
     }
     if (role == Qt::BackgroundRole)
     {
+      if (reservation->isBatch())
+      {
+        return QColor(144, 144, 238);
+      }
       return QColor(144, 238, 144);
     }
   }
@@ -58,7 +62,7 @@ QVariant ScheduleModel::headerData(int section, Qt::Orientation orientation, int
   {
     if (role == Qt::DisplayRole)
     {
-      return QString("%1").arg(section + 1);
+      return QString("%1").arg(section + 1); // TODO Refactor like in BatchDateModel
     }
   }
 

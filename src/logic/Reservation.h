@@ -10,6 +10,7 @@
 #include "Client.h"
 #include "Room.h"
 #include "Price.h"
+#include "Batch.h"
 
 
 class Reservation : public QObject
@@ -26,6 +27,7 @@ public:
   int additionalParticipantsCount() const;
   int additionalParticipantsCountPerRoom(RoomPtr room) const;
   int emptyPlaceCount() const;
+  bool isBatch() const;
   Price price() const;
   QDate beginDate() const;
   QDate endDate() const;
@@ -38,6 +40,7 @@ public:
   void removeRoom(RoomPtr room);
   void setRoomMainParticipants(RoomPtr room, int mainParticipantsCount);
   void setRoomAdditionalParticipants(RoomPtr room, int additionalParticipantsCount);
+  void setBatch(BatchPtr batch);
   void setBeginDate(const QDate& date);
   void setEndDate(const QDate& date);
   void setParking(bool value);
@@ -63,6 +66,7 @@ private slots:
 private:
   ClientPtr _client;
   QMap<RoomPtr, QPair<int, int>> _rooms; // QPair<participants, additional>
+  BatchPtr _batch;
 
   QDate _beginDate;
   QDate _endDate;

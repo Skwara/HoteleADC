@@ -8,6 +8,7 @@
 #include "logic/Client.h"
 #include "logic/Room.h"
 #include "logic/Reservation.h"
+#include "logic/Batch.h"
 
 
 class DatabaseHandler
@@ -39,6 +40,10 @@ public:
 
   bool hasAvailableParkingSpace(const ReservationPtr reservation) const;
 
+  QList<BatchPtr> batchPeriods() const;
+  BatchPtr batchPeriod(int index) const;
+  BatchPtr batchPeriod(QDate beginDate, QDate endDate);
+
 
 
   bool saveReservation(const ReservationPtr reservation);
@@ -49,12 +54,14 @@ private:
   void fetchClients();
   void fetchRooms();
   void fetchReservations();
+  void fetchBatchPeriods();
   void fetchOther();
 
 private:
   QList<ClientPtr> _clients;
   QList<RoomPtr> _rooms;
   QList<ReservationPtr> _reservations;
+  QList<BatchPtr> _batchPeriods;
 
   double _emptyPlaceFactor;
   double _additionalPlaceFactor;
