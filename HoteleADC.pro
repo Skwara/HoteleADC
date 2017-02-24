@@ -30,6 +30,7 @@ SOURCES  += src/main.cpp \
             src/logic/Batch.cpp \
             src/ui/MainWindow.cpp \
             src/ui/ScheduleTableView.cpp \
+            src/ui/NewReservation/NewReservationDialogInterface.cpp \
             src/ui/NewReservation/NewSingleDialog.cpp \
             src/ui/NewReservation/NewBatchDialog.cpp \
             src/ui/NewReservation/MainGroupBox.cpp \
@@ -54,6 +55,7 @@ HEADERS  += src/data/DatabaseHandler.h \
             src/logic/Batch.h \
             src/ui/MainWindow.h \
             src/ui/ScheduleTableView.h \
+            src/ui/NewReservation/NewReservationDialogInterface.h \
             src/ui/NewReservation/NewSingleDialog.h \
             src/ui/NewReservation/NewBatchDialog.h \
             src/ui/NewReservation/MainGroupBox.h \

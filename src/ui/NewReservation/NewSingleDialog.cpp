@@ -1,28 +1,14 @@
 #include "NewSingleDialog.h"
 #include "ui_NewSingleDialog.h"
 
-#include <QMessageBox>
-
 
 NewSingleDialog::NewSingleDialog(QWidget* parent)
-  : QDialog(parent)
+  : NewReservationDialogInterface(parent)
   , ui(new Ui::NewSingleDialog)
-  , _reservation(std::make_shared<Reservation>())
-  , _dbHandler(DatabaseHandler::instance())
-  , _mainGroupBox(this)
-  , _roomsGroupBox(_reservation, this)
-  , _participantsGroupBox(_reservation, this)
-  , _additionalGroupBox(_reservation, this)
   , _singleDateGroupBox(_reservation, this)
-  , _summaryGroupBox(_reservation, this)
 {
   ui->setupUi(this);
   setupHandlers();
-
-  connect(&_summaryGroupBox, SIGNAL(saveButtonClicked()), this, SLOT(onSaveButtonClicked()));
-
-  this->resize(this->minimumWidth(), this->minimumHeight());
-  setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
 NewSingleDialog::~NewSingleDialog()
@@ -40,41 +26,6 @@ void NewSingleDialog::scheduleSelectionChanged(const QItemSelection& /*selected*
 
   _roomsGroupBox.update(selectedRows);
   _singleDateGroupBox.update(selectedCols);
-}
-
-void NewSingleDialog::onSaveButtonClicked()
-{
-  // TODO Check if room and date is available
-  QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
-  if (clients.size() == 0)
-  {
-    _reservation->setClient(_mainGroupBox.createClient());
-  }
-  else if (clients.size() == 1)
-  {
-    _reservation->setClient(clients.first());
-  }
-  else
-  {
-    // TODO handle selection of multiple clients
-  }
-
-  if (!_dbHandler->saveReservation(_reservation))
-  {
-    int ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
-    while (ret == QMessageBox::Retry)
-    {
-      if (!_dbHandler->saveReservation(_reservation))
-      {
-        ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
-        continue;
-      }
-      emit reservationSaved();
-    }
-    return;
-  }
-
-  emit reservationSaved();
 }
 
 void NewSingleDialog::setupHandlers()

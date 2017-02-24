@@ -1,60 +1,36 @@
 #ifndef NEWSINGLEDIALOG_H
 #define NEWSINGLEDIALOG_H
 
-#include <QDialog>
-#include <QItemSelection>
 #include <QSet>
-#include <QItemSelectionModel>
 
-#include "logic/Reservation.h"
-#include "data/DatabaseHandler.h"
-#include "MainGroupBox.h"
-#include "RoomsGroupBox.h"
-#include "ParticipantsGroupBox.h"
-#include "AdditionalGroupBox.h"
+#include "NewReservationDialogInterface.h"
 #include "SingleDateGroupBox.h"
-#include "SummaryGroupBox.h"
 
 
 namespace Ui {
 class NewSingleDialog;
 }
 
-class NewSingleDialog : public QDialog
+class NewSingleDialog : public NewReservationDialogInterface
 {
   Q_OBJECT
 
 public:
   explicit NewSingleDialog(QWidget* parent = 0);
-  ~NewSingleDialog();
+  virtual ~NewSingleDialog();
 
 public slots:
-  void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
-
-signals:
-  void reservationSaved();
-
-private slots:
-  void onSaveButtonClicked();
+  virtual void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
 
 private:
-  void setupHandlers();
+  virtual void setupHandlers();
 
   QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
   QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);
 
 private:
   Ui::NewSingleDialog* ui;
-
-  ReservationPtr _reservation;
-  DatabaseHandler* _dbHandler;
-
-  MainGroupBox _mainGroupBox;
-  RoomsGroupBox _roomsGroupBox;
-  ParticipantsGroupBox _participantsGroupBox;
-  AdditionalGroupBox _additionalGroupBox;
-  SingleDateGroupBox _singleDateGroupBox;
-  SummaryGroupBox _summaryGroupBox;
+  SingleDateGroupBox _singleDateGroupBox; // TODO Extract interface and move to NewReservationDialogInterface
 };
 
 #endif // NewSingleDialog_H
