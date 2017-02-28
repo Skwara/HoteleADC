@@ -29,7 +29,12 @@ void NewReservationDialogInterface::scheduleSelectionChanged(const QItemSelectio
 
 void NewReservationDialogInterface::onSaveButtonClicked()
 {
-  // TODO Check if room and date is available
+  if (!_dbHandler->isReservationAvailable(_reservation))
+  {
+    QMessageBox::critical(this, "Błąd", "Pokoje nie są dostępne w wybranym terminie", QMessageBox::Ok);
+    return;
+  }
+
   QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
   {
@@ -46,15 +51,13 @@ void NewReservationDialogInterface::onSaveButtonClicked()
 
   if (!_dbHandler->saveReservation(_reservation))
   {
-    int ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
-    while (ret == QMessageBox::Retry)
+    while (QMessageBox::critical(this, "Błąd", "Nie można zapisać rezerwacji", QMessageBox::Abort | QMessageBox::Retry) == QMessageBox::Retry)
     {
-      if (!_dbHandler->saveReservation(_reservation))
+      if (_dbHandler->saveReservation(_reservation))
       {
-        ret = QMessageBox::critical(this, "Error", "Reservation cannot be saved", QMessageBox::Abort | QMessageBox::Retry);
-        continue;
+        emit reservationSaved();
+        return;
       }
-      emit reservationSaved();
     }
     return;
   }

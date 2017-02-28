@@ -85,6 +85,29 @@ RoomPtr DatabaseHandler::room(int index) const
   return _rooms.value(index, nullptr);
 }
 
+bool DatabaseHandler::isReservationAvailable(ReservationPtr reservation) const
+{
+  foreach (ReservationPtr r, _reservations)
+  {
+    if (periodsOverlap(reservation->beginDate(), reservation->endDate(),
+                       r->beginDate(), r->endDate()))
+    {
+      foreach (RoomPtr lRoom, reservation->rooms())
+      {
+        foreach (RoomPtr rRoom, r->rooms())
+        {
+          if (lRoom == rRoom)
+          {
+            return false;
+          }
+        }
+      }
+    }
+  }
+
+  return true;
+}
+
 QList<ReservationPtr> DatabaseHandler::reservations() const
 {
   return _reservations;
@@ -154,6 +177,13 @@ bool DatabaseHandler::saveClient(const ClientPtr client)
   }
 
   return true;
+}
+
+bool DatabaseHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
+{
+  int periodsSpan = std::min(lBeginDate, rBeginDate).daysTo(std::max(lEndDate, rEndDate));
+  int periodslength = lBeginDate.daysTo(lEndDate) + rBeginDate.daysTo(rEndDate);
+  return periodsSpan < periodslength;
 }
 
 void DatabaseHandler::fetch()

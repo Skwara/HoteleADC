@@ -33,6 +33,7 @@ public:
 
   QList<RoomPtr> rooms() const;
   RoomPtr room(int index) const;
+  bool isReservationAvailable(ReservationPtr reservation) const;
 
   QList<ReservationPtr> reservations() const;
   ReservationPtr reservation(const QDate& beginDate, const RoomPtr& room) const;
@@ -49,6 +50,8 @@ public:
   bool saveClient(const ClientPtr client);
 
 private:
+  bool periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const;
+
   void fetch();
   void fetchClients();
   void fetchRooms();
