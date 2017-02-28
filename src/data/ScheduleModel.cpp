@@ -55,14 +55,14 @@ QVariant ScheduleModel::headerData(int section, Qt::Orientation orientation, int
   {
     if (role == Qt::DisplayRole)
     {
-      return QString("%1").arg(_dbhandler->firstDate().addDays(section).toString("dd\nMMM"));
+      return sourceDate(section).toString("dd\nMMM");
     }
   }
   else
   {
     if (role == Qt::DisplayRole)
     {
-      return QString("%1").arg(section + 1); // TODO Refactor like in BatchDateModel
+      return sourceRoom(section)->number();
     }
   }
 
@@ -78,6 +78,16 @@ QSize ScheduleModel::span(const QModelIndex& index) const
   }
 
   return QAbstractItemModel::span(index);
+}
+
+QDate ScheduleModel::sourceDate(int col) const
+{
+  return _dbhandler->firstDate().addDays(col);
+}
+
+RoomPtr ScheduleModel::sourceRoom(int row) const
+{
+  return _dbhandler->room(row);
 }
 
 ReservationPtr ScheduleModel::findReservation(const QModelIndex& index) const

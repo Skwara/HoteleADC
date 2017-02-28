@@ -23,6 +23,9 @@ public:
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;
   QSize span(const QModelIndex& index) const;
 
+  QDate sourceDate(int col) const;
+  RoomPtr sourceRoom(int row) const;
+
 private:
   ReservationPtr findReservation(const QModelIndex& index) const;
 

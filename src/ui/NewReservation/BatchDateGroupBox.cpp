@@ -29,7 +29,7 @@ void BatchDateGroupBox::update(QSet<int> selectedCols)
     _reservation->setBatch(batch);
     for (int row = 0; row < _batchDateModel.rowCount(); ++row)
     {
-      if (batch == _batchDateModel.sourceData(row))
+      if (batch == _batchDateModel.sourceBatch(row))
       {
         ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
       }
@@ -52,5 +52,5 @@ void BatchDateGroupBox::setup()
 
 void BatchDateGroupBox::onDateTableViewClicked(const QModelIndex& index)
 {
-  _reservation->setBatch(_batchDateModel.sourceData(index.row()));
+  _reservation->setBatch(_batchDateModel.sourceBatch(index.row()));
 }

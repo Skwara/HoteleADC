@@ -11,6 +11,11 @@ DatabaseHandler::DatabaseHandler()
   fetch();
 }
 
+QList<ClientPtr> DatabaseHandler::clients() const
+{
+  return _clients;
+}
+
 QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString street)
 {
   QList<ClientPtr> matchingClients;
@@ -70,6 +75,21 @@ int DatabaseHandler::parkingCost(QDate date) const
   }
 }
 
+QList<RoomPtr> DatabaseHandler::rooms() const
+{
+  return _rooms;
+}
+
+RoomPtr DatabaseHandler::room(int index) const
+{
+  return _rooms.value(index, nullptr);
+}
+
+QList<ReservationPtr> DatabaseHandler::reservations() const
+{
+  return _reservations;
+}
+
 ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPtr& room) const
 {
   QList<ReservationPtr>::const_iterator it = std::find_if(_reservations.begin(), _reservations.end(), [&](const ReservationPtr& reservation)
@@ -98,7 +118,7 @@ QList<BatchPtr> DatabaseHandler::batchPeriods() const
 
 BatchPtr DatabaseHandler::batchPeriod(int index) const
 {
-  return _batchPeriods[index];
+  return _batchPeriods.value(index, nullptr);
 }
 
 BatchPtr DatabaseHandler::batchPeriod(QDate beginDate, QDate endDate)
@@ -193,6 +213,9 @@ void DatabaseHandler::fetchRooms()
   _rooms.push_back(std::make_shared<Room>(Room(8, 3)));
   _rooms.push_back(std::make_shared<Room>(Room(9, 3)));
   _rooms.push_back(std::make_shared<Room>(Room(10, 3)));
+
+  std::sort(_rooms.begin(), _rooms.end(),
+            [](const RoomPtr& lRoom, const RoomPtr& rRoom){ return lRoom->number() < rRoom->number(); });
 }
 
 void DatabaseHandler::fetchReservations()

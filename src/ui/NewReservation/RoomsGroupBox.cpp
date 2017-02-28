@@ -43,16 +43,15 @@ void RoomsGroupBox::setup()
 
 void RoomsGroupBox::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)
 {
-  // TODO Use getSourceData on roomsModel and scheduleModel like in batchDateModel
   foreach (QModelIndex index, selected.indexes())
   {
-    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
+    RoomPtr room = _roomsModel.sourceRoom(index.row());
     _reservation->addRoom(room);
   }
 
   foreach (QModelIndex index, deselected.indexes())
   {
-    RoomPtr room = _dbHandler->room(ui->roomListView->model()->data(index).toInt());
+    RoomPtr room = _roomsModel.sourceRoom(index.row());
     _reservation->removeRoom(room);
   }
 }

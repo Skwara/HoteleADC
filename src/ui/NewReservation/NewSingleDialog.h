@@ -30,7 +30,7 @@ private:
 
 private:
   Ui::NewSingleDialog* ui;
-  SingleDateGroupBox _singleDateGroupBox; // TODO Extract interface and move to NewReservationDialogInterface
+  SingleDateGroupBox _singleDateGroupBox;
 };
 
 #endif // NewSingleDialog_H

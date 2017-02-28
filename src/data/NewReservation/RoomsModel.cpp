@@ -15,3 +15,8 @@ QVariant RoomsModel::data(const QModelIndex& index, int role) const
 {
   return _scheduleModel->headerData(index.row(), Qt::Vertical, role);
 }
+
+RoomPtr RoomsModel::sourceRoom(int row) const
+{
+  return _scheduleModel->sourceRoom(row);
+}

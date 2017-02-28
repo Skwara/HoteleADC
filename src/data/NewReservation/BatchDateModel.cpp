@@ -28,11 +28,11 @@ QVariant BatchDateModel::data(const QModelIndex& index, int role) const
     switch (index.column())
     {
     case 0:
-      return sourceData(index.row())->beginDate().toString(Qt::SystemLocaleShortDate);
+      return sourceBatch(index.row())->beginDate().toString(Qt::SystemLocaleShortDate);
     case 1:
-      return sourceData(index.row())->endDate().toString(Qt::SystemLocaleShortDate);
+      return sourceBatch(index.row())->endDate().toString(Qt::SystemLocaleShortDate);
     case 2:
-      return sourceData(index.row())->buildings().join(", ");
+      return sourceBatch(index.row())->buildings().join(", ");
     default:
       return QVariant();
     }
@@ -53,7 +53,7 @@ QVariant BatchDateModel::headerData(int section, Qt::Orientation orientation, in
   return QVariant();
 }
 
-BatchPtr BatchDateModel::sourceData(int row) const
+BatchPtr BatchDateModel::sourceBatch(int row) const
 {
   return _dbHandler->batchPeriod(row);
 }

@@ -18,7 +18,7 @@ public:
   QVariant data(const QModelIndex& index, int role) const;
   QVariant headerData(int section, Qt::Orientation orientation, int role) const;
 
-  BatchPtr sourceData(int row) const;
+  BatchPtr sourceBatch(int row) const;
 
 private:
   static const QStringList columns()
