@@ -18,7 +18,7 @@ int ParticipantsModel::rowCount(const QModelIndex& /*parent*/) const
 
 int ParticipantsModel::columnCount(const QModelIndex& /*parent*/) const
 {
-  return 3;
+  return columns().size();
 }
 
 QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
@@ -48,25 +48,13 @@ QVariant ParticipantsModel::data(const QModelIndex& index, int role) const
   return QVariant();
 }
 
-// TODO Refactor like in BatchDateModel
 QVariant ParticipantsModel::headerData(int section, Qt::Orientation orientation, int role) const
 {
   if (orientation == Qt::Horizontal)
   {
     if (role == Qt::DisplayRole)
     {
-      if (section == 0)
-      {
-        return "Pokój";
-      }
-      else if (section == 1)
-      {
-        return "Osoby";
-      }
-      else if (section == 2)
-      {
-        return "Dostawki";
-      }
+      return columns()[section];
     }
   }
 

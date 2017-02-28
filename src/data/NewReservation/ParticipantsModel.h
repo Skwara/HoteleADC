@@ -26,11 +26,16 @@ public:
   Qt::ItemFlags flags(const QModelIndex& index) const;
 
 private:
+  static const QStringList columns()
+  {
+    static const QStringList columns = {"Pokój", "Osoby", "Dostawki"};
+    return columns;
+  }
+
   ParticipantsSpinBoxDelegate _spinBoxDelegate;
 
 private:
   ReservationPtr _reservation;
-
 };
 
 #endif // PARTICIPANTSMODEL_H
