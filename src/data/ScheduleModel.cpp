@@ -93,7 +93,7 @@ RoomPtr ScheduleModel::sourceRoom(int row) const
 ReservationPtr ScheduleModel::findReservation(const QModelIndex& index) const
 {
   // TODO Caching reservations
-  QDate beginDate = _dbhandler->firstDate().addDays(index.column());
-  RoomPtr room = _dbhandler->rooms()[index.row()];
+  QDate beginDate = sourceDate(index.column());
+  RoomPtr room = sourceRoom(index.row());
   return _dbhandler->reservation(beginDate, room);
 }
