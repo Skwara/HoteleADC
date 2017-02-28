@@ -27,9 +27,6 @@ public slots:
 signals:
   void reservationSaved();
 
-protected slots:
-  virtual void onSaveButtonClicked();
-
 protected:
   virtual void setupHandlers() = 0;
 
@@ -42,6 +39,14 @@ protected:
   ParticipantsGroupBox _participantsGroupBox;
   AdditionalGroupBox _additionalGroupBox;
   SummaryGroupBox _summaryGroupBox;
+
+private slots:
+  void onSaveButtonClicked();
+
+private:
+  bool checkAvailability();
+  void setClient();
+  void saveReservation();
 };
 
 #endif // NEWRESERVATIONDIALOGINTERFACE_H

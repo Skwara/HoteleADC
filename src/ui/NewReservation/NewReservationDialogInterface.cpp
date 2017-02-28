@@ -29,38 +29,42 @@ void NewReservationDialogInterface::scheduleSelectionChanged(const QItemSelectio
 
 void NewReservationDialogInterface::onSaveButtonClicked()
 {
+  if (!checkAvailability())
+    return;
+  setClient();
+  saveReservation();
+}
+
+bool NewReservationDialogInterface::checkAvailability()
+{
   if (!_dbHandler->isReservationAvailable(_reservation))
   {
     QMessageBox::critical(this, "Błąd", "Pokoje nie są dostępne w wybranym terminie", QMessageBox::Ok);
-    return;
+    return false;
   }
+  return true;
+}
 
+void NewReservationDialogInterface::setClient()
+{
   QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
-  {
     _reservation->setClient(_mainGroupBox.createClient());
-  }
   else if (clients.size() == 1)
-  {
     _reservation->setClient(clients.first());
-  }
   else
-  {
-    // TODO handle selection of multiple clients
-  }
+    return; // TODO handle selection of multiple clients
+}
 
-  if (!_dbHandler->saveReservation(_reservation))
+void NewReservationDialogInterface::saveReservation()
+{
+  bool saved = false;
+  while (!saved)
   {
-    while (QMessageBox::critical(this, "Błąd", "Nie można zapisać rezerwacji", QMessageBox::Abort | QMessageBox::Retry) == QMessageBox::Retry)
-    {
-      if (_dbHandler->saveReservation(_reservation))
-      {
-        emit reservationSaved();
-        return;
-      }
-    }
-    return;
+    if (_dbHandler->saveReservation(_reservation))
+      saved = true;
+    else if (QMessageBox::critical(this, "Błąd", "Nie można zapisać rezerwacji", QMessageBox::Abort | QMessageBox::Retry) == QMessageBox::Abort)
+      return;
   }
-
   emit reservationSaved();
 }
