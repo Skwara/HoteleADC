@@ -25,6 +25,8 @@ public:
   QDate sourceDate(int col) const;
   RoomPtr sourceRoom(int row) const;
 
+  bool deleteReservation(const QModelIndex& index) const;
+
 private:
   ReservationPtr findReservation(const QModelIndex& index) const;
 

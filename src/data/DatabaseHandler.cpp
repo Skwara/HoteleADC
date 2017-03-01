@@ -179,6 +179,11 @@ bool DatabaseHandler::saveClient(const ClientPtr client)
   return true;
 }
 
+bool DatabaseHandler::deleteReservation(ReservationPtr reservation)
+{
+  return _reservations.removeOne(reservation);
+}
+
 bool DatabaseHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
 {
   int periodsSpan = std::min(lBeginDate, rBeginDate).daysTo(std::max(lEndDate, rEndDate));

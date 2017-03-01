@@ -49,6 +49,10 @@ public:
   bool saveReservation(const ReservationPtr reservation);
   bool saveClient(const ClientPtr client);
 
+
+
+  bool deleteReservation(ReservationPtr reservation);
+
 private:
   bool periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const;
 

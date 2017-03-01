@@ -19,6 +19,16 @@ public slots:
   void updateSpan();
 
 private:
+  void contextMenuEvent(QContextMenuEvent* event);
+  void onContextMenuActionTriggered(QAction* action);
+
+  static const QStringList actions()
+  {
+    static const QStringList actions = {"Delete"};
+    return actions;
+  }
+
+private:
   const int _horizontalHeaderWidth = 30;
   const int _horizontalHeaderHeight = 40;
   const int _verticalHeaderWidth = 30;

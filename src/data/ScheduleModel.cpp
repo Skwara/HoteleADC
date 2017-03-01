@@ -90,6 +90,11 @@ RoomPtr ScheduleModel::sourceRoom(int row) const
   return _dbhandler->room(row);
 }
 
+bool ScheduleModel::deleteReservation(const QModelIndex& index) const
+{
+  return _dbhandler->deleteReservation(findReservation(index));
+}
+
 ReservationPtr ScheduleModel::findReservation(const QModelIndex& index) const
 {
   // TODO Caching reservations
