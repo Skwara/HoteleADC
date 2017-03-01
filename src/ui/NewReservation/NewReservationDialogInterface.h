@@ -45,8 +45,8 @@ private slots:
 
 private:
   bool checkAvailability();
-  void setClient();
-  void saveReservation();
+  bool setClient();
+  bool saveReservation();
 };
 
 #endif // NEWRESERVATIONDIALOGINTERFACE_H

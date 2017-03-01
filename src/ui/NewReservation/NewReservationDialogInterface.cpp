@@ -31,8 +31,10 @@ void NewReservationDialogInterface::onSaveButtonClicked()
 {
   if (!checkAvailability())
     return;
-  setClient();
-  saveReservation();
+  if (!setClient())
+    return;
+  if (!saveReservation())
+    return;
 }
 
 bool NewReservationDialogInterface::checkAvailability()
@@ -45,7 +47,7 @@ bool NewReservationDialogInterface::checkAvailability()
   return true;
 }
 
-void NewReservationDialogInterface::setClient()
+bool NewReservationDialogInterface::setClient()
 {
   QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
@@ -53,10 +55,14 @@ void NewReservationDialogInterface::setClient()
   else if (clients.size() == 1)
     _reservation->setClient(clients.first());
   else
-    return; // TODO handle selection of multiple clients
+  {
+    QMessageBox::critical(this, "Błąd", "Znaleziono więcej niż jednego klienta", QMessageBox::Ok);
+    return false; // TODO handle selection of multiple clients
+  }
+  return true;
 }
 
-void NewReservationDialogInterface::saveReservation()
+bool NewReservationDialogInterface::saveReservation()
 {
   bool saved = false;
   while (!saved)
@@ -64,7 +70,8 @@ void NewReservationDialogInterface::saveReservation()
     if (_dbHandler->saveReservation(_reservation))
       saved = true;
     else if (QMessageBox::critical(this, "Błąd", "Nie można zapisać rezerwacji", QMessageBox::Abort | QMessageBox::Retry) == QMessageBox::Abort)
-      return;
+      return false;
   }
   emit reservationSaved();
+  return true;
 }
