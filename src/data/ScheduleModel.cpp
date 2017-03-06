@@ -29,7 +29,7 @@ QVariant ScheduleModel::data(const QModelIndex& index, int role) const
     return QVariant();
   }
 
-  ReservationPtr reservation = findReservation(index);
+  ReservationPtr reservation = getReservation(index);
   if (reservation)
   {
     if (role == Qt::DisplayRole)
@@ -71,7 +71,7 @@ QVariant ScheduleModel::headerData(int section, Qt::Orientation orientation, int
 
 QSize ScheduleModel::span(const QModelIndex& index) const
 {
-  ReservationPtr reservation = findReservation(index);
+  ReservationPtr reservation = getReservation(index);
   if (reservation)
   {
     return QSize(reservation->days(), 1);
@@ -92,10 +92,10 @@ RoomPtr ScheduleModel::sourceRoom(int row) const
 
 bool ScheduleModel::deleteReservation(const QModelIndex& index) const
 {
-  return _dbhandler->deleteReservation(findReservation(index));
+  return _dbhandler->deleteReservation(getReservation(index));
 }
 
-ReservationPtr ScheduleModel::findReservation(const QModelIndex& index) const
+ReservationPtr ScheduleModel::getReservation(const QModelIndex& index) const
 {
   // TODO Caching reservations
   QDate beginDate = sourceDate(index.column());

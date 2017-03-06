@@ -164,7 +164,8 @@ bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
     return false;
   }
 
-  _reservations.append(reservation);
+  if (!_reservations.contains(reservation))
+    _reservations.append(reservation);
 
   return true;
 }
@@ -172,9 +173,7 @@ bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
 bool DatabaseHandler::saveClient(const ClientPtr client)
 {
   if (!_clients.contains(client))
-  {
     _clients.push_back(client);
-  }
 
   return true;
 }

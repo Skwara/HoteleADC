@@ -5,6 +5,7 @@
 
 #include "src/ui/ScheduleTableView.h"
 #include "data/DatabaseHandler.h"
+#include "NewReservation/NewReservationDialogInterface.h"
 
 namespace Ui {
 class MainWindow;
@@ -22,6 +23,9 @@ private slots:
   void on_newReservationButton_clicked();
   void on_newBatchButton_clicked();
   void on_dockWidget_topLevelChanged(bool isFloating);
+
+private:
+  void connectNewDialog(NewReservationDialogInterface* dialog);
 
 private:
   Ui::MainWindow* ui;
