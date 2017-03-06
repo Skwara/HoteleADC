@@ -21,6 +21,10 @@ public:
     return &_instance;
   }
 
+  unsigned int nextClientId();
+  unsigned int nextRoomId();
+  unsigned int nextReservationId();
+
   QList<ClientPtr> clients() const;
   QList<ClientPtr> clients(QString surname, QString name, QString street);
 
@@ -56,6 +60,9 @@ public:
 private:
   bool periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const;
 
+  template<typename T>
+  bool hasElementWithId(QList<T> container, T element) const;
+
   void fetch();
   void fetchClients();
   void fetchRooms();
@@ -64,6 +71,10 @@ private:
   void fetchOther();
 
 private:
+  unsigned int _nextClientId = 0;
+  unsigned int _nextRoomId = 0;
+  unsigned int _nextReservationId = 0;
+
   QList<ClientPtr> _clients;
   QList<RoomPtr> _rooms;
   QList<ReservationPtr> _reservations;

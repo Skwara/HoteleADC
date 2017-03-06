@@ -9,12 +9,14 @@ class Room
 public:
   Room(int number, int maxParticipants);
 
+  unsigned int id() const;
   int number() const { return _number; }
   int maxParticipants() const { return _maxParticipants; }
 
   bool operator==(const Room& other) { return this->_number == other._number; }
 
 private:
+  unsigned int _id;
   int _number;
   int _maxParticipants;
 

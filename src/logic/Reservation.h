@@ -20,6 +20,7 @@ class Reservation : public QObject
 public:
   Reservation();
 
+  unsigned int id() const;
   ClientPtr client() const;
   QList<RoomPtr> rooms() const;
   int mainParticipantsCount() const;
@@ -64,6 +65,8 @@ private slots:
   void updatePrice();
 
 private:
+  unsigned int _id;
+
   ClientPtr _client;
   QMap<RoomPtr, QPair<int, int>> _rooms; // QPair<participants, additional>
   BatchPtr _batch;

@@ -3,12 +3,18 @@
 
 
 Reservation::Reservation()
-  : _client(nullptr)
+  : _id(DatabaseHandler::instance()->nextReservationId())
+  , _client(nullptr)
   , _batch(nullptr)
   , _parking(false)
   , _countEmptyPlace(true)
   , _price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace)
 {
+}
+
+unsigned int Reservation::id() const
+{
+  return _id;
 }
 
 ClientPtr Reservation::client() const

@@ -1,4 +1,5 @@
 #include "Client.h"
+#include "data/DatabaseHandler.h"
 
 Address::Address(QString street, QString number, QString postalCode, QString city, QString country)
   : _street(street)
@@ -15,7 +16,8 @@ void Address::correctStreetFormatting(QString& /*street*/)
 }
 
 Client::Client(QString surname, QString name, Address address, QString phone, QString eMail)
-  : _surname(surname)
+  : _id(DatabaseHandler::instance()->nextClientId())
+  , _surname(surname)
   , _name(name)
   , _address(address)
   , _phone(phone)

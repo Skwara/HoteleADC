@@ -31,6 +31,7 @@ class Client
 public:
   Client(QString surname, QString name, Address address, QString phone, QString eMail);
 
+  unsigned int id() const { return _id; }
   QString surname() const { return _surname; }
   QString name() const { return _name; }
   Address address() const { return _address; }
@@ -40,6 +41,7 @@ public:
   static void firstLetterUppercase(QString& string);
 
 private:
+  unsigned int _id;
   QString _surname;
   QString _name;
   Address _address;

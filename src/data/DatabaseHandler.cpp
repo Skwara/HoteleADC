@@ -11,6 +11,22 @@ DatabaseHandler::DatabaseHandler()
   fetch();
 }
 
+unsigned int DatabaseHandler::nextClientId()
+{
+  return _nextClientId++;
+}
+
+unsigned int DatabaseHandler::nextRoomId()
+{
+  return _nextRoomId++;
+}
+
+unsigned int DatabaseHandler::nextReservationId()
+{
+  // TODO Make permanent storage for ids
+  return _nextReservationId++;
+}
+
 QList<ClientPtr> DatabaseHandler::clients() const
 {
   return _clients;
@@ -118,7 +134,7 @@ ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPt
   QList<ReservationPtr>::const_iterator it = std::find_if(_reservations.begin(), _reservations.end(), [&](const ReservationPtr& reservation)
   {
     return reservation->beginDate() == beginDate &&
-           reservation->rooms().contains(room);
+           hasElementWithId(reservation->rooms(), room);
   });
 
   if (it != _reservations.end())
@@ -164,23 +180,31 @@ bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
     return false;
   }
 
-  if (!_reservations.contains(reservation))
+  if (!hasElementWithId(_reservations, reservation))
     _reservations.append(reservation);
+  else
+    return false;
 
   return true;
 }
 
 bool DatabaseHandler::saveClient(const ClientPtr client)
 {
-  if (!_clients.contains(client))
+  if (!hasElementWithId(_clients, client))
     _clients.push_back(client);
+  else
+    return false;
 
   return true;
 }
 
 bool DatabaseHandler::deleteReservation(ReservationPtr reservation)
 {
-  return _reservations.removeOne(reservation);
+  QList<ReservationPtr>::iterator it = std::remove_if(_reservations.begin(), _reservations.end(),
+                                                      [&reservation](const ReservationPtr& r){ return r->id() == reservation->id(); });
+  bool erased = it != _reservations.end();
+  _reservations.erase(it, _reservations.end());
+  return erased;
 }
 
 bool DatabaseHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
@@ -315,4 +339,11 @@ void DatabaseHandler::fetchOther()
 {
   _emptyPlaceFactor = 0.6;
   _additionalPlaceFactor = 0.6;
+}
+
+template<typename T>
+bool DatabaseHandler::hasElementWithId(QList<T> container, T element) const
+{
+  return std::any_of(container.begin(), container.end(),
+                     [&element](const T& e){ return e->id() == element->id(); });
 }
