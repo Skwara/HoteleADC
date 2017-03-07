@@ -20,3 +20,12 @@ RoomPtr RoomsModel::sourceRoom(int row) const
 {
   return _scheduleModel->sourceRoom(row);
 }
+
+int RoomsModel::roomRow(RoomPtr room) const
+{
+  for (int row = 0; row < rowCount(); ++row)
+    if (room->id() == sourceRoom(row)->id())
+      return row;
+
+  return -1;
+}

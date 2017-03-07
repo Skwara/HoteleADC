@@ -23,7 +23,6 @@ unsigned int DatabaseHandler::nextRoomId()
 
 unsigned int DatabaseHandler::nextReservationId()
 {
-  // TODO Make permanent storage for ids
   return _nextReservationId++;
 }
 
@@ -34,6 +33,7 @@ QList<ClientPtr> DatabaseHandler::clients() const
 
 QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString street)
 {
+  // TODO Clients search should take all data into account?
   QList<ClientPtr> matchingClients;
   foreach (ClientPtr client, _clients)
   {
@@ -105,6 +105,9 @@ bool DatabaseHandler::isReservationAvailable(ReservationPtr reservation) const
 {
   foreach (ReservationPtr r, _reservations)
   {
+    if (r->id() == reservation->id())
+      continue;
+
     if (periodsOverlap(reservation->beginDate(), reservation->endDate(),
                        r->beginDate(), r->endDate()))
     {
@@ -175,15 +178,15 @@ BatchPtr DatabaseHandler::batchPeriod(QDate beginDate, QDate endDate)
 
 bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
 {
-  if (!saveClient(reservation->client()))
-  {
-    return false;
-  }
-
   if (!hasElementWithId(_reservations, reservation))
+  {
+    if (!saveClient(reservation->client()))
+      return false;
+    reservation->setId(nextReservationId());
     _reservations.append(reservation);
+  }
   else
-    return false;
+    return updateReservation(reservation);
 
   return true;
 }
@@ -191,10 +194,18 @@ bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
 bool DatabaseHandler::saveClient(const ClientPtr client)
 {
   if (!hasElementWithId(_clients, client))
+  {
+    client->setId(nextClientId());
     _clients.push_back(client);
-  else
-    return false;
+  }
 
+  return true;
+}
+
+bool DatabaseHandler::saveRoom(const RoomPtr room)
+{
+  room->setId(nextRoomId());
+  _rooms.push_back(room);
   return true;
 }
 
@@ -205,6 +216,24 @@ bool DatabaseHandler::deleteReservation(ReservationPtr reservation)
   bool erased = it != _reservations.end();
   _reservations.erase(it, _reservations.end());
   return erased;
+}
+
+bool DatabaseHandler::updateReservation(ReservationPtr reservation)
+{
+  ClientPtr client = reservation->client();
+  QList<ClientPtr> clients = this->clients(client->surname(), client->name(), client->address().street());
+  if (clients.size() == 0)
+  {
+    client->setId(nextClientId());
+    saveClient(client);
+  }
+
+  if (deleteReservation(reservation))
+    _reservations.append(reservation);
+  else
+    return false;
+
+  return true;
 }
 
 bool DatabaseHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
@@ -223,8 +252,8 @@ void DatabaseHandler::fetch()
 
   fetchClients();
   fetchRooms();
-  fetchReservations();
   fetchBatchPeriods();
+  fetchReservations();
   fetchOther();
 
   _fetched = true;
@@ -232,45 +261,45 @@ void DatabaseHandler::fetch()
 
 void DatabaseHandler::fetchClients()
 {
-  _clients.push_back(std::make_shared<Client>(
-                     Client("Kowalski", "Jan",
-                            Address("al. Pokoju", "22/10", "31-564", "Kraków", "Polska"),
-                            "516212757",
-                            "skwara0@gmail.com")));
-  _clients.push_back(std::make_shared<Client>(
-                     Client("Kowalski", "Janusz",
-                            Address("ul. Grzegórzecka", "17/34", "31-564", "Kraków", "Polska"),
-                            "384758678",
-                            "janusz@gmail.com")));
-  _clients.push_back(std::make_shared<Client>(
-                     Client("Kowalski", "Janusz",
-                            Address("ul. Mogilska", "1", "31-564", "Kraków", "Polska"),
-                            "123456789",
-                            "januszMogilska@gmail.com")));
-  _clients.push_back(std::make_shared<Client>(
-                     Client("Nowak", "Andrzej",
-                            Address("ul. Daniela Chodowieckiego", "8", "31-564", "Kraków", "Polska"),
-                            "584757685",
-                            "testemail@gmail.com")));
-  _clients.push_back(std::make_shared<Client>(
-                     Client("Iksiński", "Łukasz",
-                            Address("al. Pokoju", "24/15", "31-564", "Kraków", "Polska"),
-                            "384758698",
-                            "mailmail@gmail.com")));
+  saveClient(std::make_shared<Client>(
+             Client("Kowalski", "Jan",
+                    Address("al. Pokoju", "22/10", "31-564", "Kraków", "Polska"),
+                    "516212757",
+                    "skwara0@gmail.com")));
+  saveClient(std::make_shared<Client>(
+             Client("Kowalski", "Janusz",
+                    Address("ul. Grzegórzecka", "17/34", "31-564", "Kraków", "Polska"),
+                    "384758678",
+                    "janusz@gmail.com")));
+  saveClient(std::make_shared<Client>(
+             Client("Kowalski", "Janusz",
+                    Address("ul. Mogilska", "1", "31-564", "Kraków", "Polska"),
+                    "123456789",
+                    "januszMogilska@gmail.com")));
+  saveClient(std::make_shared<Client>(
+             Client("Nowak", "Andrzej",
+                    Address("ul. Daniela Chodowieckiego", "8", "31-564", "Kraków", "Polska"),
+                    "584757685",
+                    "testemail@gmail.com")));
+  saveClient(std::make_shared<Client>(
+             Client("Iksiński", "Łukasz",
+                    Address("al. Pokoju", "24/15", "31-564", "Kraków", "Polska"),
+                    "384758698",
+                    "mailmail@gmail.com")));
 }
 
 void DatabaseHandler::fetchRooms()
 {
-  _rooms.push_back(std::make_shared<Room>(Room(1, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(2, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(3, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(4, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(5, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(6, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(7, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(8, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(9, 3)));
-  _rooms.push_back(std::make_shared<Room>(Room(10, 3)));
+  saveRoom(std::make_shared<Room>(Room(1, 3)));
+  saveRoom(std::make_shared<Room>(Room(2, 3)));
+  saveRoom(std::make_shared<Room>(Room(3, 3)));
+  saveRoom(std::make_shared<Room>(Room(4, 3)));
+  saveRoom(std::make_shared<Room>(Room(5, 3)));
+  saveRoom(std::make_shared<Room>(Room(6, 3)));
+  saveRoom(std::make_shared<Room>(Room(7, 3)));
+  saveRoom(std::make_shared<Room>(Room(8, 3)));
+  saveRoom(std::make_shared<Room>(Room(9, 3)));
+  saveRoom(std::make_shared<Room>(Room(10, 3)));
 
   std::sort(_rooms.begin(), _rooms.end(),
             [](const RoomPtr& lRoom, const RoomPtr& rRoom){ return lRoom->number() < rRoom->number(); });
@@ -284,28 +313,35 @@ void DatabaseHandler::fetchReservations()
   reservation->addRoom(_rooms[0]);
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 2));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 9));
-  _reservations.push_back(reservation);
+  reservation->setRoomMainParticipants(_rooms[0], 3);
+  saveReservation(reservation);
 
   reservation = std::make_shared<Reservation>();
   reservation->setClient(_clients[1]);
   reservation->addRoom(_rooms[1]);
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 1));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 7));
-  _reservations.push_back(reservation);
+  saveReservation(reservation);
 
   reservation = std::make_shared<Reservation>();
   reservation->setClient(_clients[2]);
   reservation->addRoom(_rooms[3]);
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 1));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 7));
-  _reservations.push_back(reservation);
+  saveReservation(reservation);
 
   reservation = std::make_shared<Reservation>();
   reservation->setClient(_clients[3]);
   reservation->addRoom(_rooms[3]);
   reservation->setBeginDate(QDate(QDate::currentDate().year(), 5, 7));
   reservation->setEndDate(QDate(QDate::currentDate().year(), 5, 14));
-  _reservations.push_back(reservation);
+  saveReservation(reservation);
+
+  reservation = std::make_shared<Reservation>();
+  reservation->setClient(_clients[3]);
+  reservation->addRoom(_rooms[6]);
+  reservation->setBatch(_batchPeriods[1]);
+  saveReservation(reservation);
 }
 
 void DatabaseHandler::fetchBatchPeriods()

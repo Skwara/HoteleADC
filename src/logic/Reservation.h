@@ -19,8 +19,9 @@ class Reservation : public QObject
 
 public:
   Reservation();
+  Reservation(const Reservation& reservation);
 
-  unsigned int id() const;
+  long long int id() const;
   ClientPtr client() const;
   QList<RoomPtr> rooms() const;
   int mainParticipantsCount() const;
@@ -29,6 +30,7 @@ public:
   int additionalParticipantsCountPerRoom(RoomPtr room) const;
   int emptyPlaceCount() const;
   bool isBatch() const;
+  BatchPtr batch() const;
   Price price() const;
   QDate beginDate() const;
   QDate endDate() const;
@@ -36,6 +38,7 @@ public:
   bool parking() const;
   bool countEmptyPlace() const;
 
+  void setId(long long int id);
   void setClient(ClientPtr client);
   void addRoom(RoomPtr room);
   void removeRoom(RoomPtr room);
@@ -65,7 +68,7 @@ private slots:
   void updatePrice();
 
 private:
-  unsigned int _id;
+  long long int _id;
 
   ClientPtr _client;
   QMap<RoomPtr, QPair<int, int>> _rooms; // QPair<participants, additional>

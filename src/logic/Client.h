@@ -31,17 +31,19 @@ class Client
 public:
   Client(QString surname, QString name, Address address, QString phone, QString eMail);
 
-  unsigned int id() const { return _id; }
+  long long int id() const { return _id; }
   QString surname() const { return _surname; }
   QString name() const { return _name; }
   Address address() const { return _address; }
   QString phone() const { return _phone; }
   QString eMail() const { return _eMail; }
 
+  void setId(long long int id) { _id = id; }
+
   static void firstLetterUppercase(QString& string);
 
 private:
-  unsigned int _id;
+  long long int _id;
   QString _surname;
   QString _name;
   Address _address;

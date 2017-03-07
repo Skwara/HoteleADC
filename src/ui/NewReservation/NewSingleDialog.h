@@ -16,7 +16,7 @@ class NewSingleDialog : public NewReservationDialogInterface
   Q_OBJECT
 
 public:
-  explicit NewSingleDialog(QWidget* parent = 0);
+  explicit NewSingleDialog(QWidget* parent = 0, ReservationPtr reservationToEdit = nullptr);
   virtual ~NewSingleDialog();
 
 public slots:

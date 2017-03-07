@@ -16,7 +16,7 @@ void Address::correctStreetFormatting(QString& /*street*/)
 }
 
 Client::Client(QString surname, QString name, Address address, QString phone, QString eMail)
-  : _id(DatabaseHandler::instance()->nextClientId())
+  : _id(-1)
   , _surname(surname)
   , _name(name)
   , _address(address)

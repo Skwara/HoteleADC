@@ -5,6 +5,7 @@
 #include <QLineEdit>
 
 #include "data/DatabaseHandler.h"
+#include "logic/Reservation.h"
 
 
 namespace Ui {
@@ -16,7 +17,7 @@ class MainGroupBox : public QGroupBox
   Q_OBJECT
 
 public:
-  explicit MainGroupBox(QWidget* parent = 0);
+  explicit MainGroupBox(ReservationPtr reservation, QWidget* parent = 0);
   ~MainGroupBox();
 
   ClientPtr createClient() const;
@@ -24,6 +25,9 @@ public:
   QString surname() const;
   QString name() const;
   QString street() const;
+
+public slots:
+  void update();
 
 private:
   void setup();
@@ -39,6 +43,8 @@ private slots:
 private:
   Ui::MainGroupBox* ui;
   DatabaseHandler* _dbHandler;
+
+  ReservationPtr _reservation;
 };
 
 #endif // MAINGROUPBOX_H

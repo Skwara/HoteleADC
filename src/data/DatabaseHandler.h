@@ -52,12 +52,15 @@ public:
 
   bool saveReservation(const ReservationPtr reservation);
   bool saveClient(const ClientPtr client);
+  bool saveRoom(const RoomPtr room);
 
 
 
   bool deleteReservation(ReservationPtr reservation);
 
 private:
+  bool updateReservation(ReservationPtr reservation);
+
   bool periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const;
 
   template<typename T>

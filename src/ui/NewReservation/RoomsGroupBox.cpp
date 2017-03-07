@@ -19,6 +19,7 @@ RoomsGroupBox::~RoomsGroupBox()
 
 void RoomsGroupBox::update(QSet<int> selectedRows)
 {
+  // TODO Remove this method. Save rooms earlier in reservation and use update() based on reservation.
   QAbstractItemModel* model = ui->roomListView->model();
   for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)
   {
@@ -33,12 +34,20 @@ void RoomsGroupBox::update(QSet<int> selectedRows)
   }
 }
 
+void RoomsGroupBox::update()
+{
+  foreach (RoomPtr room, _reservation->rooms())
+    ui->roomListView->selectionModel()->select(_roomsModel.index(_roomsModel.roomRow(room), 0), QItemSelectionModel::Select);
+}
+
 void RoomsGroupBox::setup()
 {
   ui->roomListView->setModel(&_roomsModel);
   ui->roomListView->setSelectionMode(QAbstractItemView::ExtendedSelection);
 
   connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
+
+  update();
 }
 
 void RoomsGroupBox::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)

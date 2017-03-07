@@ -23,6 +23,7 @@ public:
 
 public slots:
   void update(QSet<int> selectedRows);
+  void update();
 
 private:
   void setup();

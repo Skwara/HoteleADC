@@ -3,16 +3,31 @@
 
 
 Reservation::Reservation()
-  : _id(DatabaseHandler::instance()->nextReservationId())
+  : _id(-1)
   , _client(nullptr)
   , _batch(nullptr)
+  , _beginDate(QDate::currentDate())
+  , _endDate(QDate::currentDate())
   , _parking(false)
   , _countEmptyPlace(true)
   , _price(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace)
 {
 }
 
-unsigned int Reservation::id() const
+Reservation::Reservation(const Reservation& reservation)
+  : _id(reservation._id)
+  , _client(reservation._client)
+  , _rooms(reservation._rooms)
+  , _batch(reservation._batch)
+  , _beginDate(reservation._beginDate)
+  , _endDate(reservation._endDate)
+  , _parking(reservation._parking)
+  , _countEmptyPlace(reservation._countEmptyPlace)
+  , _price(reservation._price)
+{
+}
+
+long long Reservation::id() const
 {
   return _id;
 }
@@ -63,6 +78,11 @@ bool Reservation::isBatch() const
   return _batch != nullptr;
 }
 
+BatchPtr Reservation::batch() const
+{
+  return _batch;
+}
+
 Price Reservation::price() const
 {
   return _price;
@@ -93,6 +113,11 @@ bool Reservation::countEmptyPlace() const
   return _countEmptyPlace;
 }
 
+void Reservation::setId(long long id)
+{
+  _id = id;
+}
+
 void Reservation::setClient(ClientPtr client)
 {
   _client = client;
@@ -101,6 +126,10 @@ void Reservation::setClient(ClientPtr client)
 
 void Reservation::addRoom(RoomPtr room)
 {
+  foreach (RoomPtr keyRoom, _rooms.keys())
+    if (keyRoom->id() == room->id())
+      return;
+
   _rooms.insert(room, QPair<int, int>(0, 0));
   updatePrice();
   emit roomsChanged();

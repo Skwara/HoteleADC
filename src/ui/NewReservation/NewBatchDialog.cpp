@@ -2,8 +2,8 @@
 #include "ui_NewBatchDialog.h"
 
 
-NewBatchDialog::NewBatchDialog(QWidget *parent)
-  : NewReservationDialogInterface(parent)
+NewBatchDialog::NewBatchDialog(QWidget *parent, ReservationPtr reservationToEdit)
+  : NewReservationDialogInterface(parent, reservationToEdit)
   , ui(new Ui::NewBatchDialog)
   , _batchDateGroupBox(_reservation, this)
 {

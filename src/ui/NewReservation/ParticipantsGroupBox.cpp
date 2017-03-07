@@ -34,4 +34,6 @@ void ParticipantsGroupBox::setup()
   ui->participantTableView->resizeColumnsToContents();
 
   ui->participantTableView->verticalHeader()->hide();
+
+  update();
 }

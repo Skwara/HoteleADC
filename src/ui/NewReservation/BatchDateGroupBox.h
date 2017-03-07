@@ -21,6 +21,7 @@ public:
 
 public slots:
   void update(QSet<int> selectedCols);
+  void update();
 
 private:
   void setup();

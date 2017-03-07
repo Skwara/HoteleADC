@@ -20,15 +20,18 @@ public slots:
 
 private:
   void contextMenuEvent(QContextMenuEvent* event);
+
+private slots:
   void onContextMenuActionTriggered(QAction* action);
 
+private:
+  enum Actions { Edit = 0, Delete, COUNT };
   static const QStringList actions()
   {
-    static const QStringList actions = {"Delete"};
+    static const QStringList actions = {"Edytuj", "Usuń"};
     return actions;
   }
 
-private:
   const int _horizontalHeaderWidth = 30;
   const int _horizontalHeaderHeight = 40;
   const int _verticalHeaderWidth = 30;

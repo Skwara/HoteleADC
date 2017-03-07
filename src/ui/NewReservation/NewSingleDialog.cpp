@@ -2,8 +2,8 @@
 #include "ui_NewSingleDialog.h"
 
 
-NewSingleDialog::NewSingleDialog(QWidget* parent)
-  : NewReservationDialogInterface(parent)
+NewSingleDialog::NewSingleDialog(QWidget* parent, ReservationPtr reservationToEdit)
+  : NewReservationDialogInterface(parent, reservationToEdit)
   , ui(new Ui::NewSingleDialog)
   , _singleDateGroupBox(_reservation, this)
 {

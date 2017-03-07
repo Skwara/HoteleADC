@@ -6,10 +6,11 @@
 #include "logic/Client.h"
 
 
-MainGroupBox::MainGroupBox(QWidget* parent)
+MainGroupBox::MainGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::MainGroupBox)
   , _dbHandler(DatabaseHandler::instance())
+  , _reservation(reservation)
 {
   ui->setupUi(this);
   setup();
@@ -48,6 +49,24 @@ QString MainGroupBox::street() const
   return ui->streetLineEdit->text();
 }
 
+void MainGroupBox::update()
+{
+  ClientPtr client = _reservation->client();
+  if (client)
+  {
+    ui->surnameLineEdit->setText(client->surname());
+    ui->nameLineEdit->setText(client->name());
+    Address address = client->address();
+    ui->streetLineEdit->setText(address.street());
+    ui->numberLineEdit->setText(address.number());
+    ui->postalCodeLineEdit->setText(address.postalCode());
+    ui->cityLineEdit->setText(address.city());
+    ui->countryLineEdit->setText(address.country());
+    ui->phoneLineEdit->setText(client->phone());
+    ui->emailLineEdit->setText(client->eMail());
+  }
+}
+
 void MainGroupBox::setup()
 {
   QSet<QString> surnames;
@@ -60,6 +79,8 @@ void MainGroupBox::setup()
   connect(ui->surnameLineEdit, SIGNAL(editingFinished()), this, SLOT(onSurnameLineEditEditingFinished()));
   connect(ui->nameLineEdit, SIGNAL(editingFinished()), this, SLOT(onNameLineEditEditingFinished()));
   connect(ui->streetLineEdit, SIGNAL(editingFinished()), this, SLOT(onStreetLineEditEditingFinished()));
+
+  update();
 }
 
 void MainGroupBox::addCompleter(QLineEdit* lineEdit, QSet<QString> completions)

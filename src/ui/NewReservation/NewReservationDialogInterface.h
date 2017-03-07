@@ -3,6 +3,7 @@
 
 #include <QDialog>
 #include <QItemSelection>
+#include <QTableView>
 
 #include "data/DatabaseHandler.h"
 #include "logic/Reservation.h"
@@ -18,7 +19,8 @@ class NewReservationDialogInterface : public QDialog
   Q_OBJECT
 
 public:
-  explicit NewReservationDialogInterface(QWidget* parent = 0);
+  // TODO Change all constructors to take parent first without default 0 value
+  explicit NewReservationDialogInterface(QWidget* parent = 0, ReservationPtr reservationToEdit = nullptr);
   virtual ~NewReservationDialogInterface() = 0;
 
 public slots:
@@ -33,6 +35,7 @@ protected:
 protected:
   DatabaseHandler* _dbHandler;
   ReservationPtr _reservation;
+  ReservationPtr _reservationToEdit;
 
   MainGroupBox _mainGroupBox;
   RoomsGroupBox _roomsGroupBox;

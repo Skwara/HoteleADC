@@ -19,6 +19,7 @@ BatchDateGroupBox::~BatchDateGroupBox()
 
 void BatchDateGroupBox::update(QSet<int> selectedCols)
 {
+  // TODO Remove this method. Save dates earlier in reservation and use update() based on reservation.
   std::pair<QSet<int>::const_iterator, QSet<int>::const_iterator> beginEndCol = std::minmax_element(selectedCols.begin(), selectedCols.end());
   QDate beginDate = _dbHandler->firstDate().addDays(*beginEndCol.first);
   QDate endDate = _dbHandler->firstDate().addDays(*beginEndCol.second + 1); // On schedule leave date is not selected
@@ -27,12 +28,17 @@ void BatchDateGroupBox::update(QSet<int> selectedCols)
   if (batch)
   {
     _reservation->setBatch(batch);
-    for (int row = 0; row < _batchDateModel.rowCount(); ++row)
+    update();
+  }
+}
+
+void BatchDateGroupBox::update()
+{
+  for (int row = 0; row < _batchDateModel.rowCount(); ++row)
+  {
+    if (_reservation->batch() == _batchDateModel.sourceBatch(row))
     {
-      if (batch == _batchDateModel.sourceBatch(row))
-      {
-        ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-      }
+      ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
     }
   }
 }
@@ -48,6 +54,8 @@ void BatchDateGroupBox::setup()
   ui->dateTableView->setSelectionMode(QAbstractItemView::SingleSelection);
 
   connect(ui->dateTableView, SIGNAL(clicked(QModelIndex)), this, SLOT(onDateTableViewClicked(QModelIndex)));
+
+  update();
 }
 
 void BatchDateGroupBox::onDateTableViewClicked(const QModelIndex& index)

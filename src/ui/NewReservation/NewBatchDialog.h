@@ -14,7 +14,7 @@ class NewBatchDialog : public NewReservationDialogInterface
   Q_OBJECT
 
 public:
-  explicit NewBatchDialog(QWidget* parent = 0);
+  explicit NewBatchDialog(QWidget* parent = 0, ReservationPtr reservationToEdit = nullptr);
   virtual ~NewBatchDialog();
 
 private:

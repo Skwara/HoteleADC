@@ -4,7 +4,9 @@
 #include <QMenu>
 #include <QMessageBox>
 
-#include "src/data/ScheduleModel.h"
+#include "data/ScheduleModel.h"
+#include "ui/NewReservation/NewSingleDialog.h"
+#include "ui/NewReservation/NewBatchDialog.h"
 
 
 ScheduleTableView::ScheduleTableView(QWidget* parent)
@@ -73,15 +75,30 @@ void ScheduleTableView::contextMenuEvent(QContextMenuEvent* event)
     menu->addAction(action);
   }
 
-  connect(actionGroup, &QActionGroup::triggered, this, &ScheduleTableView::onContextMenuActionTriggered); // TODO Refactor all connects to take function pointer
+  connect(actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(onContextMenuActionTriggered(QAction*)));
   menu->popup(viewport()->mapToGlobal(event->pos()));
 }
 
 void ScheduleTableView::onContextMenuActionTriggered(QAction* action)
 {
   QModelIndex index = action->data().value<QModelIndex>();
-  if (action->text() == actions()[0])
+  if (action->text() == actions()[Edit])
   {
+    ReservationPtr reservation = ScheduleModel::instance()->getReservation(index);
+    NewReservationDialogInterface* dialog;
+    if (reservation->isBatch())
+      dialog = new NewBatchDialog(this, reservation);
+    else
+      dialog = new NewSingleDialog(this, reservation);
+
+    connect(this->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
+            dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
+    connect(dialog, SIGNAL(reservationSaved()), this, SLOT(updateSpan()));
+    dialog->show();
+  }
+  else if (action->text() == actions()[Delete])
+  {
+    // TODO Check if reservation has more rooms and ask for deletion of room or whole reservation.
     if (QMessageBox::question(this, "Usunięcie rezerwacji", "Jesteś pewny?", QMessageBox::Cancel | QMessageBox::Ok, QMessageBox::Cancel) == QMessageBox::Ok)
     {
       if (!ScheduleModel::instance()->deleteReservation(index))

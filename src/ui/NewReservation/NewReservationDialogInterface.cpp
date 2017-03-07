@@ -3,11 +3,11 @@
 #include <QMessageBox>
 
 
-NewReservationDialogInterface::NewReservationDialogInterface(QWidget* parent)
+NewReservationDialogInterface::NewReservationDialogInterface(QWidget* parent, ReservationPtr reservationToEdit)
   : QDialog(parent)
   , _dbHandler(DatabaseHandler::instance())
-  , _reservation(std::make_shared<Reservation>())
-  , _mainGroupBox(this)
+  , _reservation(reservationToEdit ? std::make_shared<Reservation>(*reservationToEdit) : std::make_shared<Reservation>())
+  , _mainGroupBox(_reservation, this)
   , _roomsGroupBox(_reservation, this)
   , _participantsGroupBox(_reservation, this)
   , _additionalGroupBox(_reservation, this)
