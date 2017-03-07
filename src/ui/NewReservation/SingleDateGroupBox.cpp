@@ -16,22 +16,17 @@ SingleDateGroupBox::~SingleDateGroupBox()
   delete ui;
 }
 
-void SingleDateGroupBox::update(QSet<int> selectedCols)
-{
-  // TODO Remove this method. Save dates earlier in reservation and use update() based on reservation.
-  std::pair<QSet<int>::const_iterator, QSet<int>::const_iterator> beginEndCol = std::minmax_element(selectedCols.begin(), selectedCols.end());
-  QDate beginDate = _dbHandler->firstDate().addDays(*beginEndCol.first);
-  QDate endDate = _dbHandler->firstDate().addDays(*beginEndCol.second + 1); // On schedule leave date is not selected
-
-  _reservation->setBeginDate(beginDate);
-  _reservation->setEndDate(endDate);
-  update();
-}
-
 void SingleDateGroupBox::update()
 {
   ui->beginCalendarWidget->setSelectedDate(_reservation->beginDate());
   ui->endCalendarWidget->setSelectedDate(_reservation->endDate());
+}
+
+void SingleDateGroupBox::update(QPair<QDate, QDate> beginEndDates)
+{
+  _reservation->setBeginDate(beginEndDates.first);
+  _reservation->setEndDate(beginEndDates.second);
+  update();
 }
 
 void SingleDateGroupBox::setup()

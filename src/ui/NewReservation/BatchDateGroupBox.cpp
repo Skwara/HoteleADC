@@ -17,30 +17,22 @@ BatchDateGroupBox::~BatchDateGroupBox()
   delete ui;
 }
 
-void BatchDateGroupBox::update(QSet<int> selectedCols)
-{
-  // TODO Remove this method. Save dates earlier in reservation and use update() based on reservation.
-  std::pair<QSet<int>::const_iterator, QSet<int>::const_iterator> beginEndCol = std::minmax_element(selectedCols.begin(), selectedCols.end());
-  QDate beginDate = _dbHandler->firstDate().addDays(*beginEndCol.first);
-  QDate endDate = _dbHandler->firstDate().addDays(*beginEndCol.second + 1); // On schedule leave date is not selected
-
-  BatchPtr batch = _dbHandler->batchPeriod(beginDate, endDate);
-  if (batch)
-  {
-    _reservation->setBatch(batch);
-    update();
-  }
-}
-
 void BatchDateGroupBox::update()
 {
-  for (int row = 0; row < _batchDateModel.rowCount(); ++row)
+  selectBatch(_reservation->batch());
+}
+
+void BatchDateGroupBox::update(QPair<QDate, QDate> selectedBeginEndDates)
+{
+  BatchPtr batch = _dbHandler->batchPeriod(selectedBeginEndDates.first, selectedBeginEndDates.second);
+  if (!batch)
   {
-    if (_reservation->batch() == _batchDateModel.sourceBatch(row))
-    {
-      ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
-    }
+    selectBatch(nullptr);
+    return;
   }
+
+  _reservation->setBatch(batch);
+  update();
 }
 
 void BatchDateGroupBox::setup()
@@ -56,6 +48,15 @@ void BatchDateGroupBox::setup()
   connect(ui->dateTableView, SIGNAL(clicked(QModelIndex)), this, SLOT(onDateTableViewClicked(QModelIndex)));
 
   update();
+}
+
+void BatchDateGroupBox::selectBatch(BatchPtr batch)
+{
+  for (int row = 0; row < _batchDateModel.rowCount(); ++row)
+    if (batch == _batchDateModel.sourceBatch(row))
+      ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Select | QItemSelectionModel::Rows);
+    else
+      ui->dateTableView->selectionModel()->select(_batchDateModel.index(row, 0), QItemSelectionModel::Deselect | QItemSelectionModel::Rows);
 }
 
 void BatchDateGroupBox::onDateTableViewClicked(const QModelIndex& index)

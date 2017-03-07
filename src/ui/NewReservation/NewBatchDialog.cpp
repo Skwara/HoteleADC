@@ -16,6 +16,11 @@ NewBatchDialog::~NewBatchDialog()
   delete ui;
 }
 
+void NewBatchDialog::onScheduleDateSelectionChanged(QPair<QDate, QDate> selectedBeginEndDates)
+{
+  _batchDateGroupBox.update(selectedBeginEndDates);
+}
+
 void NewBatchDialog::setupHandlers()
 {
   ui->horizontalLayout_1->insertWidget(0, &_mainGroupBox);

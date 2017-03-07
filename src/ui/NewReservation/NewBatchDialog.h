@@ -17,6 +17,9 @@ public:
   explicit NewBatchDialog(QWidget* parent = 0, ReservationPtr reservationToEdit = nullptr);
   virtual ~NewBatchDialog();
 
+public slots:
+  virtual void onScheduleDateSelectionChanged(QPair<QDate, QDate> selectedBeginEndDates);
+
 private:
   void setupHandlers();
 

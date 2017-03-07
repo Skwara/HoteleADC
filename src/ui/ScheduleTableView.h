@@ -2,6 +2,9 @@
 #define SCHEDULEVIEW_H
 
 #include <QTableView>
+#include <QDate>
+
+#include "logic/Room.h"
 
 
 class ScheduleTableView : public QTableView
@@ -18,11 +21,20 @@ public:
 public slots:
   void updateSpan();
 
+signals:
+  void roomSelectionChanged(QList<RoomPtr>);
+  void dateSelectionChanged(QPair<QDate, QDate>);
+
 private:
   void contextMenuEvent(QContextMenuEvent* event);
 
 private slots:
+  void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
   void onContextMenuActionTriggered(QAction* action);
+
+private:
+  QList<RoomPtr> getSelectedRooms(QSet<QModelIndex> allSelected);
+  QPair<QDate, QDate> getSelectedBeginEndDates(QSet<QModelIndex> allSelected);
 
 private:
   enum Actions { Edit = 0, Delete, COUNT };

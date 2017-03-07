@@ -20,11 +20,12 @@ public:
   ~BatchDateGroupBox();
 
 public slots:
-  void update(QSet<int> selectedCols);
   void update();
+  void update(QPair<QDate, QDate> selectedBeginEndDates);
 
 private:
   void setup();
+  void selectBatch(BatchPtr batch);
 
 private slots:
   void onDateTableViewClicked(const QModelIndex& index);

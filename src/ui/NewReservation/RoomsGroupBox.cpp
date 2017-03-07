@@ -17,27 +17,16 @@ RoomsGroupBox::~RoomsGroupBox()
   delete ui;
 }
 
-void RoomsGroupBox::update(QSet<int> selectedRows)
-{
-  // TODO Remove this method. Save rooms earlier in reservation and use update() based on reservation.
-  QAbstractItemModel* model = ui->roomListView->model();
-  for (int i = 0; i < ui->roomListView->model()->rowCount(); ++i)
-  {
-    if (selectedRows.contains(i) && !ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
-    {
-      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Select);
-    }
-    else if (!selectedRows.contains(i) && ui->roomListView->selectionModel()->isRowSelected(i, QModelIndex()))
-    {
-      ui->roomListView->selectionModel()->select(model->index(i, 0), QItemSelectionModel::Deselect);
-    }
-  }
-}
-
 void RoomsGroupBox::update()
 {
-  foreach (RoomPtr room, _reservation->rooms())
-    ui->roomListView->selectionModel()->select(_roomsModel.index(_roomsModel.roomRow(room), 0), QItemSelectionModel::Select);
+  this->blockSignals(true);
+  selectRooms(_reservation->rooms());
+  this->blockSignals(false);
+}
+
+void RoomsGroupBox::update(QList<RoomPtr> selectedRooms)
+{
+  selectRooms(selectedRooms);
 }
 
 void RoomsGroupBox::setup()
@@ -48,6 +37,16 @@ void RoomsGroupBox::setup()
   connect(ui->roomListView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onRoomListViewSelectionChanged(QItemSelection,QItemSelection)));
 
   update();
+}
+
+void RoomsGroupBox::selectRooms(QList<RoomPtr> rooms)
+{
+  foreach (QModelIndex index, ui->roomListView->selectionModel()->selectedIndexes())
+    if (!rooms.contains(_roomsModel.sourceRoom(index.row())))
+      ui->roomListView->selectionModel()->select(index, QItemSelectionModel::Deselect);
+
+  foreach (RoomPtr room, rooms)
+    ui->roomListView->selectionModel()->select(_roomsModel.index(_roomsModel.roomRow(room), 0), QItemSelectionModel::Select);
 }
 
 void RoomsGroupBox::onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected)

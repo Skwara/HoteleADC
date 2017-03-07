@@ -24,7 +24,8 @@ public:
   virtual ~NewReservationDialogInterface() = 0;
 
 public slots:
-  virtual void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+  virtual void onScheduleRoomSelectionChanged(QList<RoomPtr> selectedRooms);
+  virtual void onScheduleDateSelectionChanged(QPair<QDate, QDate> selectedBeginEndDates) = 0;
 
 signals:
   void reservationSaved();

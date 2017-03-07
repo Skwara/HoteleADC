@@ -19,11 +19,12 @@ NewReservationDialogInterface::NewReservationDialogInterface(QWidget* parent, Re
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
-NewReservationDialogInterface::~NewReservationDialogInterface()
+void NewReservationDialogInterface::onScheduleRoomSelectionChanged(QList<RoomPtr> selectedRooms)
 {
+  _roomsGroupBox.update(selectedRooms);
 }
 
-void NewReservationDialogInterface::scheduleSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+NewReservationDialogInterface::~NewReservationDialogInterface()
 {
 }
 

@@ -20,13 +20,10 @@ public:
   virtual ~NewSingleDialog();
 
 public slots:
-  virtual void scheduleSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
+  virtual void onScheduleDateSelectionChanged(QPair<QDate, QDate> selectedBeginEndDates);
 
 private:
   virtual void setupHandlers();
-
-  QSet<int> getSelectedRows(QSet<QModelIndex> allSelected);
-  QSet<int> getSelectedCols(QSet<QModelIndex> allSelected);
 
 private:
   Ui::NewSingleDialog* ui;

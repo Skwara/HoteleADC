@@ -9,6 +9,13 @@
 #include "ui/NewReservation/NewBatchDialog.h"
 
 
+// For QSet<RoomPtr>
+template <typename T>
+unsigned int qHash(const std::shared_ptr<T>& ptr, unsigned int seed = 0)
+{
+    return qHash(ptr.get(), seed);
+}
+
 ScheduleTableView::ScheduleTableView(QWidget* parent)
   : QTableView(parent)
 {
@@ -33,6 +40,8 @@ ScheduleTableView::ScheduleTableView(QWidget* parent)
   resizeRowsToContents();
 
   setSelectionMode(QAbstractItemView::ExtendedSelection);
+
+  connect(this->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)), this, SLOT(onSelectionChanged(QItemSelection,QItemSelection)));
 }
 
 ScheduleTableView::~ScheduleTableView()
@@ -79,6 +88,16 @@ void ScheduleTableView::contextMenuEvent(QContextMenuEvent* event)
   menu->popup(viewport()->mapToGlobal(event->pos()));
 }
 
+void ScheduleTableView::onSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)
+{
+  QSet<QModelIndex> allSelected = this->selectionModel()->selectedIndexes().toSet();
+  QList<RoomPtr> selectedRooms = getSelectedRooms(allSelected);
+  QPair<QDate, QDate> beginEndDates = getSelectedBeginEndDates(allSelected);
+
+  emit roomSelectionChanged(selectedRooms);
+  emit dateSelectionChanged(beginEndDates);
+}
+
 void ScheduleTableView::onContextMenuActionTriggered(QAction* action)
 {
   QModelIndex index = action->data().value<QModelIndex>();
@@ -106,4 +125,26 @@ void ScheduleTableView::onContextMenuActionTriggered(QAction* action)
       updateSpan();
     }
   }
+}
+
+QList<RoomPtr> ScheduleTableView::getSelectedRooms(QSet<QModelIndex> allSelected)
+{
+  QSet<RoomPtr> selectedRooms;
+  foreach (QModelIndex index, allSelected)
+    selectedRooms += ScheduleModel::instance()->sourceRoom(index.row());
+
+  return selectedRooms.toList();
+}
+
+QPair<QDate, QDate> ScheduleTableView::getSelectedBeginEndDates(QSet<QModelIndex> allSelected)
+{
+  QPair<int, int> beginEndCols((*allSelected.begin()).column(), (*allSelected.begin()).column());
+  foreach (QModelIndex index, allSelected)
+  {
+    beginEndCols.first = std::min(beginEndCols.first, index.column());
+    beginEndCols.second = std::max(beginEndCols.second, index.column());
+  }
+
+  return QPair<QDate, QDate>(ScheduleModel::instance()->sourceDate(beginEndCols.first),
+                                 ScheduleModel::instance()->sourceDate(beginEndCols.second + 1)); // On schedule leave date is not selected
 }

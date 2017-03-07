@@ -48,7 +48,9 @@ void MainWindow::on_dockWidget_topLevelChanged(bool isFloating)
 
 void MainWindow::connectNewDialog(NewReservationDialogInterface* dialog)
 {
-  connect(_scheduleTableView->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-          dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
+  connect(_scheduleTableView, SIGNAL(roomSelectionChanged(QList<RoomPtr>)),
+          dialog, SLOT(onScheduleRoomSelectionChanged(QList<RoomPtr>)));
+  connect(_scheduleTableView, SIGNAL(dateSelectionChanged(QPair<QDate,QDate>)),
+          dialog, SLOT(onScheduleDateSelectionChanged(QPair<QDate,QDate>)));
   connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));
 }

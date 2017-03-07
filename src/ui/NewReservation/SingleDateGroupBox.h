@@ -19,8 +19,8 @@ public:
   ~SingleDateGroupBox();
 
 public slots:
-  void update(QSet<int> selectedCols);
   void update();
+  void update(QPair<QDate, QDate> beginEndDates);
 
 private:
   void setup();

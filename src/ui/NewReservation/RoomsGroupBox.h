@@ -22,11 +22,12 @@ public:
   ~RoomsGroupBox();
 
 public slots:
-  void update(QSet<int> selectedRows);
   void update();
+  void update(QList<RoomPtr> selectedRooms);
 
 private:
   void setup();
+  void selectRooms(QList<RoomPtr> rooms);
 
 private slots:
   void onRoomListViewSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
