@@ -83,7 +83,7 @@ BatchPtr Reservation::batch() const
   return _batch;
 }
 
-Price Reservation::price() const
+Price& Reservation::price()
 {
   return _price;
 }
@@ -189,46 +189,6 @@ void Reservation::setCountEmptyPlace(bool value)
   _countEmptyPlace = value;
   updatePrice();
   emit additionalChanged();
-}
-
-void Reservation::setRoomsPrice(int value)
-{
-  _price.setRoomsPrice(value);
-}
-
-void Reservation::setRoomsEmptyPlacePrice(int value)
-{
-  _price.setRoomsEmptyPlacePrice(value);
-}
-
-void Reservation::setRoomsAdditionalPlacePrice(int value)
-{
-  _price.setRoomsAdditionalPlacePrice(value);
-}
-
-void Reservation::setParkingPrice(int value)
-{
-  _price.setParkingPrice(value);
-}
-
-void Reservation::setFullPrice(int value)
-{
-  _price.setFullPrice(value);
-}
-
-void Reservation::setDiscount(double value)
-{
-  _price.setDiscount(value);
-}
-
-void Reservation::setAdvance(int value)
-{
-  _price.setAdvance(value);
-}
-
-void Reservation::setPaid(int value)
-{
-  _price.setPaid(value);
 }
 
 void Reservation::updatePrice()

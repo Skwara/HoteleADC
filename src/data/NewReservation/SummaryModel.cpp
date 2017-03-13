@@ -57,28 +57,28 @@ bool SummaryModel::setData(const QModelIndex& index, const QVariant& value, int 
       switch (index.row())
       {
       case 5:
-        _reservation->setRoomsPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsPrice().calculated());
+        _reservation->price().setRoomsPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsPrice().calculated());
         break;
       case 6:
-        _reservation->setRoomsEmptyPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsEmptyPlacePrice().calculated());
+        _reservation->price().setRoomsEmptyPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsEmptyPlacePrice().calculated());
         break;
       case 7:
-        _reservation->setRoomsAdditionalPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsAdditionalPlacePrice().calculated());
+        _reservation->price().setRoomsAdditionalPlacePrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().roomsAdditionalPlacePrice().calculated());
         break;
       case 8:
-        _reservation->setParkingPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().parkingPrice().calculated());
+        _reservation->price().setParkingPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().parkingPrice().calculated());
         break;
       case 9:
-        _reservation->setFullPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().fullPrice().calculated());
+        _reservation->price().setFullPrice(!value.toString().isEmpty() ? value.toInt() : _reservation->price().fullPrice().calculated());
         break;
       case 10:
-        _reservation->setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
+        _reservation->price().setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
         break;
       case 11:
-        _reservation->setAdvance(!value.toString().isEmpty() ? value.toInt() : 0);
+        _reservation->price().setAdvance(!value.toString().isEmpty() ? value.toInt() : 0);
         break;
       case 12:
-        _reservation->setPaid(!value.toString().isEmpty() ? value.toInt() : 0);
+        _reservation->price().setPaid(!value.toString().isEmpty() ? value.toInt() : 0);
         break;
       default:
         return false;
