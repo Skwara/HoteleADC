@@ -73,6 +73,9 @@ void ScheduleTableView::updateSpan()
 
 void ScheduleTableView::contextMenuEvent(QContextMenuEvent* event)
 {
+  if (!ScheduleModel::instance()->getReservation(indexAt(event->pos())))
+    return;
+
   QMenu* menu = new QMenu(this);
   QActionGroup* actionGroup = new QActionGroup(menu);
 
