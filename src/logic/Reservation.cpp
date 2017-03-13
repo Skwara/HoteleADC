@@ -32,6 +32,16 @@ long long Reservation::id() const
   return _id;
 }
 
+QString Reservation::description() const
+{
+  return QString("Koszt: %1\n" \
+                 "Zaliczka: %2\n" \
+                 "Wpłacono: %3")
+                 .arg(_price.fullPrice().manual())
+                 .arg(_price.advance())
+                 .arg(_price.paid());
+}
+
 ClientPtr Reservation::client() const
 {
   return _client;

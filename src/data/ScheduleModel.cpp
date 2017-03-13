@@ -44,6 +44,10 @@ QVariant ScheduleModel::data(const QModelIndex& index, int role) const
       }
       return QColor(144, 238, 144);
     }
+    if (role == Qt::ToolTipRole)
+    {
+      return reservation->description();
+    }
   }
 
   return QVariant();

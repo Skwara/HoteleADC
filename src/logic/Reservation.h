@@ -22,6 +22,7 @@ public:
   Reservation(const Reservation& reservation);
 
   long long int id() const;
+  QString description() const;
   ClientPtr client() const;
   QList<RoomPtr> rooms() const;
   int mainParticipantsCount() const;

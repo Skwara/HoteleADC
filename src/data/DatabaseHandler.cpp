@@ -253,8 +253,8 @@ void DatabaseHandler::fetch()
   fetchClients();
   fetchRooms();
   fetchBatchPeriods();
-  fetchReservations();
   fetchOther();
+  fetchReservations();
 
   _fetched = true;
 }
