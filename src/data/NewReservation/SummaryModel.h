@@ -28,7 +28,7 @@ private:
   QVariant formatDiscount(double discount) const;
 
 private:
-  static const int _rowCount = 11;
+  static const int _rowCount = 13;
   static const QString rowName(int row)
   {
     static const QString rows[_rowCount] = {"Ilość dni",
@@ -41,7 +41,9 @@ private:
                                             "Koszt dostawek",
                                             "Koszt parkingu",
                                             "Koszt całkowity",
-                                            "Rabat"};
+                                            "Rabat",
+                                            "Zaliczka",
+                                            "Wpłacono"};
     return rows[row];
   }
   bool isRowEditable(int row) const { return row >= 5; }

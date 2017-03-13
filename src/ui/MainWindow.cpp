@@ -26,14 +26,14 @@ MainWindow::~MainWindow()
 void MainWindow::on_newReservationButton_clicked()
 {
   NewSingleDialog* dialog = new NewSingleDialog(this);
-  connectNewDialog(dialog);
+  NewReservationDialogInterface::connectToScheduleTableView(_scheduleTableView, dialog);
   dialog->show();
 }
 
 void MainWindow::on_newBatchButton_clicked()
 {
   NewBatchDialog* dialog = new NewBatchDialog(this);
-  connectNewDialog(dialog);
+  NewReservationDialogInterface::connectToScheduleTableView(_scheduleTableView, dialog);
   dialog->show();
 }
 
@@ -44,13 +44,4 @@ void MainWindow::on_dockWidget_topLevelChanged(bool isFloating)
     ui->dockWidget->setWindowFlags(Qt::Window | Qt::CustomizeWindowHint | Qt::WindowMinMaxButtonsHint);
     ui->dockWidget->show();
   }
-}
-
-void MainWindow::connectNewDialog(NewReservationDialogInterface* dialog)
-{
-  connect(_scheduleTableView, SIGNAL(roomSelectionChanged(QList<RoomPtr>)),
-          dialog, SLOT(onScheduleRoomSelectionChanged(QList<RoomPtr>)));
-  connect(_scheduleTableView, SIGNAL(dateSelectionChanged(QPair<QDate,QDate>)),
-          dialog, SLOT(onScheduleDateSelectionChanged(QPair<QDate,QDate>)));
-  connect(dialog, SIGNAL(reservationSaved()), _scheduleTableView, SLOT(updateSpan()));
 }

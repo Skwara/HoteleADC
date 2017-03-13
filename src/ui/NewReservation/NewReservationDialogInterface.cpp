@@ -19,6 +19,15 @@ NewReservationDialogInterface::NewReservationDialogInterface(QWidget* parent, Re
   setAttribute(Qt::WA_DeleteOnClose, true);
 }
 
+void NewReservationDialogInterface::connectToScheduleTableView(ScheduleTableView* view, NewReservationDialogInterface* dialog)
+{
+  connect(view, SIGNAL(roomSelectionChanged(QList<RoomPtr>)),
+          dialog, SLOT(onScheduleRoomSelectionChanged(QList<RoomPtr>)));
+  connect(view, SIGNAL(dateSelectionChanged(QPair<QDate,QDate>)),
+          dialog, SLOT(onScheduleDateSelectionChanged(QPair<QDate,QDate>)));
+  connect(dialog, SIGNAL(reservationSaved()), view, SLOT(updateSpan()));
+}
+
 void NewReservationDialogInterface::onScheduleRoomSelectionChanged(QList<RoomPtr> selectedRooms)
 {
   _roomsGroupBox.update(selectedRooms);

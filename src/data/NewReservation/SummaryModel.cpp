@@ -73,6 +73,13 @@ bool SummaryModel::setData(const QModelIndex& index, const QVariant& value, int 
         break;
       case 10:
         _reservation->setDiscount(!value.toString().isEmpty() ? value.toDouble() / 100 : 0);
+        break;
+      case 11:
+        _reservation->setAdvance(!value.toString().isEmpty() ? value.toInt() : 0);
+        break;
+      case 12:
+        _reservation->setPaid(!value.toString().isEmpty() ? value.toInt() : 0);
+        break;
       default:
         return false;
         break;
@@ -125,6 +132,10 @@ QVariant SummaryModel::rowValue(int row) const
     return formatPrice(_reservation->price().fullPrice());
   case 10:
     return formatDiscount(_reservation->price().discount());
+  case 11:
+    return _reservation->price().advance();
+  case 12:
+    return _reservation->price().paid();
   default:
     return QVariant();
   }
@@ -146,6 +157,10 @@ QVariant SummaryModel::rowEditValue(int row) const
     return _reservation->price().fullPrice().manual();
   case 10:
     return _reservation->price().discount() * 100;
+  case 11:
+    return _reservation->price().advance();
+  case 12:
+    return _reservation->price().paid();
   default:
     return QVariant();
   }

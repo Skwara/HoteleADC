@@ -221,6 +221,16 @@ void Reservation::setDiscount(double value)
   _price.setDiscount(value);
 }
 
+void Reservation::setAdvance(int value)
+{
+  _price.setAdvance(value);
+}
+
+void Reservation::setPaid(int value)
+{
+  _price.setPaid(value);
+}
+
 void Reservation::updatePrice()
 {
   _price.update(_beginDate, _endDate, _rooms, _parking, _countEmptyPlace);

@@ -110,9 +110,7 @@ void ScheduleTableView::onContextMenuActionTriggered(QAction* action)
     else
       dialog = new NewSingleDialog(this, reservation);
 
-    connect(this->selectionModel(), SIGNAL(selectionChanged(QItemSelection,QItemSelection)),
-            dialog, SLOT(scheduleSelectionChanged(QItemSelection,QItemSelection)));
-    connect(dialog, SIGNAL(reservationSaved()), this, SLOT(updateSpan()));
+    NewReservationDialogInterface::connectToScheduleTableView(this, dialog);
     dialog->show();
   }
   else if (action->text() == actions()[Delete])

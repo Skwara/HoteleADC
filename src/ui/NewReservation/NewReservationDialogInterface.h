@@ -12,6 +12,7 @@
 #include "ParticipantsGroupBox.h"
 #include "AdditionalGroupBox.h"
 #include "SummaryGroupBox.h"
+#include "ui/ScheduleTableView.h"
 
 
 class NewReservationDialogInterface : public QDialog
@@ -22,6 +23,8 @@ public:
   // TODO Change all constructors to take parent first without default 0 value
   explicit NewReservationDialogInterface(QWidget* parent = 0, ReservationPtr reservationToEdit = nullptr);
   virtual ~NewReservationDialogInterface() = 0;
+
+  static void connectToScheduleTableView(ScheduleTableView* view, NewReservationDialogInterface* dialog);
 
 public slots:
   virtual void onScheduleRoomSelectionChanged(QList<RoomPtr> selectedRooms);

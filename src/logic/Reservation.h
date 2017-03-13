@@ -31,7 +31,7 @@ public:
   int emptyPlaceCount() const;
   bool isBatch() const;
   BatchPtr batch() const;
-  Price price() const;
+  Price price() const; // TODO Return reference and operate directly (remove bridge methods)
   QDate beginDate() const;
   QDate endDate() const;
   int days() const;
@@ -56,6 +56,8 @@ public:
   void setParkingPrice(int value);
   void setFullPrice(int value);
   void setDiscount(double value);
+  void setAdvance(int value);
+  void setPaid(int value);
 
 signals:
   void clientChanged();

@@ -12,6 +12,8 @@ Price::Price(QDate beginDate, QDate endDate, QMap<RoomPtr, QPair<int, int>> room
   , _rooms(rooms)
   , _parking(parking)
   , _countEmptyPlace(countEmptyPlace)
+  , _advance(0)
+  , _paid(0)
 {
   calculatePrice();
 }
@@ -126,9 +128,25 @@ void Price::setFullPrice(int value)
 
 void Price::setDiscount(double value)
 {
-  if (value >= 0.0)
+  if (value >= 0.0 && value <= 1.0)
   {
     _discount = value;
+  }
+}
+
+void Price::setAdvance(int value)
+{
+  if (value >= 0)
+  {
+    _advance = value;
+  }
+}
+
+void Price::setPaid(int value)
+{
+  if (value >= 0)
+  {
+    _paid = value;
   }
 }
 

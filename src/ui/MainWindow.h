@@ -25,9 +25,6 @@ private slots:
   void on_dockWidget_topLevelChanged(bool isFloating);
 
 private:
-  void connectNewDialog(NewReservationDialogInterface* dialog);
-
-private:
   Ui::MainWindow* ui;
   ScheduleTableView* _scheduleTableView;
 

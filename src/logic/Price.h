@@ -46,6 +46,12 @@ public:
   double discount() const { return _discount; }
   void setDiscount(double value);
 
+  int advance() const { return _advance; }
+  void setAdvance(int value);
+
+  int paid() const { return _paid; }
+  void setPaid(int value);
+
 private:
   void calculatePrice();
   void addRoomsPrice(QDate currentDate);
@@ -72,6 +78,9 @@ private:
   int _manualFullPrice = -1;
 
   double _discount;
+
+  int _advance;
+  int _paid;
 
 private:
   QDate _beginDate;
