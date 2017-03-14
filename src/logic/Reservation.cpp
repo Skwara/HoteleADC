@@ -32,11 +32,15 @@ long long Reservation::id() const
   return _id;
 }
 
-QString Reservation::description() const
+QString Reservation::description(RoomPtr room) const
 {
-  return QString("Koszt: %1\n" \
-                 "Zaliczka: %2\n" \
-                 "Wpłacono: %3")
+  return QString("Pokój: %1\n" \
+                 "Data: %2\n" \
+                 "Koszt: %3\n" \
+                 "Zaliczka: %4\n" \
+                 "Wpłacono: %5")
+                 .arg(room->number())
+                 .arg(_beginDate.toString("dd-MMM"))
                  .arg(_price.fullPrice().manual())
                  .arg(_price.advance())
                  .arg(_price.paid());

@@ -3,6 +3,7 @@
 #include <QHeaderView>
 #include <QMenu>
 #include <QMessageBox>
+#include <QToolTip>
 
 #include "data/ScheduleModel.h"
 #include "ui/NewReservation/NewSingleDialog.h"
@@ -89,6 +90,22 @@ void ScheduleTableView::contextMenuEvent(QContextMenuEvent* event)
 
   connect(actionGroup, SIGNAL(triggered(QAction*)), this, SLOT(onContextMenuActionTriggered(QAction*)));
   menu->popup(viewport()->mapToGlobal(event->pos()));
+}
+
+bool ScheduleTableView::viewportEvent(QEvent* event)
+{
+  if (event->type() == QEvent::ToolTip)
+  {
+    QHelpEvent* helpEvent = static_cast<QHelpEvent*>(event);
+    static QModelIndex previousIndex = QModelIndex();
+    QModelIndex index = indexAt(helpEvent->pos());
+    if (index.isValid() && index == previousIndex)
+      return true;
+
+    QToolTip::hideText();
+    previousIndex = index;
+  }
+  return QTableView::viewportEvent(event);
 }
 
 void ScheduleTableView::onSelectionChanged(const QItemSelection& /*selected*/, const QItemSelection& /*deselected*/)

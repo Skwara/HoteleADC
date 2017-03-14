@@ -27,6 +27,7 @@ signals:
 
 private:
   void contextMenuEvent(QContextMenuEvent* event);
+  bool viewportEvent(QEvent* event);
 
 private slots:
   void onSelectionChanged(const QItemSelection& selected, const QItemSelection& deselected);
