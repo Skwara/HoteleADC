@@ -7,18 +7,18 @@
 ScheduleModel ScheduleModel::_instance;
 
 ScheduleModel::ScheduleModel()
-  : _dbhandler(DatabaseHandler::instance())
+  : _dataHandler(DataHandler::instance())
 {
 }
 
 int ScheduleModel::rowCount(const QModelIndex& /*parent*/) const
 {
-  return _dbhandler->rooms().size();
+  return _dataHandler->rooms().size();
 }
 
 int ScheduleModel::columnCount(const QModelIndex& /*parent*/) const
 {
-  return static_cast<int>(_dbhandler->firstDate().daysTo(_dbhandler->lastDate()));
+  return static_cast<int>(_dataHandler->firstDate().daysTo(_dataHandler->lastDate()));
 }
 
 QVariant ScheduleModel::data(const QModelIndex& index, int role) const
@@ -84,17 +84,17 @@ QSize ScheduleModel::span(const QModelIndex& index) const
 
 QDate ScheduleModel::sourceDate(int col) const
 {
-  return _dbhandler->firstDate().addDays(col);
+  return _dataHandler->firstDate().addDays(col);
 }
 
 RoomPtr ScheduleModel::sourceRoom(int row) const
 {
-  return _dbhandler->room(row);
+  return _dataHandler->room(row);
 }
 
 bool ScheduleModel::deleteReservation(const QModelIndex& index) const
 {
-  return _dbhandler->deleteReservation(getReservation(index));
+  return _dataHandler->deleteReservation(getReservation(index));
 }
 
 ReservationPtr ScheduleModel::getReservation(const QModelIndex& index) const
@@ -102,5 +102,5 @@ ReservationPtr ScheduleModel::getReservation(const QModelIndex& index) const
   // TODO Caching reservations
   QDate beginDate = sourceDate(index.column());
   RoomPtr room = sourceRoom(index.row());
-  return _dbhandler->reservation(beginDate, room);
+  return _dataHandler->reservation(beginDate, room);
 }

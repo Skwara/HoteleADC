@@ -4,7 +4,7 @@
 SingleDateGroupBox::SingleDateGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::SingleDateGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
 {
   ui->setupUi(this);

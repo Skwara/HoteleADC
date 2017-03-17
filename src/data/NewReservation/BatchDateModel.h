@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 
 class BatchDateModel : public QAbstractTableModel
@@ -28,7 +28,7 @@ private:
   }
 
 private:
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 };
 
 #endif // BATCHDATEMODEL_H

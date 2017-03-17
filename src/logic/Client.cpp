@@ -1,5 +1,5 @@
 #include "Client.h"
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 Address::Address(QString street, QString number, QString postalCode, QString city, QString country)
   : _street(street)

@@ -3,7 +3,7 @@
 
 #include <QGroupBox>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 
 namespace Ui {
@@ -30,7 +30,7 @@ private slots:
 
 private:
   Ui::AdditionalGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
 };

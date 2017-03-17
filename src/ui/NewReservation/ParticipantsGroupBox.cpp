@@ -4,7 +4,7 @@
 ParticipantsGroupBox::ParticipantsGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::ParticipantsGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
   , _participantsModel(reservation)
 {

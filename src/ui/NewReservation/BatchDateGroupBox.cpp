@@ -5,7 +5,7 @@
 BatchDateGroupBox::BatchDateGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::BatchDateGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
 {
   ui->setupUi(this);
@@ -24,7 +24,7 @@ void BatchDateGroupBox::update()
 
 void BatchDateGroupBox::update(QPair<QDate, QDate> selectedBeginEndDates)
 {
-  BatchPtr batch = _dbHandler->batchPeriod(selectedBeginEndDates.first, selectedBeginEndDates.second);
+  BatchPtr batch = _dataHandler->batchPeriod(selectedBeginEndDates.first, selectedBeginEndDates.second);
   if (!batch)
   {
     selectBatch(nullptr);

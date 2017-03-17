@@ -1,6 +1,6 @@
 #include "Price.h"
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 
 // TODO Refactoring with SummaryModel class
@@ -169,8 +169,8 @@ void Price::addRoomsPrice(QDate currentDate)
 {
   foreach (RoomPtr room, _rooms.keys())
   {
-    _roomParticipantsPrices[room] += DatabaseHandler::instance()->roomCost(currentDate) * _rooms[room].first;
-    _roomAdditionalParticipantsPrices[room] += DatabaseHandler::instance()->additionalPlaceCost(currentDate) * _rooms[room].second;
+    _roomParticipantsPrices[room] += DataHandler::instance()->roomCost(currentDate) * _rooms[room].first;
+    _roomAdditionalParticipantsPrices[room] += DataHandler::instance()->additionalPlaceCost(currentDate) * _rooms[room].second;
     if (_countEmptyPlace)
     {
       addEmptyPlacePrice(currentDate, room);
@@ -183,13 +183,13 @@ void Price::addEmptyPlacePrice(QDate currentDate, RoomPtr room)
   int roomEmptyPlaceCount = room->maxParticipants() - _rooms[room].first;
   if (roomEmptyPlaceCount > 0)
   {
-    _roomEmptyPlacePrices[room] += DatabaseHandler::instance()->emptyPlaceCost(currentDate) * roomEmptyPlaceCount;
+    _roomEmptyPlacePrices[room] += DataHandler::instance()->emptyPlaceCost(currentDate) * roomEmptyPlaceCount;
   }
 }
 
 void Price::addParkingPrice(QDate currentDate)
 {
-  _parkingPrice += DatabaseHandler::instance()->parkingCost(currentDate);
+  _parkingPrice += DataHandler::instance()->parkingCost(currentDate);
 }
 
 int Price::roomsCalculatedPrice() const

@@ -4,7 +4,7 @@
 SummaryGroupBox::SummaryGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::SummaryGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
   , _summaryModel(reservation)
 {

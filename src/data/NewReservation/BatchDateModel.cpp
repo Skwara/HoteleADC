@@ -2,13 +2,13 @@
 
 
 BatchDateModel::BatchDateModel()
-  : _dbHandler(DatabaseHandler::instance())
+  : _dataHandler(DataHandler::instance())
 {
 }
 
 int BatchDateModel::rowCount(const QModelIndex& /*parent*/) const
 {
-  return _dbHandler->batchPeriods().size();
+  return _dataHandler->batchPeriods().size();
 }
 
 int BatchDateModel::columnCount(const QModelIndex& /*parent*/) const
@@ -55,5 +55,5 @@ QVariant BatchDateModel::headerData(int section, Qt::Orientation orientation, in
 
 BatchPtr BatchDateModel::sourceBatch(int row) const
 {
-  return _dbHandler->batchPeriod(row);
+  return _dataHandler->batchPeriod(row);
 }

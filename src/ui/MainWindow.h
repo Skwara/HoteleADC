@@ -4,7 +4,7 @@
 #include <QMainWindow>
 
 #include "src/ui/ScheduleTableView.h"
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "NewReservation/NewReservationDialogInterface.h"
 
 namespace Ui {
@@ -28,7 +28,7 @@ private:
   Ui::MainWindow* ui;
   ScheduleTableView* _scheduleTableView;
 
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 };
 
 #endif // MAINWINDOW_H

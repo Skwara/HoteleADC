@@ -5,7 +5,7 @@
 #include <QItemSelection>
 #include <QTableView>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "logic/Reservation.h"
 #include "MainGroupBox.h"
 #include "RoomsGroupBox.h"
@@ -37,7 +37,7 @@ protected:
   virtual void setupHandlers() = 0;
 
 protected:
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
   ReservationPtr _reservation;
   ReservationPtr _reservationToEdit;
 

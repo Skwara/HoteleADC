@@ -9,7 +9,7 @@
 MainGroupBox::MainGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::MainGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
 {
   ui->setupUi(this);
@@ -70,7 +70,7 @@ void MainGroupBox::update()
 void MainGroupBox::setup()
 {
   QSet<QString> surnames;
-  foreach (ClientPtr client, _dbHandler->clients())
+  foreach (ClientPtr client, _dataHandler->clients())
   {
     surnames << client->surname();
   }
@@ -101,7 +101,7 @@ void MainGroupBox::addCompleter(QLineEdit* lineEdit, QSet<QString> completions)
 
 void MainGroupBox::fillRemainingClientData(QString surname, QString name, QString street)
 {
-  QList<ClientPtr> matchingClients  = _dbHandler->clients(surname, name, street);
+  QList<ClientPtr> matchingClients  = _dataHandler->clients(surname, name, street);
   QSet<QString> names;
   QSet<QString> streets;
   foreach (ClientPtr client, matchingClients)

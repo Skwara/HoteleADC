@@ -3,7 +3,7 @@
 
 #include <QAbstractTableModel>
 
-#include <src/data/DatabaseHandler.h>
+#include <src/data/DataHandler.h>
 
 
 class ScheduleModel : public QAbstractTableModel
@@ -29,7 +29,7 @@ public:
   bool deleteReservation(const QModelIndex& index) const;
 
 private:
-  DatabaseHandler* _dbhandler;
+  DataHandler* _dataHandler;
 
 private:
   static ScheduleModel _instance;

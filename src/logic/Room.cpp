@@ -1,5 +1,5 @@
 #include "Room.h"
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 Room::Room(int number, int maxParticipants)
   : _id(-1)

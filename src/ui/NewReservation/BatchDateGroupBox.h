@@ -3,7 +3,7 @@
 
 #include <QGroupBox>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "data/NewReservation/BatchDateModel.h"
 
 
@@ -32,7 +32,7 @@ private slots:
 
 private:
   Ui::BatchDateGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
   BatchDateModel _batchDateModel;

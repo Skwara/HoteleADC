@@ -4,7 +4,7 @@
 RoomsGroupBox::RoomsGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::RoomsGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
   , _roomsModel()
 {

@@ -11,12 +11,12 @@
 #include "logic/Batch.h"
 
 
-class DatabaseHandler
+class DataHandler
 {
-  DatabaseHandler();
+  DataHandler();
 public:
 
-  static DatabaseHandler* instance()
+  static DataHandler* instance()
   {
     return &_instance;
   }
@@ -89,7 +89,7 @@ private:
   bool _fetched;
 
 private:
-  static DatabaseHandler _instance;
+  static DataHandler _instance;
 };
 
 #endif // DATABASEHANDLER_H

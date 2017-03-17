@@ -9,7 +9,7 @@ MainWindow::MainWindow(QWidget* parent)
   : QMainWindow(parent)
   , ui(new Ui::MainWindow)
   , _scheduleTableView(new ScheduleTableView(this))
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
 {
   ui->setupUi(this);
 

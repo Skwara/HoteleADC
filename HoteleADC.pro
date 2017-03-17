@@ -16,7 +16,7 @@ CONFIG += c++14
 INCLUDEPATH = src
 
 SOURCES  += src/main.cpp \
-            src/data/DatabaseHandler.cpp \
+            src/data/DataHandler.cpp \
             src/data/ScheduleModel.cpp \
             src/data/NewReservation/RoomsModel.cpp \
             src/data/NewReservation/ParticipantsModel.cpp \
@@ -41,7 +41,8 @@ SOURCES  += src/main.cpp \
             src/ui/NewReservation/BatchDateGroupBox.cpp \
             src/ui/NewReservation/SummaryGroupBox.cpp
 
-HEADERS  += src/data/DatabaseHandler.h \
+HEADERS  += \
+            src/data/DataHandler.h \
             src/data/ScheduleModel.h \
             src/data/NewReservation/RoomsModel.h \
             src/data/NewReservation/ParticipantsModel.h \

@@ -4,7 +4,7 @@
 #include <QGroupBox>
 #include <QLineEdit>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "logic/Reservation.h"
 
 
@@ -42,7 +42,7 @@ private slots:
 
 private:
   Ui::MainGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
 };

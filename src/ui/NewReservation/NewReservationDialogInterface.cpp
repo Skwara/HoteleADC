@@ -5,7 +5,7 @@
 
 NewReservationDialogInterface::NewReservationDialogInterface(QWidget* parent, ReservationPtr reservationToEdit)
   : QDialog(parent)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservationToEdit ? std::make_shared<Reservation>(*reservationToEdit) : std::make_shared<Reservation>())
   , _mainGroupBox(_reservation, this)
   , _roomsGroupBox(_reservation, this)
@@ -49,7 +49,7 @@ void NewReservationDialogInterface::onSaveButtonClicked()
 
 bool NewReservationDialogInterface::checkAvailability()
 {
-  if (!_dbHandler->isReservationAvailable(_reservation))
+  if (!_dataHandler->isReservationAvailable(_reservation))
   {
     QMessageBox::critical(this, "Błąd", "Pokoje nie są dostępne w wybranym terminie", QMessageBox::Ok);
     return false;
@@ -59,7 +59,7 @@ bool NewReservationDialogInterface::checkAvailability()
 
 bool NewReservationDialogInterface::setClient()
 {
-  QList<ClientPtr> clients = _dbHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
+  QList<ClientPtr> clients = _dataHandler->clients(_mainGroupBox.surname(), _mainGroupBox.name(), _mainGroupBox.street());
   if (clients.size() == 0)
     _reservation->setClient(_mainGroupBox.createClient());
   else if (clients.size() == 1)
@@ -77,7 +77,7 @@ bool NewReservationDialogInterface::saveReservation()
   bool saved = false;
   while (!saved)
   {
-    if (_dbHandler->saveReservation(_reservation))
+    if (_dataHandler->saveReservation(_reservation))
       saved = true;
     else if (QMessageBox::critical(this, "Błąd", "Nie można zapisać rezerwacji", QMessageBox::Abort | QMessageBox::Retry) == QMessageBox::Abort)
       return false;

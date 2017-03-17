@@ -4,7 +4,7 @@
 AdditionalGroupBox::AdditionalGroupBox(ReservationPtr reservation, QWidget* parent)
   : QGroupBox(parent)
   , ui(new Ui::AdditionalGroupBox)
-  , _dbHandler(DatabaseHandler::instance())
+  , _dataHandler(DataHandler::instance())
   , _reservation(reservation)
 {
   ui->setupUi(this);
@@ -18,7 +18,7 @@ AdditionalGroupBox::~AdditionalGroupBox()
 
 void AdditionalGroupBox::update()
 {
-  if (_dbHandler->hasAvailableParkingSpace(_reservation))
+  if (_dataHandler->hasAvailableParkingSpace(_reservation))
   {
     ui->parkingCheckBox->setEnabled(true);
     ui->parkingCheckBox->setChecked(_reservation->parking());

@@ -3,7 +3,7 @@
 
 #include <QGroupBox>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "data/NewReservation/SummaryModel.h"
 
 
@@ -30,7 +30,7 @@ private:
 
 private:
   Ui::SummaryGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
   SummaryModel _summaryModel;

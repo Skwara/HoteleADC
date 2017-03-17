@@ -5,7 +5,7 @@
 #include <QSet>
 #include <QItemSelection>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "src/data/NewReservation/RoomsModel.h"
 
 
@@ -34,7 +34,7 @@ private slots:
 
 private:
   Ui::RoomsGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
   RoomsModel _roomsModel;

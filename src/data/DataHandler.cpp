@@ -1,37 +1,37 @@
-#include "DatabaseHandler.h"
+#include "DataHandler.h"
 
 
 // TODO Connect mock methods to database
-DatabaseHandler DatabaseHandler::_instance;
+DataHandler DataHandler::_instance;
 
-DatabaseHandler::DatabaseHandler()
+DataHandler::DataHandler()
   : _fetched(false)
 {
   // TODO fetching in another thread
   fetch();
 }
 
-unsigned int DatabaseHandler::nextClientId()
+unsigned int DataHandler::nextClientId()
 {
   return _nextClientId++;
 }
 
-unsigned int DatabaseHandler::nextRoomId()
+unsigned int DataHandler::nextRoomId()
 {
   return _nextRoomId++;
 }
 
-unsigned int DatabaseHandler::nextReservationId()
+unsigned int DataHandler::nextReservationId()
 {
   return _nextReservationId++;
 }
 
-QList<ClientPtr> DatabaseHandler::clients() const
+QList<ClientPtr> DataHandler::clients() const
 {
   return _clients;
 }
 
-QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString street)
+QList<ClientPtr> DataHandler::clients(QString surname, QString name, QString street)
 {
   // TODO Clients search should take all data into account?
   QList<ClientPtr> matchingClients;
@@ -47,17 +47,17 @@ QList<ClientPtr> DatabaseHandler::clients(QString surname, QString name, QString
   return matchingClients;
 }
 
-QDate DatabaseHandler::firstDate() const
+QDate DataHandler::firstDate() const
 {
   return QDate(QDate::currentDate().year(), 4, 30);
 }
 
-QDate DatabaseHandler::lastDate() const
+QDate DataHandler::lastDate() const
 {
   return QDate(QDate::currentDate().year(), 10, 31);
 }
 
-int DatabaseHandler::roomCost(QDate date) const
+int DataHandler::roomCost(QDate date) const
 {
   if (date.month() >= 5 && date.month() <= 8)
   {
@@ -69,17 +69,17 @@ int DatabaseHandler::roomCost(QDate date) const
   }
 }
 
-int DatabaseHandler::emptyPlaceCost(QDate date) const
+int DataHandler::emptyPlaceCost(QDate date) const
 {
   return static_cast<int>(roomCost(date) * _emptyPlaceFactor);
 }
 
-int DatabaseHandler::additionalPlaceCost(QDate date) const
+int DataHandler::additionalPlaceCost(QDate date) const
 {
   return static_cast<int>(roomCost(date) * _additionalPlaceFactor);
 }
 
-int DatabaseHandler::parkingCost(QDate date) const
+int DataHandler::parkingCost(QDate date) const
 {
   if (date.month() >= 5 && date.month() <= 8)
   {
@@ -91,17 +91,17 @@ int DatabaseHandler::parkingCost(QDate date) const
   }
 }
 
-QList<RoomPtr> DatabaseHandler::rooms() const
+QList<RoomPtr> DataHandler::rooms() const
 {
   return _rooms;
 }
 
-RoomPtr DatabaseHandler::room(int index) const
+RoomPtr DataHandler::room(int index) const
 {
   return _rooms.value(index, nullptr);
 }
 
-bool DatabaseHandler::isReservationAvailable(ReservationPtr reservation) const
+bool DataHandler::isReservationAvailable(ReservationPtr reservation) const
 {
   foreach (ReservationPtr r, _reservations)
   {
@@ -127,12 +127,12 @@ bool DatabaseHandler::isReservationAvailable(ReservationPtr reservation) const
   return true;
 }
 
-QList<ReservationPtr> DatabaseHandler::reservations() const
+QList<ReservationPtr> DataHandler::reservations() const
 {
   return _reservations;
 }
 
-ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPtr& room) const
+ReservationPtr DataHandler::reservation(const QDate& beginDate, const RoomPtr& room) const
 {
   QList<ReservationPtr>::const_iterator it = std::find_if(_reservations.begin(), _reservations.end(), [&](const ReservationPtr& reservation)
   {
@@ -148,22 +148,22 @@ ReservationPtr DatabaseHandler::reservation(const QDate& beginDate, const RoomPt
   return nullptr;
 }
 
-bool DatabaseHandler::hasAvailableParkingSpace(const ReservationPtr /*reservation*/) const
+bool DataHandler::hasAvailableParkingSpace(const ReservationPtr /*reservation*/) const
 {
   return true;
 }
 
-QList<BatchPtr> DatabaseHandler::batchPeriods() const
+QList<BatchPtr> DataHandler::batchPeriods() const
 {
   return _batchPeriods;
 }
 
-BatchPtr DatabaseHandler::batchPeriod(int index) const
+BatchPtr DataHandler::batchPeriod(int index) const
 {
   return _batchPeriods.value(index, nullptr);
 }
 
-BatchPtr DatabaseHandler::batchPeriod(QDate beginDate, QDate endDate)
+BatchPtr DataHandler::batchPeriod(QDate beginDate, QDate endDate)
 {
   foreach (BatchPtr batch, _batchPeriods)
   {
@@ -176,7 +176,7 @@ BatchPtr DatabaseHandler::batchPeriod(QDate beginDate, QDate endDate)
   return nullptr;
 }
 
-bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
+bool DataHandler::saveReservation(const ReservationPtr reservation)
 {
   if (!hasElementWithId(_reservations, reservation))
   {
@@ -191,7 +191,7 @@ bool DatabaseHandler::saveReservation(const ReservationPtr reservation)
   return true;
 }
 
-bool DatabaseHandler::saveClient(const ClientPtr client)
+bool DataHandler::saveClient(const ClientPtr client)
 {
   if (!hasElementWithId(_clients, client))
   {
@@ -202,14 +202,14 @@ bool DatabaseHandler::saveClient(const ClientPtr client)
   return true;
 }
 
-bool DatabaseHandler::saveRoom(const RoomPtr room)
+bool DataHandler::saveRoom(const RoomPtr room)
 {
   room->setId(nextRoomId());
   _rooms.push_back(room);
   return true;
 }
 
-bool DatabaseHandler::deleteReservation(ReservationPtr reservation)
+bool DataHandler::deleteReservation(ReservationPtr reservation)
 {
   QList<ReservationPtr>::iterator it = std::remove_if(_reservations.begin(), _reservations.end(),
                                                       [&reservation](const ReservationPtr& r){ return r->id() == reservation->id(); });
@@ -218,7 +218,7 @@ bool DatabaseHandler::deleteReservation(ReservationPtr reservation)
   return erased;
 }
 
-bool DatabaseHandler::updateReservation(ReservationPtr reservation)
+bool DataHandler::updateReservation(ReservationPtr reservation)
 {
   ClientPtr client = reservation->client();
   QList<ClientPtr> clients = this->clients(client->surname(), client->name(), client->address().street());
@@ -236,14 +236,14 @@ bool DatabaseHandler::updateReservation(ReservationPtr reservation)
   return true;
 }
 
-bool DatabaseHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
+bool DataHandler::periodsOverlap(QDate lBeginDate, QDate lEndDate, QDate rBeginDate, QDate rEndDate) const
 {
   int periodsSpan = std::min(lBeginDate, rBeginDate).daysTo(std::max(lEndDate, rEndDate));
   int periodslength = lBeginDate.daysTo(lEndDate) + rBeginDate.daysTo(rEndDate);
   return periodsSpan < periodslength;
 }
 
-void DatabaseHandler::fetch()
+void DataHandler::fetch()
 {
   if (_fetched)
   {
@@ -259,7 +259,7 @@ void DatabaseHandler::fetch()
   _fetched = true;
 }
 
-void DatabaseHandler::fetchClients()
+void DataHandler::fetchClients()
 {
   saveClient(std::make_shared<Client>(
              Client("Kowalski", "Jan",
@@ -288,7 +288,7 @@ void DatabaseHandler::fetchClients()
                     "mailmail@gmail.com")));
 }
 
-void DatabaseHandler::fetchRooms()
+void DataHandler::fetchRooms()
 {
   saveRoom(std::make_shared<Room>(Room(1, 3)));
   saveRoom(std::make_shared<Room>(Room(2, 3)));
@@ -305,7 +305,7 @@ void DatabaseHandler::fetchRooms()
             [](const RoomPtr& lRoom, const RoomPtr& rRoom){ return lRoom->number() < rRoom->number(); });
 }
 
-void DatabaseHandler::fetchReservations()
+void DataHandler::fetchReservations()
 {
   ReservationPtr reservation = std::make_shared<Reservation>();
 
@@ -344,7 +344,7 @@ void DatabaseHandler::fetchReservations()
   saveReservation(reservation);
 }
 
-void DatabaseHandler::fetchBatchPeriods()
+void DataHandler::fetchBatchPeriods()
 {
   _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 4, 30), QDate(2017, 5, 14), {"D"})));
   _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 5, 7), QDate(2017, 5, 21), {"B", "C"})));
@@ -371,14 +371,14 @@ void DatabaseHandler::fetchBatchPeriods()
   _batchPeriods.push_back(std::make_shared<Batch>(Batch(QDate(2017, 10, 1), QDate(2017, 10, 15), {"D"})));
 }
 
-void DatabaseHandler::fetchOther()
+void DataHandler::fetchOther()
 {
   _emptyPlaceFactor = 0.6;
   _additionalPlaceFactor = 0.6;
 }
 
 template<typename T>
-bool DatabaseHandler::hasElementWithId(QList<T> container, T element) const
+bool DataHandler::hasElementWithId(QList<T> container, T element) const
 {
   return std::any_of(container.begin(), container.end(),
                      [&element](const T& e){ return e->id() == element->id(); });

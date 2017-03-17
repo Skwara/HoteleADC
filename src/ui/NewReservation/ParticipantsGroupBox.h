@@ -3,7 +3,7 @@
 
 #include <QGroupBox>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 #include "data/NewReservation/ParticipantsModel.h"
 
 
@@ -27,7 +27,7 @@ private:
 
 private:
   Ui::ParticipantsGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
   ParticipantsModel _participantsModel;

@@ -3,7 +3,7 @@
 
 #include <QGroupBox>
 
-#include "data/DatabaseHandler.h"
+#include "data/DataHandler.h"
 
 
 namespace Ui {
@@ -33,7 +33,7 @@ private:
 
 private:
   Ui::SingleDateGroupBox* ui;
-  DatabaseHandler* _dbHandler;
+  DataHandler* _dataHandler;
 
   ReservationPtr _reservation;
 };
